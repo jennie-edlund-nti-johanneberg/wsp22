@@ -9,11 +9,13 @@ html lang="en"
     body 
         nav
             a href="/" Date Royale 
-        / ul 
-        /     - if session
-        /     - else
-        /     a href="/" Register
-        /     a href="/showlogin" Login
+        ul 
+            - if session[:auth]
+                / Test kod
+                h5 Trevligt att råkas
+            - else
+                a href="/showregister" Register
+                a href="/showlogin" Login
         h1 Date Royale 
 
         == yield
