@@ -1,0 +1,4 @@
+Lite skit:
+    ☐ <input type="text" id="username" name="username" required>
+    ☐ <input type="text" id="fname" name="fname" autofocus><br>
+    ☐ <form action="/action_page.php" autocomplete="on">

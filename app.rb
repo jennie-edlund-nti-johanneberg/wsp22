@@ -30,11 +30,14 @@ post('/register') do
     username = params[:username]
     password = params[:password]
     passwordConfirm = params[:passwordConfirm]
+    email = params[:email]
+    phonenumber = params[:phonenumber]
+    birthday = params[:birthday]
   
     if password == passwordConfirm
         passwordDigest = BCrypt::Password.create(password)
         db = SQLite3::Database.new("db/database.db")
-        db.execute("INSERT INTO users (username, pwdigest) VALUES (?,?)", username, passwordDigest).first
+        db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday) VALUES (?,?,?,?,?)", username, passwordDigest, email, phonenumber, birthday).first
         session[:auth] = true
         redirect('/posts')
     else
