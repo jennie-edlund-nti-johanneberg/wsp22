@@ -1,10 +1,10 @@
 h1 Sign up
 form action="register" method="post"
-    label for="email" Username:
+    label for="username" Username:
     input type="text" name="username" placeholder="Enter username" maxlength="15"
-    label for="email" Password:
+    label for="password" Password:
     input type="password" name="password" placeholder="Enter password" maxlength="10"
-    label for="email" Password Confirmed:
+    label for="passwordConfirm" Password Confirmed:
     input type="password" name="passwordConfirm" placeholder="Password confirmed" maxlength="10"
     br/
     label for="email" Email:
@@ -27,6 +27,6 @@ form action="register" method="post"
     br/
     input type="submit" value="Sign up"/
 
-    -if session[:registerError]
-        article.registerError
-            h1 INVALID PASSWORD OR USERNAME
+- if session[:registerError]
+    article.registerError
+        h1 INVALID PASSWORD OR USERNAME

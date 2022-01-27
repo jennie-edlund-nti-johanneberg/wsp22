@@ -11,8 +11,7 @@ html lang="en"
             a href="/" Date Royale 
         ul 
             - if session[:auth]
-                / Test kod
-                h5 Trevligt att råkas
+                h5 = "Trevligt att råkas #{session[:user]}" 
             - else
                 a href="/showregister" Sign up 
                 a href="/showlogin" Login

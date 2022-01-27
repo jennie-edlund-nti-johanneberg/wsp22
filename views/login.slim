@@ -1,1 +1,14 @@
-h2 login :)
+h2 Login:
+
+form action="/login" mothod="post"
+    label for="username" Username:
+    input type="text" name="username" placeholder="Enter username" maxlength="15"
+    label for="password" Password:
+    input type="password" name="password" placeholder="Enter password" maxlength="10"
+    br/
+    input type="submit" value="Login"/
+
+    
+- if session[:loginError]
+    article.registerError
+        h1 INVALID PASSWORD OR USERNAME
