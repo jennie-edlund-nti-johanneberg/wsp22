@@ -5,6 +5,13 @@ require 'bcrypt'
 
 enable :sessions
 
+#Functions
+
+def db_called(path)
+    db = SQLite3::Database.new(path)
+    db.results_as_hash = true
+    return db
+end
 
 # GET called
 
@@ -20,8 +27,19 @@ get('/showlogin') do
     slim(:login)
 end
 
+get('/logout') do
+    session[:auth] = false
+    slim(:start)
+end
+
 get('/posts') do
-    slim(:"posts/index")
+    db = db_called("db/database.db")
+    result = db.execute("SELECT * FROM posts")
+    slim(:"posts/index", locals:{posts:result})
+end
+
+get('/newpost') do
+    slim(:"posts/new")
 end
 
 # POST called
@@ -36,7 +54,7 @@ post('/register') do
   
     if password == passwordconfirm
         passwordDigest = BCrypt::Password.create(password)
-        db = SQLite3::Database.new("db/database.db")
+        db = db_called("db/database.db")
         db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday) VALUES (?,?,?,?,?)", username, passwordDigest, email, phonenumber, birthday).first
         session[:auth] = true
         session[:user] = username
@@ -51,9 +69,8 @@ post('/login') do
     username = params[:username]
     password = params[:password]
   
-    db = SQLite3::Database.new('db/database.db')
-    db.results_as_hash = true
-    result = db.execute('SELECT * FROM users WHERE username = ?', username).first
+    db = db_called("db/database.db")
+    result = db.execute("SELECT * FROM users WHERE username = ?", username).first
 
     #p "RRRRRRRRR: #{result}"
 

@@ -8,10 +8,14 @@ html lang="en"
         title Date Royale
     body 
         nav
-            a href="/" Date Royale 
+            - if session[:auth]
+                a href="/posts" Date Royale 
+            - else
+                a href="/" Date Royale      
         ul 
             - if session[:auth]
-                h5 = "Trevligt att råkas #{session[:user]}" 
+                h5 = "Trevligt att råkas min fina vän #{session[:user]}" 
+                a href="/logout" Logout 
             - else
                 a href="/showregister" Sign up 
                 a href="/showlogin" Login
