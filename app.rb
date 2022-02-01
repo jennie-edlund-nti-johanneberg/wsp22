@@ -17,6 +17,7 @@ end
 
 get('/') do
     session[:loginError] = false
+    session[:registerError] = false
     slim(:start)
 end
 
@@ -26,6 +27,7 @@ get('/showregister') do
 end
 
 get('/showlogin') do
+    session[:registerError] = false
     slim(:login)
 end
 
