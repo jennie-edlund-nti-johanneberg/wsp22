@@ -1,20 +1,20 @@
 h1 Sign up
-form action="register" method="post"
+form action="register" method="post" autocomplete="on"
     label for="username" Username:
     input type="text" name="username" placeholder="Enter username" maxlength="15"
     label for="password" Password:
     input type="password" name="password" placeholder="Enter password" maxlength="10"
-    label for="passwordConfirm" Password Confirmed:
-    input type="password" name="passwordConfirm" placeholder="Password confirmed" maxlength="10"
+    label for="passwordconfirm" Password Confirmed:
+    input type="password" name="passwordconfirm" placeholder="Password confirmed" maxlength="10"
     br/
     label for="email" Email:
-    input type="email" name="email" placeholder="name@gmail.com" 
+    input type="email" name="email" placeholder="name@gmail.com"
     br/
     label for="phonenumber" Phone number:
     input type="tel" name="phonenumber" placeholder="+46 12 345 67 89" pattern="+46 [0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2}"
     br/
     label for="birthday" Birthday:
-    input type="date" name="birthday" placeholder="Enter birthday" min="1990-01-01" max="2010-01-01" 
+    input type="date" name="birthday" placeholder="Enter birthday" min="1990-01-01" max="2010-01-01"
     br/
     input type="checkbox" name="woods" value="woods"
     label for="woods" Woods
@@ -25,8 +25,8 @@ form action="register" method="post"
     input type="checkbox" name="lakes" value="lakes"
     label for="lakes" Lakes
     br/
-    input type="submit" value="Sign up"/
+    input type="submit" value="Sign up"/ 
 
 - if session[:registerError]
     article.registerError
-        h1 INVALID PASSWORD OR USERNAME
+        h1 PASSWORDS NOT MATCHING 
