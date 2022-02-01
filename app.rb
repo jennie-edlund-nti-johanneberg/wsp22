@@ -16,10 +16,12 @@ end
 # GET called
 
 get('/') do
+    session[:loginError] = false
     slim(:start)
 end
 
 get('/showregister') do
+    session[:loginError] = false
     slim(:register)
 end
 
@@ -87,7 +89,7 @@ post('/login') do
             
         else
             #WRONG PASSWORD
-            session[:loginError]=true
+            session[:loginError] = true
             redirect('/showlogin')
         end
         
