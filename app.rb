@@ -49,30 +49,46 @@ end
 # POST called
 
 post('/register') do
-    begin
+    # begin
         username = params[:username]
         password = params[:password]
         passwordconfirm = params[:passwordconfirm]
         email = params[:email]
         phonenumber = params[:phonenumber]
         birthday = params[:birthday]
+        # personality = []
         
-        if params[:woods] != nil
-            
-        elsif params[:sea] != nil
+        # if params[:woods] != nil
+        #     personality << params[:woods]
+        # end
 
-        elsif params[:mountains] != nil
+        # if params[:sea] != nil
+        #     personality << params[:sea]
+        # end
 
-        elsif params[:lakes] != nil
+        # if params[:mountains] != nil
+        #     personality << params[:mountains]
+        # end
 
-        else
-            
-        end
+        # if params[:lakes] != nil
+        #     personality << params[:lakes]
+        # end
+        personality = "hej"
+
+        p "Person: #{personality}"
     
         if password == passwordconfirm
             passwordDigest = BCrypt::Password.create(password)
             db = db_called("db/database.db")
-            db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday, personality) VALUES (?,?,?,?,?,?)", username, passwordDigest, email, phonenumber, birthday, personality).first
+
+            db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday) VALUES (?,?,?,?,?)", username, passwordDigest, email, phonenumber, birthday).first
+            result = db.execute("SELECT * FROM users WHERE username = ?", username).first
+            session[:id] = result["id"]
+
+            db.execute("INSERT INTO category (personality) VALUES (?)", personality).first
+            result_2 = db.execute("SELECT id FROM category WHERE personality = ?", personality).first
+
+            db.execute("INSERT INTO user_personality_relation (userid, categoryid) VALUES (?,?)", session[:id], result_2["id"]).first
             session[:auth] = true
             session[:user] = username
             redirect('/posts')
@@ -81,11 +97,11 @@ post('/register') do
             redirect('/showregister')
         end
         
-    rescue => exception
-        session[:registerError] = true
-        redirect('/showregister')
+    # rescue => exception
+    #     session[:registerError] = true
+    #     redirect('/showregister')
         
-    end
+    # end
 end
 
 post('/login') do
@@ -128,8 +144,6 @@ post('/post/new') do
     db = db_called("db/database.db")
     db.execute("INSERT INTO posts (title, text) VALUES (?,?)", title, text).first
     result = db.execute("SELECT id FROM posts WHERE title = ?", title).first
-    p session[:id]
-    p result["id"]
     db.execute("INSERT INTO user_posts_relation (userid, postid) VALUES (?,?)", session[:id], result["id"]).first
     redirect('posts')
 end
