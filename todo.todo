@@ -12,12 +12,15 @@ Forms, fixa undantagshantering + tex maxlength och sånt:
 Koppla:
     ☐ Post till användare
     ☐ Användare till personlighet
-    ☐  Användare till Likes vise versa
+    ☐ Användare till Likes vise versa
+    ☐ Kopplas till login från logout eller?
 
 Fix typ:
     ☐ Before grejer fin kod?
     ☐ Login och register båda samma undantag, kan vara som en funktion?
     ☐ .firts och är det ska va
+    ☐ Ska relation tabeller ha eget id?
+    ☐ Behövs rescue på index edit??
 
 Innan arbete:
     ☐ ER-diagram

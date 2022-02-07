@@ -39,11 +39,21 @@ end
 get('/posts') do
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM posts")
-    slim(:"posts/index", locals:{posts:result})
+    editposts = db.execute("SELECT user_posts_relation.postid FROM user_posts_relation
+        INNER JOIN posts ON user_posts_relation.postid = posts.id
+        WHERE userid = ?", session[:id])
+    slim(:"posts/index", locals:{posts:result, editposts:editposts})
 end
 
 get('/newpost') do
     slim(:"posts/new")
+end
+
+get('/post/:id/edit') do
+    id = params[:id].to_i
+    db = db_called("db/database.db")
+    result = db.execute("SELECT * FROM posts WHERE id = ?", id).first
+    slim(:"/posts/edit", locals:{post:result})
 end
 
 # POST called
@@ -142,8 +152,25 @@ post('/post/new') do
     title = params[:title]
     text = params[:text]
     db = db_called("db/database.db")
-    db.execute("INSERT INTO posts (title, text) VALUES (?,?)", title, text).first
+    db.execute("INSERT INTO posts (title, text) VALUES (?,?)", title, text) #.first
     result = db.execute("SELECT id FROM posts WHERE title = ?", title).first
-    db.execute("INSERT INTO user_posts_relation (userid, postid) VALUES (?,?)", session[:id], result["id"]).first
+    db.execute("INSERT INTO user_posts_relation (userid, postid) VALUES (?,?)", session[:id], result["id"]) #.first
     redirect('posts')
 end
+
+post('/post/:id/edit') do
+    id = params[:id].to_i
+    title = params[:title]
+    text = params[:text]
+    db = db_called("db/database.db")
+    db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, id)
+    redirect('/posts')
+end
+
+
+post('/post/:id/delete') do
+    id = params[:id].to_i
+    db = db_called("db/database.db")
+    db.execute("DELETE FROM posts WHERE id = ?", id)
+    redirect('/posts')
+  end

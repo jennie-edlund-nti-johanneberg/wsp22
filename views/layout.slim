@@ -14,7 +14,9 @@ html lang="en"
                 a href="/" Date Royale      
         ul 
             - if session[:auth]
-                h5 = "Trevligt att råkas min fina vän #{session[:user]}" 
+                p = "Likes:"
+                p  #{session[:user]}
+                img src="misc/gubbar.jpg" alt="gubb"/
                 a href="/logout" Logout 
             - else
                 a href="/showregister" Sign up 
