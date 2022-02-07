@@ -49,23 +49,42 @@ end
 # POST called
 
 post('/register') do
-    username = params[:username]
-    password = params[:password]
-    passwordconfirm = params[:passwordconfirm]
-    email = params[:email]
-    phonenumber = params[:phonenumber]
-    birthday = params[:birthday]
-  
-    if password == passwordconfirm
-        passwordDigest = BCrypt::Password.create(password)
-        db = db_called("db/database.db")
-        db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday) VALUES (?,?,?,?,?)", username, passwordDigest, email, phonenumber, birthday).first
-        session[:auth] = true
-        session[:user] = username
-        redirect('/posts')
-    else
+    begin
+        username = params[:username]
+        password = params[:password]
+        passwordconfirm = params[:passwordconfirm]
+        email = params[:email]
+        phonenumber = params[:phonenumber]
+        birthday = params[:birthday]
+        
+        if params[:woods] != nil
+            
+        elsif params[:sea] != nil
+
+        elsif params[:mountains] != nil
+
+        elsif params[:lakes] != nil
+
+        else
+            
+        end
+    
+        if password == passwordconfirm
+            passwordDigest = BCrypt::Password.create(password)
+            db = db_called("db/database.db")
+            db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday, personality) VALUES (?,?,?,?,?,?)", username, passwordDigest, email, phonenumber, birthday, personality).first
+            session[:auth] = true
+            session[:user] = username
+            redirect('/posts')
+        else
+            session[:registerError] = true
+            redirect('/showregister')
+        end
+        
+    rescue => exception
         session[:registerError] = true
         redirect('/showregister')
+        
     end
 end
 
@@ -101,4 +120,16 @@ post('/login') do
         redirect('/showlogin')
         
     end
+end
+
+post('/post/new') do
+    title = params[:title]
+    text = params[:text]
+    db = db_called("db/database.db")
+    db.execute("INSERT INTO posts (title, text) VALUES (?,?)", title, text).first
+    result = db.execute("SELECT id FROM posts WHERE title = ?", title).first
+    p session[:id]
+    p result["id"]
+    db.execute("INSERT INTO user_posts_relation (userid, postid) VALUES (?,?)", session[:id], result["id"]).first
+    redirect('posts')
 end
