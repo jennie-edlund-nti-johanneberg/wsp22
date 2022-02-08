@@ -36,13 +36,29 @@ get('/logout') do
     slim(:start)
 end
 
+helpers do
+    def posts
+            db = db_called("db/database.db")
+        result = db.execute("SELECT * FROM posts")
+        creatorid = db.execute("SELECT
+                users.username,
+                posts.creatorid
+            FROM users
+                INNER JOIN posts ON users.id = posts.creatorid")
+        p creatorid
+        return creatorid
+    end
+end
+
 get('/posts') do
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM posts")
-    editposts = db.execute("SELECT user_posts_relation.postid FROM user_posts_relation
-        INNER JOIN posts ON user_posts_relation.postid = posts.id
-        WHERE userid = ?", session[:id])
-    slim(:"posts/index", locals:{posts:result, editposts:editposts})
+    creatorid = db.execute("SELECT
+            users.username,
+            posts.creatorid
+        FROM users
+            INNER JOIN posts ON users.id = posts.creatorid")
+    slim(:"posts/index", locals:{posts:result, username_posts:creatorid})
 end
 
 get('/newpost') do
@@ -53,7 +69,7 @@ get('/post/:id/edit') do
     id = params[:id].to_i
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM posts WHERE id = ?", id).first
-    slim(:"/posts/edit", locals:{post:result})
+    slim(:"posts/edit", locals:{post:result})
 end
 
 # POST called
@@ -66,23 +82,6 @@ post('/register') do
         email = params[:email]
         phonenumber = params[:phonenumber]
         birthday = params[:birthday]
-        # personality = []
-        
-        # if params[:woods] != nil
-        #     personality << params[:woods]
-        # end
-
-        # if params[:sea] != nil
-        #     personality << params[:sea]
-        # end
-
-        # if params[:mountains] != nil
-        #     personality << params[:mountains]
-        # end
-
-        # if params[:lakes] != nil
-        #     personality << params[:lakes]
-        # end
         personality = "hej"
 
         p "Person: #{personality}"
@@ -152,13 +151,13 @@ post('/post/new') do
     title = params[:title]
     text = params[:text]
     db = db_called("db/database.db")
-    db.execute("INSERT INTO posts (title, text) VALUES (?,?)", title, text) #.first
-    result = db.execute("SELECT id FROM posts WHERE title = ?", title).first
-    db.execute("INSERT INTO user_posts_relation (userid, postid) VALUES (?,?)", session[:id], result["id"]) #.first
-    redirect('posts')
+    db.execute("INSERT INTO posts (title, text, creatorid) VALUES (?,?,?)", title, text, session[:id]) #.first
+    # result = db.execute("SELECT id FROM posts WHERE title = ?", title).first
+    # db.execute("INSERT INTO user_posts_relation (userid, postid) VALUES (?,?)", session[:id], result["id"]) #.first
+    redirect('/posts')
 end
 
-post('/post/:id/edit') do
+post('/post/:id/update') do
     id = params[:id].to_i
     title = params[:title]
     text = params[:text]
@@ -166,7 +165,6 @@ post('/post/:id/edit') do
     db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, id)
     redirect('/posts')
 end
-
 
 post('/post/:id/delete') do
     id = params[:id].to_i

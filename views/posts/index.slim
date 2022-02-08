@@ -1,15 +1,18 @@
 h2 All posts:
-
 ol
   - posts.each do |post|
     li
       h3 = post["title"]
-      p = post["text"]
+      - username_posts.each do |user|
+        - if post["creatorid"] == user["creatorid"]
+          h4 = "Av: #{user["username"]}"
 
-      - editposts.each do |editpost|
-        - if post["id"] == editpost["postid"]
-          a href="post/#{post['id']}/edit" Update 
-          form method="post" action="post/#{post['id']}/delete"
-              input type="submit" value="Delete"
+      p = post["text"]
+      - if post["creatorid"] == session[:id]
+        a href="post/#{post['id']}/edit" Update 
+        form method="post" action="post/#{post['id']}/delete"
+            input type="submit" value="Delete"
+
+      p = posts  
 
 a href="/newpost" New Post 

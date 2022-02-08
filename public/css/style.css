@@ -10,3 +10,7 @@
 body {
     background-color: whitesmoke;
 }
+
+img {
+    max-width: 2%;
+}

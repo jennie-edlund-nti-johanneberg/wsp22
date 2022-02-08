@@ -4,7 +4,8 @@ html lang="en"
         meta charset="UTF-8"/
         meta http-equiv="X-UA-Compatible" content="IE=edge"/
         meta name="viewport" content="width=device-width, initial-scale=1.0"/
-        link rel="stylesheet" href="style.css"/
+        base href="/"
+        link rel="stylesheet" href="css/style.css" type="text/css"/
         title Date Royale
     body 
         nav
@@ -12,15 +13,15 @@ html lang="en"
                 a href="/posts" Date Royale 
             - else
                 a href="/" Date Royale      
-        ul 
-            - if session[:auth]
-                p = "Likes:"
-                p  #{session[:user]}
-                img src="misc/gubbar.jpg" alt="gubb"/
-                a href="/logout" Logout 
-            - else
-                a href="/showregister" Sign up 
-                a href="/showlogin" Login
+            ul 
+                - if session[:auth]
+                    p = "Likes:"
+                    p  #{session[:user]}
+                    img src="img/gubbar.jpg" alt="gubb"
+                    a href="/logout" Logout 
+                - else
+                    a href="/showregister" Sign up 
+                    a href="/showlogin" Login
         h1 Date Royale 
 
         == yield

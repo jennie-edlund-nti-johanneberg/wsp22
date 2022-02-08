@@ -8,12 +8,15 @@ Forms, fixa undantagshantering + tex maxlength och sånt:
     ☐ Register
     ☐ Login
     ☐ New post
+    ☐ Update
+    ☐ Delete
 
 Koppla:
     ☐ Post till användare
     ☐ Användare till personlighet
     ☐ Användare till Likes vise versa
     ☐ Kopplas till login från logout eller?
+    ☐ Kunna ladda upp fil som bakgrundsbild?
 
 Fix typ:
     ☐ Before grejer fin kod?
@@ -21,6 +24,7 @@ Fix typ:
     ☐ .firts och är det ska va
     ☐ Ska relation tabeller ha eget id?
     ☐ Behövs rescue på index edit??
+    ☐ SKA BILD VA I PUBIC?
 
 Innan arbete:
     ☐ ER-diagram
