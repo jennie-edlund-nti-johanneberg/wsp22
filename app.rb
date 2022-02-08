@@ -54,7 +54,7 @@ end
 get('/post/:id/edit') do
     id = params[:id].to_i
     db = db_called("db/database.db")
-    result = db.execute("SELECT * FROM posts WHERE id = ?", id)
+    result = db.execute("SELECT * FROM posts WHERE id = ?", id).first
     slim(:"posts/edit", locals:{post:result})
 end
 
@@ -62,7 +62,15 @@ get('/showprofile') do
     id = session[:id]
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM users WHERE id = ?", id)
-    slim(:"users/show", locals:{userinfo:result})
+    result_2 = db.execute("SELECT
+            posts.id,
+            posts.title,
+            posts.text,
+            posts.creatorid
+        FROM posts
+            INNER JOIN users ON users.id = posts.creatorid
+        WHERE users.id = ?", id)
+    slim(:"users/show", locals:{userinfo:result, posts:result_2})
 end
 
 # POST called

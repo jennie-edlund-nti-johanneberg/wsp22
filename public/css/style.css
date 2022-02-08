@@ -8,9 +8,15 @@
 }
 
 body {
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
+    background-image: url("/public/img/background.jpg");
 }
 
 img {
     max-width: 2%;
+}
+
+a {
+    text-decoration: none;
+    color: whitesmoke;
 }
