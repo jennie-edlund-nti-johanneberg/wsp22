@@ -3,9 +3,10 @@ ol
   - posts.each do |post|
     li
       h3 = post["title"]
-      - username_posts.each do |user|
+      - username_posts.each do |user|    
         - if post["creatorid"] == user["creatorid"]
-          h4 = "Av: #{user["username"]}"
+          h4 = "By: #{user["username"]}"
+      
 
       p = post["text"]
       - if post["creatorid"] == session[:id]
@@ -13,6 +14,6 @@ ol
         form method="post" action="post/#{post['id']}/delete"
             input type="submit" value="Delete"
 
-      p = posts  
+      / p = posts  
 
 a href="/newpost" New Post 

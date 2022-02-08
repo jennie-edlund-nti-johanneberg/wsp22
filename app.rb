@@ -36,24 +36,10 @@ get('/logout') do
     slim(:start)
 end
 
-helpers do
-    def posts
-            db = db_called("db/database.db")
-        result = db.execute("SELECT * FROM posts")
-        creatorid = db.execute("SELECT
-                users.username,
-                posts.creatorid
-            FROM users
-                INNER JOIN posts ON users.id = posts.creatorid")
-        p creatorid
-        return creatorid
-    end
-end
-
 get('/posts') do
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM posts")
-    creatorid = db.execute("SELECT
+    creatorid = db.execute("SELECT DISTINCT
             users.username,
             posts.creatorid
         FROM users
