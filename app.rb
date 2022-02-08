@@ -54,8 +54,15 @@ end
 get('/post/:id/edit') do
     id = params[:id].to_i
     db = db_called("db/database.db")
-    result = db.execute("SELECT * FROM posts WHERE id = ?", id).first
+    result = db.execute("SELECT * FROM posts WHERE id = ?", id)
     slim(:"posts/edit", locals:{post:result})
+end
+
+get('/showprofile') do
+    id = session[:id]
+    db = db_called("db/database.db")
+    result = db.execute("SELECT * FROM users WHERE id = ?", id)
+    slim(:"users/show", locals:{userinfo:result})
 end
 
 # POST called
@@ -68,9 +75,6 @@ post('/register') do
         email = params[:email]
         phonenumber = params[:phonenumber]
         birthday = params[:birthday]
-        personality = "hej"
-
-        p "Person: #{personality}"
     
         if password == passwordconfirm
             passwordDigest = BCrypt::Password.create(password)
@@ -80,10 +84,34 @@ post('/register') do
             result = db.execute("SELECT * FROM users WHERE username = ?", username).first
             session[:id] = result["id"]
 
-            db.execute("INSERT INTO category (personality) VALUES (?)", personality).first
-            result_2 = db.execute("SELECT id FROM category WHERE personality = ?", personality).first
+            begin
+                woods = params[:woods]
+                if woods == "woods"
+                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
+                end  
+            end
 
-            db.execute("INSERT INTO user_personality_relation (userid, categoryid) VALUES (?,?)", session[:id], result_2["id"]).first
+            begin
+                sea = params[:sea]
+                if sea == "sea"
+                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
+                end
+            end
+
+            begin
+                mountians = params[:mountians]
+                if mountians == "mountians"
+                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
+                end
+            end
+
+            begin
+                lakes = params[:lakes]
+                if lakes == "lakes"
+                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
+                end 
+            end
+
             session[:auth] = true
             session[:user] = username
             redirect('/posts')
@@ -105,8 +133,6 @@ post('/login') do
   
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM users WHERE username = ?", username).first
-
-    #p "RRRRRRRRR: #{result}"
 
     begin
         pwdigest = result["pwdigest"]

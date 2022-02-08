@@ -16,7 +16,7 @@ html lang="en"
             ul 
                 - if session[:auth]
                     p = "Likes:"
-                    p  #{session[:user]}
+                    a href="/showprofile" #{session[:user]}
                     img src="img/gubbar.jpg" alt="gubb"
                     a href="/logout" Logout 
                 - else

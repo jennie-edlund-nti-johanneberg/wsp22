@@ -1,0 +1,18 @@
+img scr="img/gubbar.jpg"
+h2 = "Hej #{session[:user]}!"
+
+ol
+  - userinfo.each do |info |
+    li
+      h3 = info["username"]
+      
+
+    /   p = post["text"]
+    /   - if post["creatorid"] == session[:id]
+    /     a href="post/#{post['id']}/edit" Update 
+    /     form method="post" action="post/#{post['id']}/delete"
+    /         input type="submit" value="Delete"
+
+      / p = posts  
+
+a href="/newpost" New Post 
