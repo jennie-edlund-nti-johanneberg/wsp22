@@ -19,9 +19,9 @@ html lang="en"
                 - if session[:auth]
                     li
                         a href="/showprofile" #{session[:user]}
-                        img src="img/gubbar.jpg" alt="gubb"
+                        / img src="img/gubbar.jpg" alt="gubb"
                     li
-                        p = "Likes:"
+                        p = "Likes:" 
                     li
                         a href="/logout" Logout 
                 - else
@@ -30,11 +30,11 @@ html lang="en"
                     li
                         a href="/showlogin" Login
         div id="layoutdiv"
-            h1 Date Royale 
-
             == yield
 
-        footer
-            div.info
-                h1 Jennie
-                h5 är bäst
+            footer
+                div.info
+                    h1 Jennie
+                    h5 är bäst
+        p demo 
+        script src="js/javascript.js"

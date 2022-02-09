@@ -113,8 +113,8 @@ post('/register') do
             end
 
             begin
-                mountians = params[:mountians]
-                if mountians == "mountians"
+                mountains = params[:mountains]
+                if mountains == "mountains"
                     db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
                 end
             end
