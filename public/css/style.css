@@ -1,22 +1,74 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Assistant', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    color: whitesmoke;
 }
 
+h1, h2, h3, h4, h5 {
+    font-family: 'EB Garamond', serif;
+    font-weight: 550;
+}
+
+/* Layout */
+
 body {
-    /* background-color: whitesmoke; */
-    background-image: url("/public/img/background.jpg");
+    background-color: black;
+    /* background: url("/img/background_2.jpg"); */
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+nav {
+    height: 10vh;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
+nav > ul {
+    list-style: none;
+    display: inline-block;
+
+}
+
+nav > ul > li {
+
+}
+
+nav > ul > li > * {
+    font-size: 900;
+}
+
+#layoutdiv {
+    height: 100vh;
+}
+
+footer {
+    height: 30vh;
+}
+
+/* Startsidan */
+
+
+
+input[type=text], input[type=password], input[type=email], input[type=tel], input[type=date], input[type=checkbox], input[type=submit] {
+    color: black;
 }
 
 img {
-    max-width: 2%;
+    max-width: 5%;
 }
 
 a {
     text-decoration: none;
-    color: whitesmoke;
 }

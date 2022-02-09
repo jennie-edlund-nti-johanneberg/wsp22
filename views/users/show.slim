@@ -2,7 +2,7 @@ img src="img/gubbar.jpg" alt="guzz"
 h2 = "Hej #{session[:user]}!"
 
 ol
-    - userinfo.each do |info |
+    - userinfo.each do |info|
         li
             h3 Birthday:
             p = info["birthday"]
@@ -13,8 +13,9 @@ ol
             h3 Email:
             p = info["email"]
 
-            h3 Birthday:
-            p = info["birthday"]
+            h3 Personality:
+            - personality.each do |element|
+                p = element["personality"] 
 
 h2 Your posts:
 ol

@@ -9,24 +9,32 @@ html lang="en"
         title Date Royale
     body 
         nav
-            - if session[:auth]
-                a href="/posts" Date Royale 
-            - else
-                a href="/" Date Royale      
+            ul 
+                li 
+                    - if session[:auth]
+                        a href="/posts" Date Royale 
+                    - else
+                        a href="/" Date Royale   
             ul 
                 - if session[:auth]
-                    p = "Likes:"
-                    a href="/showprofile" #{session[:user]}
-                    img src="img/gubbar.jpg" alt="gubb"
-                    a href="/logout" Logout 
+                    li
+                        a href="/showprofile" #{session[:user]}
+                        img src="img/gubbar.jpg" alt="gubb"
+                    li
+                        p = "Likes:"
+                    li
+                        a href="/logout" Logout 
                 - else
-                    a href="/showregister" Sign up 
-                    a href="/showlogin" Login
-        h1 Date Royale 
+                    li
+                        a href="/showregister" Sign up 
+                    li
+                        a href="/showlogin" Login
+        div id="layoutdiv"
+            h1 Date Royale 
 
-        == yield
+            == yield
 
-    footer
-        div.info
-            h1 Jennie
-            h5 är bäst
+        footer
+            div.info
+                h1 Jennie
+                h5 är bäst

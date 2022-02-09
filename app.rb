@@ -70,7 +70,13 @@ get('/showprofile') do
         FROM posts
             INNER JOIN users ON users.id = posts.creatorid
         WHERE users.id = ?", id)
-    slim(:"users/show", locals:{userinfo:result, posts:result_2})
+
+    result_3 = db.execute("SELECT
+            category.personality
+        FROM category
+            INNER JOIN user_personality_relation ON  category.id = user_personality_relation.categoryid
+        WHERE user_personality_relation.userid = ?", id)
+    slim(:"users/show", locals:{userinfo:result, posts:result_2, personality:result_3})
 end
 
 # POST called
