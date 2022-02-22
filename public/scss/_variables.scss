@@ -1,0 +1,7 @@
+@mixin center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+$background_color: rgb(0, 0, 0);

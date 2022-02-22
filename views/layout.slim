@@ -5,10 +5,10 @@ html lang="en"
         meta http-equiv="X-UA-Compatible" content="IE=edge"/
         meta name="viewport" content="width=device-width, initial-scale=1.0"/
         base href="/"
-        link rel="stylesheet" href="css/style.css" type="text/css"/
+        link rel="stylesheet" href="scss/main.css" type="text/css"/
         title Date Royale
     body 
-        nav
+        nav id="nav"
             ul 
                 li 
                     - if session[:auth]
@@ -34,7 +34,6 @@ html lang="en"
 
             footer
                 div.info
-                    h1 Jennie
-                    h5 är bäst
-        p demo 
+                    h1 Detta är footern
+                    h5 kan vara bra att veta det.
         script src="js/javascript.js"

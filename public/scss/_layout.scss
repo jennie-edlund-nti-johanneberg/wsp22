@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import './variables';
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    color: #FFFFFF;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Newsreader', serif;
+}
+
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Layout */
+
+body {
+    background-color: $background_color;
+    /* background: url("/img/background_2.jpg"); */
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+nav {
+    // height: auto;
+    max-height: auto;
+    width: 100%;
+    background-color: $background_color;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+
+    position: fixed;
+    top: 0;
+    transition: 1s;
+
+    > ul {
+        list-style: none;
+
+        display: flex;
+        flex-direction: row;
+
+        > li {
+            margin: 1.7em 2.5em 1.7em 2.5em;
+
+            > * {
+                font-weight: 500;
+                font-size: 1.2em;
+            }
+
+            > a:hover {
+                font-weight: 900;
+            }
+        }
+    }
+    
+}
+
+#layoutdiv {
+    height: 100vh;
+}
+
+footer {
+    height: 30vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Startsidan */
+
+#helastartdiv {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mindrestartdiv {
+    margin-top: 6rem;
+    margin-right: 25rem;
+    margin-left: 5rem;
+}
+
+#startrubrik {
+    font-size: 5em;
+    margin-bottom: 1.8rem;
+}
+
+#starttext {
+
+}
+
+#startinfodiv {
+    height: 100vh;
+}
+
+/* Registreringssidan */
+
+#helaregistreringsdiv {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mindreregistreringdiv {
+    margin-top: 6rem;
+    margin-right: 25rem;
+    margin-left: 5rem;
+}
+
+/* Loginsidan */
+
+#helalogindiv {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mindrelogindiv {
+    margin-top: 6rem;
+    margin-right: 25rem;
+    margin-left: 5rem;
+}
+
+/* Postssidan */
+
+#helapostsdiv {
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mindrepostsdiv {
+    margin-top: 6rem;
+    margin-right: 25rem;
+    margin-left: 5rem;
+}
+
+/* Nypostsidan */
+
+#helanewpostdiv {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mindrenewpostdiv {
+    margin-top: 6rem;
+    margin-right: 25rem;
+    margin-left: 5rem;
+}
+
+/* Updatepostsidan */
+
+#helaupdatediv {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mindreupdatediv {
+    margin-top: 6rem;
+    margin-right: 25rem;
+    margin-left: 5rem;
+}
+
+/* Profilsidan */
+
+#helaprofildiv {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#mindreprofildiv {
+    margin-top: 6rem;
+    margin-right: 25rem;
+    margin-left: 5rem;
+}
+
+
+
+input[type=text], input[type=password], input[type=email], input[type=tel], input[type=date], input[type=checkbox], input[type=submit] {
+    color: black;
+}
+
+img {
+    max-width: 5%;
+}
+
