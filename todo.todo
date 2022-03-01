@@ -11,6 +11,10 @@ Forms, fixa undantagshantering + tex maxlength och sånt:
     ☐ Update
     ☐ Delete
 
+Validering:
+    ☐ Inlogg
+    ☐ Kolla presentation och cheat-sheet
+
 Koppla:
     ☐ Post till användare
     ☐ Användare till personlighet

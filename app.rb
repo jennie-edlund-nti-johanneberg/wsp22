@@ -79,6 +79,10 @@ get('/showprofile') do
     slim(:"users/show", locals:{userinfo:result, posts:result_2, personality:result_3})
 end
 
+get('/api/data') do
+    session[:like]
+end
+
 # POST called
 
 post('/register') do
@@ -197,4 +201,19 @@ post('/post/:id/delete') do
     db = db_called("db/database.db")
     db.execute("DELETE FROM posts WHERE id = ?", id)
     redirect('/posts')
-  end
+end
+
+post('/post/:postid/:userid/like') do
+    userid = params[:userid].to_i
+    postid = params[:postid].to_i
+    db = db_called("db/database.db")
+    begin 
+        result = db.execute("SELECT userid FROM likes WHERE postid = ?", postid).first 
+        db.execute("DELETE FROM likes WHERE userid = ?", result['userid'])
+        session[:like] = true
+    rescue => exception
+        db.execute("INSERT INTO likes (userid,postid) VALUES (?,?)", userid, postid)
+        c = false
+    end
+    redirect('/posts')
+end

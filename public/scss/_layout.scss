@@ -10,10 +10,6 @@
     color: #FFFFFF;
 }
 
-h1, h2, h3, h4, h5 {
-    font-family: 'Newsreader', serif;
-}
-
 ol {
     list-style: none;
 }
@@ -26,7 +22,6 @@ a {
 
 body {
     background-color: $background_color;
-    /* background: url("/img/background_2.jpg"); */
     height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
@@ -38,7 +33,7 @@ nav {
     // height: auto;
     max-height: auto;
     width: 100%;
-    background-color: $background_color;
+    background-color: rgba(0, 0, 0, 0.5);
     
     display: flex;
     justify-content: space-between;
