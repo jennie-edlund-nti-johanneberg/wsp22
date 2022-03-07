@@ -21,7 +21,7 @@ Koppla:
     ☐ Användare till Likes vise versa
     ☐ Kopplas till login från logout eller?
     ☐ Kunna ladda upp fil som bakgrundsbild?
-    ☐ Koppla javascripoch fixa när scroll
+    ✔ Koppla javascrip @done(22-03-01 13:38)
 
 Fix typ:
     ☐ Before grejer fin kod?
@@ -29,9 +29,10 @@ Fix typ:
     ☐ .firts och är det ska va
     ☐ Ska relation tabeller ha eget id?
     ☐ Behövs rescue på index edit??
-    ☐ SKA BILD VA I PUBIC?
-    ☐ Se till att alla raouts och filer är döpta rätt
-    ☐ personality på show profile
+    ✔ SKA BILD VA I PUBIC? @done(22-03-01 13:38)
+    ☐ Se till att alla routes och filer är döpta rätt
+    ✔ personality på show profile @done(22-03-01 13:38)
+    ☐ Model.rb, all databas grejs ska vara i en egen fil :)
 
 Innan arbete:
     ☐ ER-diagram

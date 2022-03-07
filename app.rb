@@ -18,6 +18,7 @@ end
 get('/') do
     session[:loginError] = false
     session[:registerError] = false
+    session[:like] = false
     slim(:start)
 end
 
@@ -44,7 +45,12 @@ get('/posts') do
             posts.creatorid
         FROM users
             INNER JOIN posts ON users.id = posts.creatorid")
-    slim(:"posts/index", locals:{posts:result, username_posts:creatorid})
+    db.results_as_hash = false
+    likeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
+    newArr = likeArr.map do |el|
+        el = el.first
+    end
+    slim(:"posts/index", locals:{posts:result, username_posts:creatorid, likes:newArr})
 end
 
 get('/newpost') do
@@ -79,9 +85,9 @@ get('/showprofile') do
     slim(:"users/show", locals:{userinfo:result, posts:result_2, personality:result_3})
 end
 
-get('/api/data') do
-    session[:like]
-end
+# get('/api/data') do
+#     session[:like]
+# end
 
 # POST called
 
@@ -207,13 +213,14 @@ post('/post/:postid/:userid/like') do
     userid = params[:userid].to_i
     postid = params[:postid].to_i
     db = db_called("db/database.db")
-    begin 
-        result = db.execute("SELECT userid FROM likes WHERE postid = ?", postid).first 
-        db.execute("DELETE FROM likes WHERE userid = ?", result['userid'])
-        session[:like] = true
-    rescue => exception
-        db.execute("INSERT INTO likes (userid,postid) VALUES (?,?)", userid, postid)
-        c = false
-    end
+    db.execute("INSERT INTO likes (userid,postid) VALUES (?,?)", userid, postid)
+    redirect('/posts')
+end
+
+post('/post/:postid/:userid/unlike') do
+    userid = params[:userid].to_i
+    postid = params[:postid].to_i
+    db = db_called("db/database.db")
+    db.execute("DELETE FROM likes WHERE postid = ? AND userid = ?", postid, userid)
     redirect('/posts')
 end

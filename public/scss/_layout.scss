@@ -130,12 +130,33 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
 
-#mindrelogindiv {
-    margin-top: 6rem;
-    margin-right: 25rem;
-    margin-left: 5rem;
+    #mindrelogindiv {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        // margin-top: 6rem;
+        // margin-right: 25rem;
+        // margin-left: 5rem;
+        height: 70vh;
+        width: 35vw;
+
+        background-color: $div_backcolor;
+        border-radius: $radius;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            // align-items: center;
+            height: 40vh;
+            width: 25vw;
+            * {
+                margin: 0.5rem;
+            }
+        }
+    }
 }
 
 /* Postssidan */
@@ -153,6 +174,26 @@ footer {
     margin-top: 6rem;
     margin-right: 25rem;
     margin-left: 5rem;
+
+    #newPostDiv {
+        position: fixed;
+        bottom: 10vh;
+        right: 10vw;
+
+        #newPostLink {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: $radius;
+        }
+
+        #newPostLink:hover {
+            background-color: rgba(223, 223, 223, 0.2);
+        }
+
+        #newPostLink:active {
+            background-color: rgba(161, 124, 124, 0.2);
+        }
+    }
 }
 
 /* Nypostsidan */
