@@ -52,16 +52,12 @@ get('/posts') do
         FROM likes
             INNER JOIN posts ON posts.id = likes.postid
         WHERE creatorid = ?", id).first.first
-    # likeCountPost = db.execute("SELECT COUNT
-    #     (likes.postid)
-    # FROM likes
-    #     INNER JOIN posts ON posts.id = likes.postid
-    # WHERE creatorid = ?", id).first.first
+    likeCountPost = db.execute("SELECT postid FROM likes")
     likeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
     newArr = likeArr.map do |el|
         el = el.first
     end
-    slim(:"posts/index", locals:{posts:result, username_posts:creatorid, likes:newArr})
+    slim(:"posts/index", locals:{posts:result, username_posts:creatorid, likes:newArr, likeCountPost:likeCountPost})
 end
 
 get('/newpost') do

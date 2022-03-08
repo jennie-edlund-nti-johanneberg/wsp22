@@ -9,9 +9,9 @@ div id="helapostsdiv"
               - if post["creatorid"] == user["creatorid"]
                 h5 By:
                 a href="/showprofile/#{user["creatorid"]}" #{user["username"]}
-            
 
             p = post["text"]
+
             - if post["creatorid"] == session[:id]
               a href="post/#{post['id']}/edit" Update 
               form method="post" action="post/#{post['id']}/delete"
@@ -23,6 +23,16 @@ div id="helapostsdiv"
               - else 
                 form class="likeForm" method="post" action="post/#{post['id']}/#{session[:id]}/like"
                   img class="likeHeart" src="./img/heart_3.png" alt="heart"/
+
+              - i = 0
+              - likeCountPost.each do |like|      
+                - if like.first == post["id"]
+                  - i += 1
+              p = i 
+                
+
+            
+
 
       div id="newPostDiv"
         a id="newPostLink" href="/newpost" New Post 
