@@ -19,6 +19,7 @@ a {
 
 input {
   color: black;
+  font-weight: 600;
 }
 
 img {
@@ -134,7 +135,7 @@ footer {
 
 /* Registreringssidan */
 #helaregistreringsdiv {
-  height: 100vh;
+  height: auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -150,10 +151,63 @@ footer {
           align-items: center;
 }
 
-#mindreregistreringdiv {
-  margin-top: 6rem;
-  margin-right: 25rem;
-  margin-left: 5rem;
+#helaregistreringsdiv #mindreregistreringdiv {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: auto;
+  padding: 5rem;
+  width: 35vw;
+  margin: 10rem;
+  background-color: rgba(199, 199, 199, 0.178);
+  border-radius: 6px;
+}
+
+#helaregistreringsdiv #mindreregistreringdiv form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: auto;
+  width: 25vw;
+}
+
+#helaregistreringsdiv #mindreregistreringdiv form * {
+  margin: 0.5rem;
+}
+
+#helaregistreringsdiv #mindreregistreringdiv form input {
+  padding: 12px 20px;
+  border-radius: 6px;
+}
+
+#helaregistreringsdiv #mindreregistreringdiv form input[type="submit"] {
+  background-color: white;
+}
+
+#helaregistreringsdiv #mindreregistreringdiv form input[type="submit"]:hover {
+  background-color: #b8b8b8;
+  cursor: pointer;
+}
+
+#helaregistreringsdiv #mindreregistreringdiv form input[type="submit"]:active {
+  background-color: #b9a4a4;
 }
 
 /* Loginsidan */
@@ -211,6 +265,24 @@ footer {
 
 #helalogindiv #mindrelogindiv form * {
   margin: 0.5rem;
+}
+
+#helalogindiv #mindrelogindiv form input {
+  padding: 12px 20px;
+  border-radius: 6px;
+}
+
+#helalogindiv #mindrelogindiv form input[type="submit"] {
+  background-color: white;
+}
+
+#helalogindiv #mindrelogindiv form input[type="submit"]:hover {
+  background-color: #b8b8b8;
+  cursor: pointer;
+}
+
+#helalogindiv #mindrelogindiv form input[type="submit"]:active {
+  background-color: #b9a4a4;
 }
 
 /* Postssidan */

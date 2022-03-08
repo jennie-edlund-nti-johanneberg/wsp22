@@ -20,6 +20,7 @@ a {
 
 input {
     color: black;
+    font-weight: 600;
 }
 
 img {
@@ -115,19 +116,60 @@ footer {
 /* Registreringssidan */
 
 #helaregistreringsdiv {
-    height: 100vh;
+    height: auto;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    #mindreregistreringdiv {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        padding: 5rem;
+        width: 35vw;
+        margin: 10rem;
+    
+        background-color: $div_backcolor;
+        border-radius: $radius;
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: auto;
+            width: 25vw;
+    
+            * {
+                margin: 0.5rem;
+            }
+    
+            input {
+                padding: 12px 20px;
+                border-radius: $radius;
+            }
+    
+            input[type="submit"] {
+                background-color: $sumbit_button;
+            }
+    
+            input[type="submit"]:hover {
+                background-color: $sumbit_button_hover;
+                cursor: pointer;
+            }
+    
+            input[type="submit"]:active {
+                background-color: $sumbit_button_active;
+            }
+               
+        }
+    }
 }
 
-#mindreregistreringdiv {
-    margin-top: 6rem;
-    margin-right: 25rem;
-    margin-left: 5rem;
-}
+
 
 /* Loginsidan */
 
@@ -144,9 +186,6 @@ footer {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        // margin-top: 6rem;
-        // margin-right: 25rem;
-        // margin-left: 5rem;
         height: 70vh;
         width: 35vw;
 
@@ -157,12 +196,31 @@ footer {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            // align-items: center;
             height: 40vh;
             width: 25vw;
+
             * {
                 margin: 0.5rem;
             }
+
+            input {
+                padding: 12px 20px;
+                border-radius: $radius;
+            }
+
+            input[type="submit"] {
+                background-color: $sumbit_button;
+            }
+
+            input[type="submit"]:hover {
+                background-color: $sumbit_button_hover;
+                cursor: pointer;
+            }
+
+            input[type="submit"]:active {
+                background-color: $sumbit_button_active;
+            }
+               
         }
     }
 }
@@ -181,7 +239,7 @@ footer {
 #mindrepostsdiv {
     margin-top: 6rem;
     margin-right: 25rem;
-    margin-left: 5rem;
+    margin-left: 5rem; 
 }
 
 #newPostDiv {

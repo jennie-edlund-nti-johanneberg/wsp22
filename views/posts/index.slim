@@ -13,6 +13,14 @@ div id="helapostsdiv"
             p = post["text"]
 
             - if post["creatorid"] == session[:id]
+              img src="./img/lined_heart.png" alt="heart"/
+
+              - i = 0
+              - likeCountPost.each do |like|      
+                - if like.first == post["id"]
+                  - i += 1
+              p = "Your likes: #{i}" 
+
               a href="post/#{post['id']}/edit" Update 
               form method="post" action="post/#{post['id']}/delete"
                 input type="submit" value="Delete"
