@@ -7,7 +7,8 @@ div id="helapostsdiv"
             h3 = post["title"]
             - username_posts.each do |user|    
               - if post["creatorid"] == user["creatorid"]
-                h4 = "By: #{user["username"]}"
+                h5 By:
+                a href="/showprofile/#{user["creatorid"]}" #{user["username"]}
             
 
             p = post["text"]

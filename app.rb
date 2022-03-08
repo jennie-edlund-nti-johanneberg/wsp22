@@ -45,6 +45,7 @@ get('/posts') do
             posts.creatorid
         FROM users
             INNER JOIN posts ON users.id = posts.creatorid")
+    session[:likeCount] = db.execute("SELECT COUNT(userid) FROM likes WHERE userid = 19").first
     db.results_as_hash = false
     likeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
     newArr = likeArr.map do |el|
@@ -64,8 +65,8 @@ get('/post/:id/edit') do
     slim(:"posts/edit", locals:{post:result})
 end
 
-get('/showprofile') do
-    id = session[:id]
+get('/showprofile/:id') do
+    id = params[:id].to_i
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM users WHERE id = ?", id)
     result_2 = db.execute("SELECT
