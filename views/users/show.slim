@@ -1,9 +1,9 @@
 div id="helaprofildiv"
     div id="mindreprofildiv"           
         img src="img/gubbar.jpg" alt="guzz"
-        h2 = "Hi #{session[:user]}!"
         ol
             - userinfo.each do |info|
+                h2 = "This is #{info["username"]}!"
                 li
                     h3 Birthday:
                     p = info["birthday"]
@@ -17,19 +17,20 @@ div id="helaprofildiv"
                     h3 Personality:
                     - personality.each do |element|
                         p = element["personality"] 
-
-        h2 Your posts:
-        ol
-            - posts.each do |post|
                 li
-                    h3 = post["title"]
-                    p = post["text"]
+                    h2 Posts:
+                    ol
+                        - posts.each do |post|
+                            li
+                                h3 = post["title"]
+                                p = post["text"]
+                                - if info["id"] == session[:id]
+                                    a href="post/#{post['id']}/edit" Update
 
-                    a href="post/#{post['id']}/edit" Update
-
-                    / p = "post/#{post['id']}/edit"
-                    form method="post" action="post/#{post['id']}/delete"
-                        input type="submit" value="Delete"
+                                    / p = "post/#{post['id']}/edit"
+                                    form method="post" action="post/#{post['id']}/delete"
+                                        input type="submit" value="Delete"
 
 
-        / a href="/newpost" New Post 
+        div id="newPostDiv"
+            a id="newPostLink" href="/newpost" New Post 

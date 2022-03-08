@@ -237,23 +237,23 @@ footer {
   margin-left: 5rem;
 }
 
-#mindrepostsdiv #newPostDiv {
+#newPostDiv {
   position: fixed;
   bottom: 10vh;
   right: 10vw;
 }
 
-#mindrepostsdiv #newPostDiv #newPostLink {
+#newPostDiv #newPostLink {
   background-color: rgba(199, 199, 199, 0.178);
   padding: 10px;
   border-radius: 6px;
 }
 
-#mindrepostsdiv #newPostDiv #newPostLink:hover {
+#newPostDiv #newPostLink:hover {
   background-color: rgba(163, 163, 163, 0.178);
 }
 
-#mindrepostsdiv #newPostDiv #newPostLink:active {
+#newPostDiv #newPostLink:active {
   background-color: rgba(156, 102, 102, 0.2);
 }
 

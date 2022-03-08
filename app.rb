@@ -38,6 +38,7 @@ get('/logout') do
 end
 
 get('/posts') do
+    id = session[:id]
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM posts")
     creatorid = db.execute("SELECT DISTINCT
@@ -45,8 +46,17 @@ get('/posts') do
             posts.creatorid
         FROM users
             INNER JOIN posts ON users.id = posts.creatorid")
-    session[:likeCount] = db.execute("SELECT COUNT(userid) FROM likes WHERE userid = 19").first
-    db.results_as_hash = false
+        db.results_as_hash = false
+    session[:likeCount] = db.execute("SELECT COUNT
+            (likes.postid)
+        FROM likes
+            INNER JOIN posts ON posts.id = likes.postid
+        WHERE creatorid = ?", id).first.first
+    # likeCountPost = db.execute("SELECT COUNT
+    #     (likes.postid)
+    # FROM likes
+    #     INNER JOIN posts ON posts.id = likes.postid
+    # WHERE creatorid = ?", id).first.first
     likeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
     newArr = likeArr.map do |el|
         el = el.first

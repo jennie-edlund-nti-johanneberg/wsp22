@@ -182,25 +182,25 @@ footer {
     margin-top: 6rem;
     margin-right: 25rem;
     margin-left: 5rem;
+}
 
-    #newPostDiv {
-        position: fixed;
-        bottom: 10vh;
-        right: 10vw;
+#newPostDiv {
+    position: fixed;
+    bottom: 10vh;
+    right: 10vw;
 
-        #newPostLink {
-            background-color: $div_backcolor;
-            padding: 10px;
-            border-radius: $radius;
-        }
+    #newPostLink {
+        background-color: $div_backcolor;
+        padding: 10px;
+        border-radius: $radius;
+    }
 
-        #newPostLink:hover {
-            background-color: $button_hover;
-        }
+    #newPostLink:hover {
+        background-color: $button_hover;
+    }
 
-        #newPostLink:active {
-            background-color: $button_active;
-        }
+    #newPostLink:active {
+        background-color: $button_active;
     }
 }
 

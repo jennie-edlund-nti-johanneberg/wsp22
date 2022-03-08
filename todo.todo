@@ -2,7 +2,7 @@ Lite skit:
     ☐ <input type="text" id="username" name="username" required>
     ☐ <input type="text" id="fname" name="fname" autofocus><br>
     ☐ <form action="/action_page.php" autocomplete="on">
-    ☐ def för db
+    ✔ def för db @done(22-03-08 15:26)
 
 Forms, fixa undantagshantering + tex maxlength och sånt:
     ☐ Register
@@ -39,8 +39,10 @@ Innan arbete:
     ☐ Skisserna ska ändras? I alla fall lägga till Profilskiss.
 
 Vad ska göras:
-    ☐ profillänkar
-    ☐ likes total i nav
+    ✔ profillänkar @done(22-03-08 15:25)
+    ✔ likes total i nav @done(22-03-08 15:25)
+    ☐ Likes per post
     ☐ filter
+
 https://wearenobody.co/
 https://www.profile.site/
