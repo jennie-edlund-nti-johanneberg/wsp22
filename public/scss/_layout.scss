@@ -110,6 +110,10 @@ footer {
 }
 
 #startinfodiv {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    margin-top: 5rem;
     height: 100vh;
 }
 
@@ -234,13 +238,46 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    #mindrepostsdiv {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 7rem;
+    
+        #postList {
+            display: flex;
+            flex-direction: column-reverse;
+
+            li {
+                margin: 3rem;
+                padding: 3rem;
+                background-color: $div_backcolor;
+                border-radius: $radius; 
+    
+                #divInListObject {
+                    display: flex;
+                    flex-direction: column;
+
+                    #divForCreator {
+                        display: flex;
+                        flex-direction: row;
+                    }
+
+                    #divForContent {
+                        display: flex;
+                        flex-direction: column;
+                        margin: 2rem 0 2rem 0;
+                    }
+                }
+            }
+        
+        }
+    }
 }
 
-#mindrepostsdiv {
-    margin-top: 6rem;
-    margin-right: 25rem;
-    margin-left: 5rem; 
-}
+
 
 #newPostDiv {
     position: fixed;
@@ -313,7 +350,7 @@ footer {
     margin-left: 5rem;
 }
 
-/* Profilsidan */
+/* Errorsidan */
 
 #helaErrorDiv {
     height: 100vh;
@@ -324,8 +361,8 @@ footer {
     align-items: center;
 }
 
-#mindreErrorDiv {
-    // margin-top: 6rem;
-    // margin-right: 25rem;
-    // margin-left: 5rem;
-}
+// #mindreErrorDiv {
+//     margin-top: 6rem;
+//     margin-right: 25rem;
+//     margin-left: 5rem;
+// }

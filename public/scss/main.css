@@ -130,6 +130,16 @@ footer {
 }
 
 #startinfodiv {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  margin-top: 5rem;
   height: 100vh;
 }
 
@@ -303,10 +313,69 @@ footer {
           align-items: center;
 }
 
-#mindrepostsdiv {
-  margin-top: 6rem;
-  margin-right: 25rem;
-  margin-left: 5rem;
+#helapostsdiv #mindrepostsdiv {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 7rem;
+}
+
+#helapostsdiv #mindrepostsdiv #postList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li {
+  margin: 3rem;
+  padding: 3rem;
+  background-color: rgba(199, 199, 199, 0.178);
+  border-radius: 6px;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject #divForCreator {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject #divForContent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 2rem 0 2rem 0;
 }
 
 #newPostDiv {
@@ -401,7 +470,7 @@ footer {
   margin-left: 5rem;
 }
 
-/* Profilsidan */
+/* Errorsidan */
 #helaErrorDiv {
   height: 100vh;
   display: -webkit-box;
