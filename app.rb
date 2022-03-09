@@ -96,6 +96,22 @@ end
 #     session[:like]
 # end
 
+get('/error/:id') do
+    errors = {
+        401 => "",
+        404 => "Page not found"
+    }
+
+    errorId = params[:id].to_i
+    errorMsg = errors[errorId]
+
+    slim(:error, locals: {errorId:errorId, errorMsg:errorMsg})
+end
+
+get('/*') do
+    redirect('/error/404')
+end
+
 # POST called
 
 post('/register') do
