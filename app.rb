@@ -209,8 +209,10 @@ end
 post('/post/new') do
     title = params[:title]
     text = params[:text]
+    t = Time.now
+    time = t.strftime("%Y-%m-%d %H:%M")
     db = db_called("db/database.db")
-    db.execute("INSERT INTO posts (title, text, creatorid) VALUES (?,?,?)", title, text, session[:id]) #.first
+    db.execute("INSERT INTO posts (title, text, creatorid, time) VALUES (?,?,?,?)", title, text, session[:id], time) #.first
     # result = db.execute("SELECT id FROM posts WHERE title = ?", title).first
     # db.execute("INSERT INTO user_posts_relation (userid, postid) VALUES (?,?)", session[:id], result["id"]) #.first
     redirect('/posts')

@@ -1,6 +1,7 @@
 div id="helapostsdiv"
     div id="mindrepostsdiv"        
       h2 All posts:
+      p = session[:id] 
       ol id="postList"
         - posts.each do |post|
           li
@@ -10,17 +11,22 @@ div id="helapostsdiv"
                   - if post["creatorid"] == user["creatorid"]
                     h5 By:
                     a href="/showprofile/#{user["creatorid"]}" #{user["username"]}
+                    p = post["time"]
+
               div id="divForContent"
                 h3 = post["title"]
                 p = post["text"]
 
+              / p = post["creatorid"]
+
               - if post["creatorid"] == session[:id]
-                img src="./img/lined_heart.png" alt="heart"/
+                / img src="./img/lined_heart.png" alt="heart"/
 
                 - i = 0
                 - likeCountPost.each do |like|      
                   - if like.first == post["id"]
                     - i += 1
+
                 p = "Your likes: #{i}" 
 
                 a href="post/#{post['id']}/edit" Update 
