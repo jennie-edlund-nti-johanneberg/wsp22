@@ -41,17 +41,20 @@ get('/posts') do
     id = session[:id]
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM posts")
+
     creatorid = db.execute("SELECT DISTINCT
             users.username,
             posts.creatorid
         FROM users
             INNER JOIN posts ON users.id = posts.creatorid")
-        db.results_as_hash = false
+
+    db.results_as_hash = false
     session[:likeCount] = db.execute("SELECT COUNT
             (likes.postid)
         FROM likes
             INNER JOIN posts ON posts.id = likes.postid
         WHERE creatorid = ?", id).first.first
+
     likeCountPost = db.execute("SELECT postid FROM likes")
     likeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
     newArr = likeArr.map do |el|
@@ -75,6 +78,7 @@ get('/showprofile/:id') do
     id = params[:id].to_i
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM users WHERE id = ?", id)
+
     result_2 = db.execute("SELECT
             posts.id,
             posts.title,
@@ -89,12 +93,18 @@ get('/showprofile/:id') do
         FROM category
             INNER JOIN user_personality_relation ON  category.id = user_personality_relation.categoryid
         WHERE user_personality_relation.userid = ?", id)
-    slim(:"users/show", locals:{userinfo:result, posts:result_2, personality:result_3})
-end
 
-# get('/api/data') do
-#     session[:like]
-# end
+    db.results_as_hash = false
+    likeCountTotal = db.execute("SELECT COUNT
+        (likes.postid)
+    FROM likes
+        INNER JOIN posts ON posts.id = likes.postid
+    WHERE creatorid = ?", id).first.first
+
+    p likeCountTotal
+
+    slim(:"users/show", locals:{userinfo:result, posts:result_2, personality:result_3, likesCount:likeCountTotal})
+end
 
 get('/error/:id') do
     errors = {

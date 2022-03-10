@@ -1,7 +1,6 @@
 div id="helapostsdiv"
     div id="mindrepostsdiv"        
       h2 All posts:
-      p = session[:id] 
       ol id="postList"
         - posts.each do |post|
           li
@@ -9,7 +8,7 @@ div id="helapostsdiv"
               div id="divForCreator"
                 - username_posts.each do |user|    
                   - if post["creatorid"] == user["creatorid"]
-                    h5 By:
+                    / h5 By:
                     a href="/showprofile/#{user["creatorid"]}" #{user["username"]}
                     p = post["time"]
 
@@ -17,34 +16,33 @@ div id="helapostsdiv"
                 h3 = post["title"]
                 p = post["text"]
 
-              / p = post["creatorid"]
-
               - if post["creatorid"] == session[:id]
-                / img src="./img/lined_heart.png" alt="heart"/
 
                 - i = 0
                 - likeCountPost.each do |like|      
                   - if like.first == post["id"]
                     - i += 1
+                div id="divForUnderPost"
+                  p = "Your likes: #{i}" 
 
-                p = "Your likes: #{i}" 
+                  a href="post/#{post['id']}/edit" Update 
+                  form method="post" action="post/#{post['id']}/delete"
+                    input type="submit" value="Delete"
 
-                a href="post/#{post['id']}/edit" Update 
-                form method="post" action="post/#{post['id']}/delete"
-                  input type="submit" value="Delete"
-              - else 
-                - if likes.include?(post["id"])
-                  form class="likeForm" method="post" action="post/#{post['id']}/#{session[:id]}/unlike"
-                    img class="likeHeart" src="./img/heart_red.png" alt="heart"/
-                - else 
-                  form class="likeForm" method="post" action="post/#{post['id']}/#{session[:id]}/like"
-                    img class="likeHeart" src="./img/heart_4.png" alt="heart"/
+              - else
+                div id="divForUnderPost" 
+                  - if likes.include?(post["id"])
+                    form class="likeForm" method="post" action="post/#{post['id']}/#{session[:id]}/unlike"
+                      img class="likeHeart" src="./img/heart_red.png" alt="heart"/
+                  - else 
+                    form class="likeForm" method="post" action="post/#{post['id']}/#{session[:id]}/like"
+                      img class="likeHeart" src="./img/heart_4.png" alt="heart"/
 
-                - i = 0
-                - likeCountPost.each do |like|      
-                  - if like.first == post["id"]
-                    - i += 1
-                p = i 
+                  - i = 0
+                  - likeCountPost.each do |like|      
+                    - if like.first == post["id"]
+                      - i += 1
+                  p = i 
                 
 
             

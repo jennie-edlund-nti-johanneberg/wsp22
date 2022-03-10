@@ -5,18 +5,26 @@ div id="helaprofildiv"
             - userinfo.each do |info|
                 h2 = "This is #{info["username"]}!"
                 li
+                    h3 Total likes:
+                    p = likesCount
+
+                li
                     h3 Birthday:
                     p = info["birthday"]
 
+                li                
                     h3 Phonenumber:
                     p = info["phonenumber"]
-
+                
+                li
                     h3 Email:
                     p = info["email"]
 
+                li
                     h3 Personality:
                     - personality.each do |element|
                         p = element["personality"] 
+
                 li
                     h2 Posts:
                     ol
@@ -26,8 +34,6 @@ div id="helaprofildiv"
                                 p = post["text"]
                                 - if info["id"] == session[:id]
                                     a href="post/#{post['id']}/edit" Update
-
-                                    / p = "post/#{post['id']}/edit"
                                     form method="post" action="post/#{post['id']}/delete"
                                         input type="submit" value="Delete"
 
