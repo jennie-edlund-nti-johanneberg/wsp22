@@ -42,19 +42,22 @@ Vad ska göras:
     ✔ profillänkar @done(22-03-08 15:25)
     ✔ likes total i nav @done(22-03-08 15:25)
     ✔ Likes per post @done(22-03-08 22:08)
-    ☐ filter
+    ✔ filter @done(22-03-15 17:19)
     ☐ inte scrollas ner?
     ☐ kunna redigera sin profil
     ✔ länk på update på posts är lång? @done(22-03-10 20:54)
     ✔ tid när inlägget läggs upp @done(22-03-10 20:09)
     ✔ ta bort test.rb @done(22-03-15 13:23)
     ✔ likes på profil @done(22-03-15 13:23)
+    ☐ rad 56 app.rb ska else va all posts?
     ☐ Admin som kan ta bort och redigera alla posts, användare 1 har admin och ska kunna se alla likes också
     ☐ Ta bort likes relationer och annat när posts tas bort
     ☐ Kolla om användaren värkligen äger posten för delete eller redigering eller redigering för profil
     ☐ delete popup
     ☐ Fixa modul.rb
     ☐ fixa projektrapporten
+    ☐ valedering
+    ☐ kolla presentationer
 
     
 https://css-tricks.com/the-checkbox-hack/

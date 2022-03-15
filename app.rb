@@ -128,9 +128,14 @@ get('/showprofile/:id') do
         INNER JOIN posts ON posts.id = likes.postid
     WHERE creatorid = ?", id).first.first
 
-    p likeCountTotal
-
     slim(:"users/show", locals:{userinfo:result, posts:result_2, personality:result_3, likesCount:likeCountTotal})
+end
+
+get('/user/:id/edit') do
+    id = params[:id].to_i
+    db = db_called("db/database.db")
+    result = db.execute("SELECT * FROM users WHERE id = ?", id).first
+    slim(:"users/edit", locals:{user:result})
 end
 
 get('/error/:id') do

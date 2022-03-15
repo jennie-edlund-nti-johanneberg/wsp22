@@ -23,7 +23,11 @@ div id="helaprofildiv"
                 li
                     h3 Personality:
                     - personality.each do |element|
-                        p = element["personality"] 
+                        p = element["personality"]
+
+                - if info["id"] == session[:id]  
+                    li
+                        a id="editProfileLink" href="/user/#{session[:id]}/edit" Edit profile 
 
                 li
                     h2 Posts:

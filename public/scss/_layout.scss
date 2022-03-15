@@ -434,6 +434,23 @@ footer {
     margin-left: 5rem;
 }
 
+/* EditProfilsidan */
+
+#editProfile {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#smallereditProfile {
+    margin-top: 6rem;
+    margin-right: 25rem;
+    margin-left: 5rem;
+}
+
 /* Errorsidan */
 
 #helaErrorDiv {

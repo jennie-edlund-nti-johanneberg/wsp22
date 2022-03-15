@@ -19,7 +19,6 @@ html lang="en"
                 - if session[:auth]
                     li
                         a href="/showprofile/#{session[:id]}" #{session[:user]}
-                        / img src="img/gubbar.jpg" alt="gubb"
                     li
                         p = "Likes: #{session[:likeCount]}" 
                     li
