@@ -1,6 +1,15 @@
 div id="helapostsdiv"
     div id="mindrepostsdiv"        
-      h2 All posts:
+      / h2 All posts:
+      div class="dropdown"
+        button class="dropBtn" #{session[:filter]}
+        div class="dropdownContent"
+          a href="/posts/all" All Posts
+          a href="/posts/1" Woods
+          a href="/posts/2" Sea
+          a href="/posts/3" Mountains
+          a href="/posts/4" Lakes
+
       ol id="postList"
         - posts.each do |post|
           li

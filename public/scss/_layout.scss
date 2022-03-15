@@ -245,7 +245,55 @@ footer {
         justify-content: center;
         align-items: center;
         margin-top: 7rem;
-    
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+
+
+            .dropBtn {
+                background-color: $div_backcolor;
+                border-radius: $radius;
+                padding: 1.5rem;
+                font-size: 1.7em;
+                font-weight: 650;
+                width: 20vw;
+                border: none;
+            }
+
+            .dropdownContent {
+                display: none;
+                position: absolute;
+                background-color: $dropdown_backcolor;
+                border-radius: $radius;
+                width: 20vw;
+                min-width: 5vw;
+                box-shadow: $box_shadow;
+                z-index: 1;
+
+                a {
+                    padding: 1em 2em;
+                    text-decoration: none;
+                    display: block;
+                }
+
+                a:hover {
+                    background-color: $dropdown_hover;
+                }
+            }
+        }
+
+        .dropdown:hover {
+            .dropdownContent {
+                display: block;
+            }
+
+            .dropBtn {
+                background-color: $button_hover;
+            }
+        }
+
+
         #postList {
             display: flex;
             flex-direction: column-reverse;

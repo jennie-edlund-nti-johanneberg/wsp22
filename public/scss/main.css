@@ -330,6 +330,51 @@ footer {
   margin-top: 7rem;
 }
 
+#helapostsdiv #mindrepostsdiv .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+#helapostsdiv #mindrepostsdiv .dropdown .dropBtn {
+  background-color: rgba(199, 199, 199, 0.178);
+  border-radius: 6px;
+  padding: 1.5rem;
+  font-size: 1.7em;
+  font-weight: 650;
+  width: 20vw;
+  border: none;
+}
+
+#helapostsdiv #mindrepostsdiv .dropdown .dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: rgba(65, 65, 65, 0.9);
+  border-radius: 6px;
+  width: 20vw;
+  min-width: 5vw;
+  -webkit-box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.719);
+          box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.719);
+  z-index: 1;
+}
+
+#helapostsdiv #mindrepostsdiv .dropdown .dropdownContent a {
+  padding: 1em 2em;
+  text-decoration: none;
+  display: block;
+}
+
+#helapostsdiv #mindrepostsdiv .dropdown .dropdownContent a:hover {
+  background-color: rgba(32, 32, 32, 0.9);
+}
+
+#helapostsdiv #mindrepostsdiv .dropdown:hover .dropdownContent {
+  display: block;
+}
+
+#helapostsdiv #mindrepostsdiv .dropdown:hover .dropBtn {
+  background-color: rgba(163, 163, 163, 0.178);
+}
+
 #helapostsdiv #mindrepostsdiv #postList {
   display: -webkit-box;
   display: -ms-flexbox;

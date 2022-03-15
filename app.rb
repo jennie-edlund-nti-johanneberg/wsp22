@@ -37,16 +37,37 @@ get('/logout') do
     slim(:start)
 end
 
-get('/posts') do
+get('/posts/:filter') do
     id = session[:id]
+    filter = params[:filter]
     db = db_called("db/database.db")
-    result = db.execute("SELECT * FROM posts")
+    if filter == "all"
+        session[:filter] = "All Posts"
+        result = db.execute("SELECT * FROM posts")
+    else
+        result = db.execute("SELECT * FROM posts WHERE creatorid IN (
+            SELECT DISTINCT
+                user_personality_relation.userid
+            FROM user_personality_relation
+                INNER JOIN category ON user_personality_relation.categoryid = ?)", filter)
+
+        if filter == "1"
+            session[:filter] = "Woods"
+        elsif filter == "2"
+            session[:filter] = "Sea"
+        elsif filter == "2"
+            session[:filter] = "Mountains"
+        else
+            session[:filter] = "Lakes"
+        end
+        
+    end
 
     creatorid = db.execute("SELECT DISTINCT
-            users.username,
-            posts.creatorid
-        FROM users
-            INNER JOIN posts ON users.id = posts.creatorid")
+        users.username,
+        posts.creatorid
+    FROM users
+        INNER JOIN posts ON users.id = posts.creatorid")
 
     db.results_as_hash = false
     session[:likeCount] = db.execute("SELECT COUNT
@@ -60,6 +81,7 @@ get('/posts') do
     newArr = likeArr.map do |el|
         el = el.first
     end
+    
     slim(:"posts/index", locals:{posts:result, username_posts:creatorid, likes:newArr, likeCountPost:likeCountPost})
 end
 
@@ -171,7 +193,7 @@ post('/register') do
 
             session[:auth] = true
             session[:user] = username
-            redirect('/posts')
+            redirect('/posts/all')
         else
             session[:registerError] = true
             redirect('/showregister')
@@ -200,7 +222,7 @@ post('/login') do
             session[:id] = id
             session[:auth] = true
             session[:user] = username
-            redirect('/posts')
+            redirect('/posts/all')
             
         else
             #WRONG PASSWORD
@@ -225,7 +247,7 @@ post('/post/new') do
     db.execute("INSERT INTO posts (title, text, creatorid, time) VALUES (?,?,?,?)", title, text, session[:id], time) #.first
     # result = db.execute("SELECT id FROM posts WHERE title = ?", title).first
     # db.execute("INSERT INTO user_posts_relation (userid, postid) VALUES (?,?)", session[:id], result["id"]) #.first
-    redirect('/posts')
+    redirect('/posts/all')
 end
 
 post('/post/:id/update') do
@@ -234,14 +256,14 @@ post('/post/:id/update') do
     text = params[:text]
     db = db_called("db/database.db")
     db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, id)
-    redirect('/posts')
+    redirect('/posts/all')
 end
 
 post('/post/:id/delete') do
     id = params[:id].to_i
     db = db_called("db/database.db")
     db.execute("DELETE FROM posts WHERE id = ?", id)
-    redirect('/posts')
+    redirect('/posts/all')
 end
 
 post('/post/:postid/:userid/like') do
@@ -249,7 +271,7 @@ post('/post/:postid/:userid/like') do
     postid = params[:postid].to_i
     db = db_called("db/database.db")
     db.execute("INSERT INTO likes (userid,postid) VALUES (?,?)", userid, postid)
-    redirect('/posts')
+    redirect('/posts/all')
 end
 
 post('/post/:postid/:userid/unlike') do
@@ -257,5 +279,5 @@ post('/post/:postid/:userid/unlike') do
     postid = params[:postid].to_i
     db = db_called("db/database.db")
     db.execute("DELETE FROM likes WHERE postid = ? AND userid = ?", postid, userid)
-    redirect('/posts')
+    redirect('/posts/all')
 end
