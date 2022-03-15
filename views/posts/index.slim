@@ -5,10 +5,10 @@ div id="helapostsdiv"
         button class="dropBtn" #{session[:filter]}
         div class="dropdownContent"
           a href="/posts/all" All Posts
-          a href="/posts/1" Woods
-          a href="/posts/2" Sea
-          a href="/posts/3" Mountains
-          a href="/posts/4" Lakes
+          a href="/posts/woods" Woods
+          a href="/posts/sea" Sea
+          a href="/posts/mountains" Mountains
+          a href="/posts/lakes" Lakes
 
       ol id="postList"
         - posts.each do |post|

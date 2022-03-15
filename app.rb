@@ -40,7 +40,23 @@ end
 get('/posts/:filter') do
     id = session[:id]
     filter = params[:filter]
+
+    if filter == "woods"
+        session[:filter] = "Woods"
+        filterid = 1
+    elsif filter == "sea"
+        session[:filter] = "Sea"
+        filterid = 2
+    elsif filter == "mountains"
+        session[:filter] = "Mountains"
+        filterid = 3
+    else
+        session[:filter] = "Lakes"
+        filterid = 4
+    end
+
     db = db_called("db/database.db")
+
     if filter == "all"
         session[:filter] = "All Posts"
         result = db.execute("SELECT * FROM posts")
@@ -49,18 +65,7 @@ get('/posts/:filter') do
             SELECT DISTINCT
                 user_personality_relation.userid
             FROM user_personality_relation
-                INNER JOIN category ON user_personality_relation.categoryid = ?)", filter)
-
-        if filter == "1"
-            session[:filter] = "Woods"
-        elsif filter == "2"
-            session[:filter] = "Sea"
-        elsif filter == "2"
-            session[:filter] = "Mountains"
-        else
-            session[:filter] = "Lakes"
-        end
-        
+                INNER JOIN category ON user_personality_relation.categoryid = ?)", filterid)
     end
 
     creatorid = db.execute("SELECT DISTINCT
@@ -271,7 +276,18 @@ post('/post/:postid/:userid/like') do
     postid = params[:postid].to_i
     db = db_called("db/database.db")
     db.execute("INSERT INTO likes (userid,postid) VALUES (?,?)", userid, postid)
-    redirect('/posts/all')
+
+    if session[:filter] == "All Posts"
+        redirect('/posts/all')
+    elsif session[:filter] == "Woods"
+        redirect('/posts/woods')
+    elsif session[:filter] = "Sea"
+        redirect('/posts/sea')
+    elsif session[:filter] = "Mountains"
+        redirect('/posts/mountain')
+    else
+        redirect('/posts/lakes')
+    end
 end
 
 post('/post/:postid/:userid/unlike') do
@@ -279,5 +295,16 @@ post('/post/:postid/:userid/unlike') do
     postid = params[:postid].to_i
     db = db_called("db/database.db")
     db.execute("DELETE FROM likes WHERE postid = ? AND userid = ?", postid, userid)
-    redirect('/posts/all')
+
+    if session[:filter] == "All Posts"
+        redirect('/posts/all')
+    elsif session[:filter] == "Woods"
+        redirect('/posts/woods')
+    elsif session[:filter] = "Sea"
+        redirect('/posts/sea')
+    elsif session[:filter] = "Mountains"
+        redirect('/posts/mountain')
+    else
+        redirect('/posts/lakes')
+    end
 end
