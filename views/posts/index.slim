@@ -38,6 +38,21 @@ div id="helapostsdiv"
                   form method="post" action="post/#{post['id']}/#{session[:id]}/delete"
                     input type="submit" value="Delete"
 
+              - elsif session[:id] == 1
+
+                - i = 0
+                - likeCountPost.each do |like|      
+                  - if like.first == post["id"]
+                    - i += 1
+                div id="divForUnderPost"
+                  p = "Likes on this post: #{i}" 
+
+                  / - username_posts.each do |user|    
+
+                  a href="post/#{post['id']}/#{session[:id]}/edit" Update 
+                  form method="post" action="post/#{post['id']}/#{session[:id]}/delete"
+                    input type="submit" value="Delete"
+
               - else
                 div id="divForUnderPost" 
                   - if likes.include?(post["id"])

@@ -1,45 +1,54 @@
 div id="helaprofildiv"
     div id="mindreprofildiv"           
-        img src="img/gubbar.jpg" alt="guzz"
         ol
             - userinfo.each do |info|
-                h2 = "This is #{info["username"]}!"
-                li
-                    h3 Total likes:
-                    p = likesCount 
-
-                li
-                    h3 Email:
-                    p = info["email"]                
-
-                li                
-                    h3 Phonenumber:
-                    p = info["phonenumber"]
-                
-                li
-                    h3 Birthday:
-                    p = info["birthday"]
-
-                li
-                    h3 Personality:
-                    - personality.each do |element|
-                        p = element["personality"]
-
-                - if info["id"] == session[:id]  
+                - if session[:id] == 1
                     li
-                        a id="editProfileLink" href="/user/#{session[:id]}/edit" Edit profile 
+                        img src="img/gubbar.jpg" alt="guzz"
 
-                li
-                    h2 Posts:
-                    ol
-                        - posts.each do |post|
-                            li
-                                h3 = post["title"]
-                                p = post["text"]
-                                - if info["id"] == session[:id]
-                                    a href="post/#{post['id']}/edit" Update
-                                    form method="post" action="post/#{post['id']}/delete"
-                                        input type="submit" value="Delete"
+                    li    
+                        h2 = "Hi ADMIN, hows it going my dude?"
+                        p = "maybe dont post anything, thats a litle weird for admin to do, otherwise have a nice day"
+                        
+                - else 
+                    h2 = "This is #{info["username"]}!"
+
+                    li
+                        h3 Total likes:
+                        p = likesCount 
+
+                    li
+                        h3 Email:
+                        p = info["email"]                
+
+                    li                
+                        h3 Phonenumber:
+                        p = info["phonenumber"]
+                    
+                    li
+                        h3 Birthday:
+                        p = info["birthday"]
+
+                    li
+                        h3 Personality:
+                        - personality.each do |element|
+                            p = element["personality"]
+
+                    - if info["id"] == session[:id]  
+                        li
+                            a id="editProfileLink" href="/user/#{session[:id]}/edit" Edit profile 
+
+                    li
+                        h2 Posts:
+                        ol
+                            - posts.each do |post|
+                                li
+                                    h3 = post["title"]
+                                    p = post["text"]
+                                    - if info["id"] == session[:id]
+                                        a href="post/#{post['id']}/edit" Update
+                                        form method="post" action="post/#{post['id']}/delete"
+                                            input type="submit" value="Delete"
 
 
         div id="newPostDiv"

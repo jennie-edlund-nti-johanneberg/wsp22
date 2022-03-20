@@ -16,9 +16,9 @@ Validering:
     ☐ Kolla presentation och cheat-sheet
 
 Koppla:
-    ☐ Post till användare
-    ☐ Användare till personlighet
-    ☐ Användare till Likes vise versa
+    ✔ Post till användare @done(22-03-20 22:07)
+    ✔ Användare till personlighet @done(22-03-20 22:07)
+    ✔ Användare till Likes vise versa @done(22-03-20 22:07)
     ☐ Kopplas till login från logout eller?
     ☐ Kunna ladda upp fil som bakgrundsbild?
     ✔ Koppla javascrip @done(22-03-01 13:38)
@@ -49,10 +49,11 @@ Vad ska göras:
     ✔ tid när inlägget läggs upp @done(22-03-10 20:09)
     ✔ ta bort test.rb @done(22-03-15 13:23)
     ✔ likes på profil @done(22-03-15 13:23)
-    ☐ rad 56 app.rb ska else va all posts? Gilla och inte gilla
-    ☐ Admin som kan ta bort och redigera alla posts, användare 1 har admin och ska kunna se alla likes också
+    ✔ rad 56 app.rb ska else va all posts? Gilla och inte gilla @done(22-03-20 22:06)
+    ✔ Admin som kan ta bort och redigera alla posts, användare 1 har admin och ska kunna se alla likes också @done(22-03-20 22:28)
     ✔ Ta bort likes relationer och annat när posts tas bort @done(22-03-20 19:14)
-    ☐ Kolla om användaren värkligen äger posten för delete eller redigering eller redigering för profil
+    ✔ Kolla om användaren värkligen äger posten för delete eller redigering eller redigering för profil @done(22-03-20 22:06)
+    ☐ Fråga emil om admin
     ☐ delete popup
     ☐ Fixa modul.rb
     ☐ fixa projektrapporten
