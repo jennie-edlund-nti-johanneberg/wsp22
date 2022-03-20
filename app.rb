@@ -91,15 +91,24 @@ get('/posts/:filter') do
 end
 
 get('/newpost/:id') do
-    if 
-    slim(:"posts/new")
+    id = params[:id].to_i
+    if session[:id] == id
+        slim(:"posts/new")
+    else
+        redirect('/error/401')
+    end
 end
 
-get('/post/:id/edit') do
-    id = params[:id].to_i
-    db = db_called("db/database.db")
-    result = db.execute("SELECT * FROM posts WHERE id = ?", id).first
-    slim(:"posts/edit", locals:{post:result})
+get('/post/:postid/:userid/edit') do
+    userid = params[:userid].to_i
+    if session[:id] == userid
+        postid = params[:postid].to_i
+        db = db_called("db/database.db")
+        result = db.execute("SELECT * FROM posts WHERE id = ?", postid).first
+        slim(:"posts/edit", locals:{post:result})
+    else
+        redirect('/error/401')
+    end
 end
 
 get('/showprofile/:id') do
@@ -134,15 +143,19 @@ end
 
 get('/user/:id/edit') do
     id = params[:id].to_i
-    db = db_called("db/database.db")
-    result = db.execute("SELECT * FROM users WHERE id = ?", id).first
-    checked = db.execute("SELECT categoryid FROM user_personality_relation WHERE userid = ?", id)
-    slim(:"users/edit", locals:{user:result, checked:checked})
+    if session[:id] == id
+        db = db_called("db/database.db")
+        result = db.execute("SELECT * FROM users WHERE id = ?", id).first
+        checked = db.execute("SELECT categoryid FROM user_personality_relation WHERE userid = ?", id)
+        slim(:"users/edit", locals:{user:result, checked:checked})
+    else
+        redirect('/error/401')
+    end
 end
 
 get('/error/:id') do
     errors = {
-        401 => "",
+        401 => "Not authorized",
         404 => "Page not found"
     }
 
@@ -314,48 +327,63 @@ post('/post/:id/update') do
     redirect('/posts/all')
 end
 
-post('/post/:id/delete') do
-    id = params[:id].to_i
-    db = db_called("db/database.db")
-    db.execute("DELETE FROM posts WHERE id = ?", id)
-    db.execute("DELETE FROM likes WHERE userid = ?", id)
-    redirect('/posts/all')
+post('/post/:postid/:userid/delete') do
+    userid = params[:userid].to_i
+    if userid == session[:id]
+        postid = params[:postid].to_i
+        db = db_called("db/database.db")
+        db.execute("DELETE FROM posts WHERE id = ?", postid)
+        db.execute("DELETE FROM likes WHERE postid = ?", postid)
+        redirect('/posts/all')
+    else
+        redirect('/error/401')
+    end
 end
 
 post('/post/:postid/:userid/like') do
     userid = params[:userid].to_i
-    postid = params[:postid].to_i
-    db = db_called("db/database.db")
-    db.execute("INSERT INTO likes (userid,postid) VALUES (?,?)", userid, postid)
+    if userid == session[:id]
+        postid = params[:postid].to_i
+        db = db_called("db/database.db")
+        db.execute("INSERT INTO likes (userid,postid) VALUES (?,?)", userid, postid)
 
-    if session[:filter] == "All Posts"
-        redirect('/posts/all')
-    elsif session[:filter] == "Woods"
-        redirect('/posts/woods')
-    elsif session[:filter] = "Sea"
-        redirect('/posts/sea')
-    elsif session[:filter] = "Mountains"
-        redirect('/posts/mountain')
+        if session[:filter] == "Lakes"
+            redirect('/posts/lakes')
+        elsif session[:filter] == "Woods"
+            redirect('/posts/woods')
+        elsif session[:filter] == "Sea"
+            redirect('/posts/sea')
+        elsif session[:filter] == "Mountains"
+            redirect('/posts/mountains')
+        else
+            redirect('/posts/all')
+        end
+        
     else
-        redirect('/posts/lakes')
+        redirect('/error/401')
     end
 end
 
 post('/post/:postid/:userid/unlike') do
     userid = params[:userid].to_i
-    postid = params[:postid].to_i
-    db = db_called("db/database.db")
-    db.execute("DELETE FROM likes WHERE postid = ? AND userid = ?", postid, userid)
+    if userid == session[:id]
+        postid = params[:postid].to_i
+        db = db_called("db/database.db")
+        db.execute("DELETE FROM likes WHERE postid = ? AND userid = ?", postid, userid)
 
-    if session[:filter] == "All Posts"
-        redirect('/posts/all')
-    elsif session[:filter] == "Woods"
-        redirect('/posts/woods')
-    elsif session[:filter] = "Sea"
-        redirect('/posts/sea')
-    elsif session[:filter] = "Mountains"
-        redirect('/posts/mountain')
+        if session[:filter] == "Lakes"
+            redirect('/posts/lakes')
+        elsif session[:filter] == "Woods"
+            redirect('/posts/woods')
+        elsif session[:filter] == "Sea"
+            redirect('/posts/sea')
+        elsif session[:filter] == "Mountains"
+            redirect('/posts/mountains')
+        else
+            redirect('/posts/all')
+        end
+        
     else
-        redirect('/posts/lakes')
+        redirect('/error/401')
     end
 end

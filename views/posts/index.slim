@@ -34,8 +34,8 @@ div id="helapostsdiv"
                 div id="divForUnderPost"
                   p = "Your likes: #{i}" 
 
-                  a href="post/#{post['id']}/edit" Update 
-                  form method="post" action="post/#{post['id']}/delete"
+                  a href="post/#{post['id']}/#{session[:id]}/edit" Update 
+                  form method="post" action="post/#{post['id']}/#{session[:id]}/delete"
                     input type="submit" value="Delete"
 
               - else
@@ -58,4 +58,4 @@ div id="helapostsdiv"
 
 
       div id="newPostDiv"
-        a id="newPostLink" href="/newpost" New Post 
+        a id="newPostLink" href="/newpost/#{session[:id]}" New Post 
