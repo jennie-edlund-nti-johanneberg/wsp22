@@ -135,7 +135,8 @@ get('/user/:id/edit') do
     id = params[:id].to_i
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM users WHERE id = ?", id).first
-    slim(:"users/edit", locals:{user:result})
+    checked = db.execute("SELECT categoryid FROM user_personality_relation WHERE userid = ?", id)
+    slim(:"users/edit", locals:{user:result, checked:checked})
 end
 
 get('/error/:id') do
@@ -246,6 +247,49 @@ post('/login') do
         redirect('/showlogin')
         
     end
+end
+
+post('/user/:id/update') do
+    id = params[:id].to_i
+    email = params[:email]
+    phonenumber = params[:phonenumber]
+    birthday = params[:birthday]
+
+    db = db_called("db/database.db")
+    db.execute("UPDATE users SET email = ?, phonenumber = ?, birthday = ? WHERE id = ?", email, phonenumber, birthday, id)
+    db.execute("DELETE FROM user_personality_relation WHERE userid = ?", id)
+
+    begin
+        woods = params[:woods]
+        if woods == "woods"
+            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
+        end  
+    end
+
+    begin
+        sea = params[:sea]
+        if sea == "sea"
+            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
+        end
+    end
+
+    begin
+        mountains = params[:mountains]
+        if mountains == "mountains"
+            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
+        end
+    end
+
+    begin
+        lakes = params[:lakes]
+        if lakes == "lakes"
+            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
+        end 
+    end
+
+    route = "/showprofile/#{id}"
+
+    redirect(route)
 end
 
 post('/post/new') do

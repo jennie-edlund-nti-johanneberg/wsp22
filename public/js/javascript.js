@@ -10,4 +10,3 @@ hearts.forEach((heart, index) => {
 })
 
 
-
