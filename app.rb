@@ -90,7 +90,8 @@ get('/posts/:filter') do
     slim(:"posts/index", locals:{posts:result, username_posts:creatorid, likes:newArr, likeCountPost:likeCountPost})
 end
 
-get('/newpost') do
+get('/newpost/:id') do
+    if 
     slim(:"posts/new")
 end
 
@@ -317,6 +318,7 @@ post('/post/:id/delete') do
     id = params[:id].to_i
     db = db_called("db/database.db")
     db.execute("DELETE FROM posts WHERE id = ?", id)
+    db.execute("DELETE FROM likes WHERE userid = ?", id)
     redirect('/posts/all')
 end
 
