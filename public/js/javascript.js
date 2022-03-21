@@ -33,4 +33,3 @@ deleteBtn.forEach((eachdelete, index) => {
         })
     })
 })
-

@@ -339,10 +339,54 @@ footer {
                         }
                     }
 
-                    #divForUnderPost {
+                    .divForUnderPost {
                         display: flex;
                         flex-direction: row;
-                        justify-content: flex-start;
+                        justify-content: space-between;
+
+                        div {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-start;
+
+                            a {
+                                display: block;
+                                color: $background_color;
+                                padding: 0.5em 2em;
+                                // margin-left: 30vw;
+                                background-color: $sumbit_button;
+                                border-radius: $radius;
+                                font-size: 1em;
+                            }
+
+                            a:hover {
+                                cursor: pointer;
+                                background-color: $sumbit_button_hover;
+                            }
+
+                            
+                            a:active {
+                                background-color: $sumbit_button_active;
+                            }
+
+                            .deleteButton {
+                                padding: 0.5em 2em;
+                                background-color: $confirmDeleteBackground;
+                                border-style: none;
+                                border-radius: $radius;
+                                font-size: 1em;
+                                margin: 0;
+                            }
+
+                            .deleteButton:hover {
+                                cursor: pointer;
+                                background-color: $confirmDeletehover;
+                            }
+                            
+                            .deleteButton:active {
+                                background-color: $sumbit_button_active;
+                            }
+                        }
 
                         #modalDiv {
                             display: none; 
@@ -366,7 +410,7 @@ footer {
                                         align-items: center;
                                         flex-direction: column;
 
-                                        background-color: $deletePopUp;
+                                        background-color: $background_color;
                                         margin: 0;
                                         width: 65%;
                                         padding: 3rem;
@@ -430,6 +474,10 @@ footer {
                             }
                         }
                     }
+
+                    #underPostLike {
+                        justify-content: flex-start;
+                    }    
                 }
             }
         

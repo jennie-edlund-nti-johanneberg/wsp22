@@ -31,11 +31,12 @@ div id="helapostsdiv"
                 - likeCountPost.each do |like|      
                   - if like.first == post["id"]
                     - i += 1
-                div id="divForUnderPost"
+                div class="divForUnderPost"
                   p = "Your likes: #{i}" 
 
-                  a href="post/#{post['id']}/#{session[:id]}/edit" Update 
-                  button class="deleteButton" type="button" Delete
+                  div
+                    a href="post/#{post['id']}/#{session[:id]}/edit" Update 
+                    button class="deleteButton" type="button" Delete
 
                   div id="modalDiv" class="modal"
                         div class="container"
@@ -54,27 +55,26 @@ div id="helapostsdiv"
                 - likeCountPost.each do |like|      
                   - if like.first == post["id"]
                     - i += 1
-                div id="divForUnderPost"
+                div class="divForUnderPost"
                   p = "Likes on this post: #{i}" 
-
-                  / - username_posts.each do |user|    
-
-                  a href="post/#{post['id']}/#{session[:id]}/edit" Update 
-                  button class="deleteButton" type="button" Delete
+                    
+                  div
+                    a href="post/#{post['id']}/#{session[:id]}/edit" Update 
+                    button class="deleteButton" type="button" Delete
 
                   div id="modalDiv" class="modal"
                         div class="container"
                           div id="deleteBack"
                             form class="modalContent" method="post" action="post/#{post['id']}/#{session[:id]}/delete"
                             h1 Delete Post
-                            p Are you sure you (litle admin shit) want to delete this post?
+                            p Are you sure you (litle shit) want to delete your post?
                           
                             div class="deleteChoice"
                               button type="button" class="cancelBtn" Cancel
                               button type="button" class="confirmDelete" Delete
 
               - else
-                div id="divForUnderPost" 
+                div class="divForUnderPost" id="underPostLike"
                   - if likes.include?(post["id"])
                     form class="likeForm" method="post" action="post/#{post['id']}/#{session[:id]}/unlike"
                       img class="likeHeart" src="./img/heart_red.png" alt="heart"/
