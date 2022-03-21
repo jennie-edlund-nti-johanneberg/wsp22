@@ -344,6 +344,80 @@ footer {
                         flex-direction: row;
                         justify-content: flex-start;
 
+                        #modalDiv {
+                            display: none; 
+
+                            .container {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                position: fixed; 
+                                z-index: 1;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                                height: 100%;
+                                overflow: auto;
+                                background-color: $div_backcolor;
+                                
+                                #deleteBack {
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        flex-direction: column;
+
+                                        background-color: $deletePopUp;
+                                        margin: 0;
+                                        width: 65%;
+                                        padding: 3rem;
+                                        border-radius: $radius;
+
+                                        * {
+                                            margin: 0;
+                                        }
+
+                                        h1 {
+                                            padding: 0.4em;
+                                            margin-bottom: 1rem;
+                                        }
+
+                                        p {
+                                            margin-bottom: 2rem;
+                                        }
+
+                                        .deleteChoice {
+                                            button {
+                                                width: 20vw;
+                                                border-style: none;
+                                                padding: 0.8em;
+                                                margin: 1rem;
+                                                border-radius: $radius;
+                                            }
+
+                                            .cancelBtn {
+                                                background-color: $cancelBtnBackground;
+                                            }
+
+                                            .cancelBtn:hover {
+                                                background-color: $cancelBtnHover;
+                                                cursor: pointer;
+                                            }
+
+                                            .confirmDelete {
+                                                background-color: $confirmDeleteBackground;
+                                            }
+
+                                            .confirmDelete:hover {
+                                                background-color: $confirmDeletehover;
+                                                cursor: pointer;
+                                            }
+                                        }
+                                }
+
+                            }
+
+                        }
+
                         * {
                             margin: 0 2em 0 0;
                         }

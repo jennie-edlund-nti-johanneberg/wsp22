@@ -53,8 +53,11 @@ Vad ska göras:
     ✔ Admin som kan ta bort och redigera alla posts, användare 1 har admin och ska kunna se alla likes också @done(22-03-20 22:28)
     ✔ Ta bort likes relationer och annat när posts tas bort @done(22-03-20 19:14)
     ✔ Kolla om användaren värkligen äger posten för delete eller redigering eller redigering för profil @done(22-03-20 22:06)
-    ☐ Fråga emil om admin
-    ☐ delete popup
+    ☐ Fråga Emil om admin
+    ✔ delete popup @done(22-03-21 15:49)
+    ☐ unik problem fixa (för titel..)
+    ✔ fixa för admin också @done(22-03-21 15:54)
+    ☐ fixa css för allt
     ☐ Fixa modul.rb
     ☐ fixa projektrapporten
     ☐ valedering
