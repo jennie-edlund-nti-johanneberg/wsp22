@@ -1,11 +1,15 @@
 /Redigera post
 div id="helaupdatediv"
-    div id="mindreupdatediv"              
+    div id="mindreupdatediv"
+        h2 Edit post
+
         form method="post" action="/post/#{post['id']}/update"
             label for="title" Title: 
             input type="text" name="title" value="#{post['title']}"
             br/
+
             label for="text" Text: 
             input type="text" name="text" value="#{post['text']}"
             br/
+            
             input type="submit" value="Update"

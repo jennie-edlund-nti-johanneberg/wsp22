@@ -207,6 +207,19 @@ footer {
   border-radius: 6px;
 }
 
+#helaregistreringsdiv #mindreregistreringdiv form input[type="checkbox"] {
+  background-color: white;
+  cursor: pointer;
+}
+
+#helaregistreringsdiv #mindreregistreringdiv form input[type="checkbox"]:hover {
+  background-color: #b8b8b8;
+}
+
+#helaregistreringsdiv #mindreregistreringdiv form input[type="checkbox"]:active {
+  background-color: #b9a4a4;
+}
+
 #helaregistreringsdiv #mindreregistreringdiv form input[type="submit"] {
   background-color: white;
 }
@@ -648,9 +661,64 @@ footer {
 }
 
 #mindrenewpostdiv {
-  margin-top: 6rem;
-  margin-right: 25rem;
-  margin-left: 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 70vh;
+  width: 35vw;
+  background-color: rgba(199, 199, 199, 0.178);
+  border-radius: 6px;
+}
+
+#mindrenewpostdiv h2 {
+  margin-bottom: 1.5rem;
+}
+
+#mindrenewpostdiv form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 40vh;
+  width: 25vw;
+}
+
+#mindrenewpostdiv form * {
+  margin: 0.5rem;
+}
+
+#mindrenewpostdiv form input {
+  padding: 12px 20px;
+  border-radius: 6px;
+}
+
+#mindrenewpostdiv form input[type="submit"] {
+  background-color: white;
+}
+
+#mindrenewpostdiv form input[type="submit"]:hover {
+  background-color: #b8b8b8;
+  cursor: pointer;
+}
+
+#mindrenewpostdiv form input[type="submit"]:active {
+  background-color: #b9a4a4;
 }
 
 /* Updatepostsidan */
@@ -672,9 +740,64 @@ footer {
 }
 
 #mindreupdatediv {
-  margin-top: 6rem;
-  margin-right: 25rem;
-  margin-left: 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 70vh;
+  width: 35vw;
+  background-color: rgba(199, 199, 199, 0.178);
+  border-radius: 6px;
+}
+
+#mindreupdatediv h2 {
+  margin-bottom: 1.5rem;
+}
+
+#mindreupdatediv form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 40vh;
+  width: 25vw;
+}
+
+#mindreupdatediv form * {
+  margin: 0.5rem;
+}
+
+#mindreupdatediv form input {
+  padding: 12px 20px;
+  border-radius: 6px;
+}
+
+#mindreupdatediv form input[type="submit"] {
+  background-color: white;
+}
+
+#mindreupdatediv form input[type="submit"]:hover {
+  background-color: #b8b8b8;
+  cursor: pointer;
+}
+
+#mindreupdatediv form input[type="submit"]:active {
+  background-color: #b9a4a4;
 }
 
 /* Profilsidan */

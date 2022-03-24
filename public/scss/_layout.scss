@@ -155,6 +155,19 @@ footer {
                 padding: 12px 20px;
                 border-radius: $radius;
             }
+
+            input[type="checkbox"] {
+                background-color: $sumbit_button;
+                cursor: pointer;
+            }
+
+            input[type="checkbox"]:hover {
+                background-color: $sumbit_button_hover;
+            }
+
+            input[type="checkbox"]:active {
+                background-color: $sumbit_button_active;
+            }
     
             input[type="submit"] {
                 background-color: $sumbit_button;
@@ -172,7 +185,6 @@ footer {
         }
     }
 }
-
 
 
 /* Loginsidan */
@@ -353,7 +365,6 @@ footer {
                                 display: block;
                                 color: $background_color;
                                 padding: 0.5em 2em;
-                                // margin-left: 30vw;
                                 background-color: $sumbit_button;
                                 border-radius: $radius;
                                 font-size: 1em;
@@ -517,9 +528,50 @@ footer {
 }
 
 #mindrenewpostdiv {
-    margin-top: 6rem;
-    margin-right: 25rem;
-    margin-left: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    width: 35vw;
+
+    background-color: $div_backcolor;
+    border-radius: $radius;
+
+    
+    h2 {
+        margin-bottom: 1.5rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 40vh;
+        width: 25vw;
+
+        * {
+            margin: 0.5rem;
+        }
+
+        input {
+            padding: 12px 20px;
+            border-radius: $radius;
+        }
+
+        input[type="submit"] {
+            background-color: $sumbit_button;
+        }
+
+        input[type="submit"]:hover {
+            background-color: $sumbit_button_hover;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:active {
+            background-color: $sumbit_button_active;
+        }
+    }
 }
 
 /* Updatepostsidan */
@@ -534,9 +586,49 @@ footer {
 }
 
 #mindreupdatediv {
-    margin-top: 6rem;
-    margin-right: 25rem;
-    margin-left: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    width: 35vw;
+
+    background-color: $div_backcolor;
+    border-radius: $radius;
+
+    h2 {
+        margin-bottom: 1.5rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 40vh;
+        width: 25vw;
+
+        * {
+            margin: 0.5rem;
+        }
+
+        input {
+            padding: 12px 20px;
+            border-radius: $radius;
+        }
+
+        input[type="submit"] {
+            background-color: $sumbit_button;
+        }
+
+        input[type="submit"]:hover {
+            background-color: $sumbit_button_hover;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:active {
+            background-color: $sumbit_button_active;
+        }
+    }
 }
 
 /* Profilsidan */
@@ -583,9 +675,3 @@ footer {
     justify-content: center;
     align-items: center;
 }
-
-// #mindreErrorDiv {
-//     margin-top: 6rem;
-//     margin-right: 25rem;
-//     margin-left: 5rem;
-// }
