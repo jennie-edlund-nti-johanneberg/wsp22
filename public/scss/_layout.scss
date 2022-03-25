@@ -412,16 +412,22 @@ footer {
                                 background-color: $div_backcolor;
                                 
                                 #deleteBack {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    flex-direction: column;
+
+                                    background-color: $background_color;
+                                    margin: 0;
+                                    width: 65%;
+                                    padding: 3rem;
+                                    border-radius: $radius;
+
+                                    form {
                                         display: flex;
                                         justify-content: center;
                                         align-items: center;
                                         flex-direction: column;
-
-                                        background-color: $background_color;
-                                        margin: 0;
-                                        width: 65%;
-                                        padding: 3rem;
-                                        border-radius: $radius;
 
                                         * {
                                             margin: 0;
@@ -473,6 +479,7 @@ footer {
                                                 cursor: pointer;
                                             }
                                         }
+                                    }
                                 }
 
                             }
@@ -720,7 +727,210 @@ footer {
                 }
             }
         }
+
+        #postList {
+            display: flex;
+            flex-direction: column-reverse;
+
+            li {
+                margin: 3rem;
+                padding: 3rem;
+                background-color: $div_backcolor;
+                border-radius: $radius; 
     
+                #divInListObject {
+                    display: flex;
+                    flex-direction: column;
+                    max-width: 50vw;
+
+                    #divForCreator {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: baseline;
+
+                        a {
+                            border-bottom: 1px solid $div_backcolor;
+                            margin: 0 2em 0 0;
+                        }
+                        
+                        a:hover {
+                            border-bottom: 1px solid $text_color;
+                            font-weight: 900;
+                        }
+
+                        p {
+                            font-size: 0.8em;
+                        }
+                    }
+
+                    #divForContent {
+                        display: flex;
+                        flex-direction: column;
+                        margin: 2rem 0 2rem 0;
+
+                        * {
+                            margin: 0 0 0.5em 0;
+                        }
+                    }
+
+                    .divForUnderPost {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+
+                        div {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-start;
+
+                            a {
+                                display: block;
+                                color: $background_color;
+                                padding: 0.5em 2em;
+                                background-color: $sumbit_button;
+                                border-radius: $radius;
+                                font-size: 1em;
+                            }
+
+                            a:hover {
+                                cursor: pointer;
+                                background-color: $sumbit_button_hover;
+                            }
+
+                            
+                            a:active {
+                                background-color: $sumbit_button_active;
+                            }
+
+                            .deleteButton {
+                                padding: 0.5em 2em;
+                                background-color: $confirmDeleteBackground;
+                                border-style: none;
+                                border-radius: $radius;
+                                font-size: 1em;
+                                margin: 0;
+                            }
+
+                            .deleteButton:hover {
+                                cursor: pointer;
+                                background-color: $confirmDeleteHover;
+                            }
+                            
+                            .deleteButton:active {
+                                background-color: $sumbit_button_active;
+                            }
+                        }
+
+                        #modalDiv {
+                            display: none; 
+
+                            .container {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                position: fixed; 
+                                z-index: 1;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                                height: 100%;
+                                overflow: auto;
+                                background-color: $div_backcolor;
+                                
+                                #deleteBack {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    flex-direction: column;
+
+                                    background-color: $background_color;
+                                    margin: 0;
+                                    width: 65%;
+                                    padding: 3rem;
+                                    border-radius: $radius;
+
+                                    form {
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        flex-direction: column;
+
+                                        * {
+                                            margin: 0;
+                                        }
+
+                                        h1 {
+                                            padding: 0.4em;
+                                            margin-bottom: 1rem;
+                                        }
+
+                                        p {
+                                            margin-bottom: 2rem;
+                                        }
+
+                                        .deleteChoice {
+                                            button {
+                                                width: 20vw;
+                                                border-style: none;
+                                                padding: 0.8em;
+                                                margin: 1rem;
+                                                border-radius: $radius;
+                                            }
+
+                                            .cancelBtn {
+                                                background-color: $cancelBtnBackground;
+                                            }
+
+                                            .cancelBtn:hover {
+                                                background-color: $cancelBtnHover;
+                                                cursor: pointer;
+                                            }
+
+                                            .cancelBtn:active {
+                                                background-color: $cancelBtnActive;
+                                                cursor: pointer;
+                                            }
+
+                                            .confirmDelete {
+                                                background-color: $confirmDeleteBackground;
+                                            }
+
+                                            .confirmDelete:hover {
+                                                background-color: $confirmDeleteHover;
+                                                cursor: pointer;
+                                            }
+
+                                            .confirmDelete:active {
+                                                background-color: $confirmDeleteActive;
+                                                cursor: pointer;
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+
+                        }
+
+                        * {
+                            margin: 0 2em 0 0;
+                        }
+
+                        .likeForm {
+                            width: 5vw;
+
+                            img {
+                                max-width: 100%;
+                            }
+                        }
+                    }
+
+                    #underPostLike {
+                        justify-content: flex-start;
+                    }    
+                }
+            }
+        }
     }
 }
 

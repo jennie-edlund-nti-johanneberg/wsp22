@@ -120,7 +120,8 @@ get('/showprofile/:id') do
             posts.id,
             posts.title,
             posts.text,
-            posts.creatorid
+            posts.creatorid,
+            posts.time
         FROM posts
             INNER JOIN users ON users.id = posts.creatorid
         WHERE users.id = ?", id)
@@ -131,6 +132,12 @@ get('/showprofile/:id') do
             INNER JOIN user_personality_relation ON  category.id = user_personality_relation.categoryid
         WHERE user_personality_relation.userid = ?", id)
 
+    creatorid = db.execute("SELECT DISTINCT
+        users.username,
+        posts.creatorid
+    FROM users
+        INNER JOIN posts ON users.id = posts.creatorid")
+
     db.results_as_hash = false
     likeCountTotal = db.execute("SELECT COUNT
         (likes.postid)
@@ -138,7 +145,9 @@ get('/showprofile/:id') do
         INNER JOIN posts ON posts.id = likes.postid
     WHERE creatorid = ?", id).first.first
 
-    slim(:"users/show", locals:{userinfo:result, posts:result_2, personality:result_3, likesCount:likeCountTotal})
+    likeCountPost = db.execute("SELECT postid FROM likes")
+
+    slim(:"users/show", locals:{userinfo:result, posts:result_2, personality:result_3, likesCount:likeCountTotal, username_posts:creatorid, likeCountPost:likeCountPost})
 end
 
 get('/user/:id/edit') do

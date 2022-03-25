@@ -63,38 +63,51 @@ div id="helaprofildiv"
                         a id="editProfileLink" href="/user/#{session[:id]}/edit" Edit profile 
 
             - if session[:id] != 1
-                div class="listProfilDiv"  
-                    h2 Posts:
-                    - i = 0         
-                        - posts.each do |post|
+                ol id="postList"
+                    - posts.each do |post|
+                        li
+                            div id="divInListObject"
+                                div id="divForCreator"
+                                    - username_posts.each do |user|    
+                                        - if post["creatorid"] == user["creatorid"]
+                                            a href="/showprofile/#{user["creatorid"]}" #{user["username"]}
+                                            p = post["time"]
+
+                                div id="divForContent"
+                                    h3 = post["title"]
+                                    p = post["text"]
+
+                            - i = 0
                             - likeCountPost.each do |like|      
-                            - if like.first == post["id"]
-                                - i += 1
+                                - if like.first == post["id"]
+                                    - i += 1
+
                             div class="divForUnderPost"
-                            p = "Your likes: #{i}" 
+                                p = "Your likes: #{i}" 
 
-                            div
-                                a href="post/#{post['id']}/#{session[:id]}/edit" Update 
-                                button class="deleteButton" type="button" Delete
+                                div
+                                    a href="post/#{post['id']}/#{session[:id]}/edit" Update 
+                                    button class="deleteButton" type="button" Delete
 
-                            div id="modalDiv" class="modal"
+                                div id="modalDiv" class="modal"
                                     div class="container"
-                                    div id="deleteBack"
-                                        form class="modalContent" method="post" action="post/#{post['id']}/#{session[:id]}/delete"
-                                        h1 Delete Post
-                                        p Are you sure you (litle shit) want to delete your post?
-                                    
-                                        div class="deleteChoice"
-                                        button type="button" class="cancelBtn" Cancel
-                                        button type="button" class="confirmDelete" Delete
+                                        div id="deleteBack"
+                                            form class="modalContent" method="post" action="post/#{post['id']}/#{session[:id]}/delete"
+                                                h1 Delete Post
+                                                p Are you sure you (litle shit) want to delete your post?
+                                            
+                                                div class="deleteChoice"
+                                                    button type="button" class="cancelBtn" Cancel
+                                                    button type="button" class="confirmDelete" Delete
 
 
-/ h2 = post["title"]
-/ p = post["text"]
-/ - if info["id"] == session[:id]
-/     a href="post/#{post['id']}/edit" Update
-/     form method="post" action="post/#{post['id']}/delete"
-/         input type="submit" value="Delete"
+                            / - posts.each do |post|
+                            /     h3 = post["title"]
+                            /     p = post["text"]
+                            /     - if info["id"] == session[:id]
+                            /         a href="post/#{post['id']}/edit" Update
+                            /         form method="post" action="post/#{post['id']}/delete"
+                            /             input type="submit" value="Delete"
 
 
             div id="newPostDiv"

@@ -561,20 +561,36 @@ footer {
   border-radius: 6px;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack * {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form * {
   margin: 0;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack h1 {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form h1 {
   padding: 0.4em;
   margin-bottom: 1rem;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack p {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form p {
   margin-bottom: 2rem;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice button {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice button {
   width: 20vw;
   border-style: none;
   padding: 0.8em;
@@ -582,30 +598,30 @@ footer {
   border-radius: 6px;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .cancelBtn {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn {
   background-color: #a7a7a7;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .cancelBtn:hover {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn:hover {
   background-color: #868686;
   cursor: pointer;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .cancelBtn:active {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn:active {
   background-color: #666666;
   cursor: pointer;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete {
   background-color: #ff2d2d;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete:hover {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete:hover {
   background-color: #c52525;
   cursor: pointer;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete:active {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete:active {
   background-color: #881919;
   cursor: pointer;
 }
@@ -903,6 +919,266 @@ footer {
 
 #helaprofildiv #mindreprofildiv .listProfilDiv div a:active {
   background-color: #b9a4a4;
+}
+
+#helaprofildiv #mindreprofildiv #postList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+}
+
+#helaprofildiv #mindreprofildiv #postList li {
+  margin: 3rem;
+  padding: 3rem;
+  background-color: rgba(199, 199, 199, 0.178);
+  border-radius: 6px;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-width: 50vw;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject #divForCreator {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject #divForCreator a {
+  border-bottom: 1px solid rgba(199, 199, 199, 0.178);
+  margin: 0 2em 0 0;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject #divForCreator a:hover {
+  border-bottom: 1px solid #FFFFFF;
+  font-weight: 900;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject #divForCreator p {
+  font-size: 0.8em;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject #divForContent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 2rem 0 2rem 0;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject #divForContent * {
+  margin: 0 0 0.5em 0;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost div a {
+  display: block;
+  color: black;
+  padding: 0.5em 2em;
+  background-color: white;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost div a:hover {
+  cursor: pointer;
+  background-color: #b8b8b8;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost div a:active {
+  background-color: #b9a4a4;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost div .deleteButton {
+  padding: 0.5em 2em;
+  background-color: #ff2d2d;
+  border-style: none;
+  border-radius: 6px;
+  font-size: 1em;
+  margin: 0;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost div .deleteButton:hover {
+  cursor: pointer;
+  background-color: #c52525;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost div .deleteButton:active {
+  background-color: #b9a4a4;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv {
+  display: none;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(199, 199, 199, 0.178);
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: black;
+  margin: 0;
+  width: 65%;
+  padding: 3rem;
+  border-radius: 6px;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form * {
+  margin: 0;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form h1 {
+  padding: 0.4em;
+  margin-bottom: 1rem;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form p {
+  margin-bottom: 2rem;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice button {
+  width: 20vw;
+  border-style: none;
+  padding: 0.8em;
+  margin: 1rem;
+  border-radius: 6px;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn {
+  background-color: #a7a7a7;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn:hover {
+  background-color: #868686;
+  cursor: pointer;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn:active {
+  background-color: #666666;
+  cursor: pointer;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete {
+  background-color: #ff2d2d;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete:hover {
+  background-color: #c52525;
+  cursor: pointer;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete:active {
+  background-color: #881919;
+  cursor: pointer;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost * {
+  margin: 0 2em 0 0;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost .likeForm {
+  width: 5vw;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost .likeForm img {
+  max-width: 100%;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject #underPostLike {
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 /* EditProfilsidan */
