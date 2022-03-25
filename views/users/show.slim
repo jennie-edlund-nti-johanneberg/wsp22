@@ -1,55 +1,101 @@
 div id="helaprofildiv"
-    div id="mindreprofildiv"           
-        ol
-            - userinfo.each do |info|
-                - if session[:id] == 1
-                    li
+    div id="mindreprofildiv"
+        - userinfo.each do |info|
+            div class="listProfilDiv"           
+                ol
+                    - if session[:id] == 1
+                        h1 = "Hi ADMIN, hows it going my dude?"
                         img src="img/gubbar.jpg" alt="guzz"
 
-                    li    
-                        h2 = "Hi ADMIN, hows it going my dude?"
-                        p = "maybe dont post anything, thats a litle weird for admin to do, otherwise have a nice day"
-                        
-                - else 
-                    h2 = "This is #{info["username"]}!"
+                        li    
+                            p = "maybe dont post anything, thats a litle weird for admin to do, otherwise have a nice day"
 
-                    li
-                        h3 Total likes:
-                        p = likesCount 
-
-                    li
-                        h3 Email:
-                        p = info["email"]                
-
-                    li                
-                        h3 Phonenumber:
-                        p = info["phonenumber"]
-                    
-                    li
-                        h3 Birthday:
-                        p = info["birthday"]
-
-                    li
-                        h3 Personality:
-                        - personality.each do |element|
-                            p = element["personality"]
-
-                    - if info["id"] == session[:id]  
                         li
-                            a id="editProfileLink" href="/user/#{session[:id]}/edit" Edit profile 
+                            h2 Total likes:
+                            p = likesCount 
 
-                    li
-                        h2 Posts:
-                        ol
-                            - posts.each do |post|
-                                li
-                                    h3 = post["title"]
-                                    p = post["text"]
-                                    - if info["id"] == session[:id]
-                                        a href="post/#{post['id']}/edit" Update
-                                        form method="post" action="post/#{post['id']}/delete"
-                                            input type="submit" value="Delete"
+                        li
+                            h2 Email:
+                            p = info["email"]                
+
+                        li                
+                            h2 Phonenumber:
+                            p = info["phonenumber"]
+                        
+                        li
+                            h2 Birthday:
+                            p = info["birthday"]
+
+                        li
+                            h2 Personality:
+                            ul
+                                - personality.each do |element|
+                                    li
+                                        p = element["personality"]
+                            
+                    - else 
+                        h1 = "This is #{info["username"]}!"
+
+                        li
+                            h2 Total likes:
+                            p = likesCount 
+
+                        li
+                            h2 Email:
+                            p = info["email"]                
+
+                        li                
+                            h2 Phonenumber:
+                            p = info["phonenumber"]
+                        
+                        li
+                            h2 Birthday:
+                            p = info["birthday"]
+
+                        li
+                            h2 Personality:
+                            ul
+                                - personality.each do |element|
+                                    li
+                                        p = element["personality"]
+                div
+                    - if info["id"] == session[:id]  
+                        a id="editProfileLink" href="/user/#{session[:id]}/edit" Edit profile 
+
+            - if session[:id] != 1
+                div class="listProfilDiv"  
+                    h2 Posts:
+                    - i = 0         
+                        - posts.each do |post|
+                            - likeCountPost.each do |like|      
+                            - if like.first == post["id"]
+                                - i += 1
+                            div class="divForUnderPost"
+                            p = "Your likes: #{i}" 
+
+                            div
+                                a href="post/#{post['id']}/#{session[:id]}/edit" Update 
+                                button class="deleteButton" type="button" Delete
+
+                            div id="modalDiv" class="modal"
+                                    div class="container"
+                                    div id="deleteBack"
+                                        form class="modalContent" method="post" action="post/#{post['id']}/#{session[:id]}/delete"
+                                        h1 Delete Post
+                                        p Are you sure you (litle shit) want to delete your post?
+                                    
+                                        div class="deleteChoice"
+                                        button type="button" class="cancelBtn" Cancel
+                                        button type="button" class="confirmDelete" Delete
 
 
-        div id="newPostDiv"
-            a id="newPostLink" href="/newpost/#{session[:id]}" New Post 
+/ h2 = post["title"]
+/ p = post["text"]
+/ - if info["id"] == session[:id]
+/     a href="post/#{post['id']}/edit" Update
+/     form method="post" action="post/#{post['id']}/delete"
+/         input type="submit" value="Delete"
+
+
+            div id="newPostDiv"
+                a id="newPostLink" href="/newpost/#{session[:id]}" New Post 

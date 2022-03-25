@@ -23,10 +23,6 @@ input {
     font-weight: 600;
 }
 
-img {
-    max-width: 5%;
-}
-
 /* Layout */
 
 body {
@@ -391,7 +387,7 @@ footer {
 
                             .deleteButton:hover {
                                 cursor: pointer;
-                                background-color: $confirmDeletehover;
+                                background-color: $confirmDeleteHover;
                             }
                             
                             .deleteButton:active {
@@ -458,12 +454,22 @@ footer {
                                                 cursor: pointer;
                                             }
 
+                                            .cancelBtn:active {
+                                                background-color: $cancelBtnActive;
+                                                cursor: pointer;
+                                            }
+
                                             .confirmDelete {
                                                 background-color: $confirmDeleteBackground;
                                             }
 
                                             .confirmDelete:hover {
-                                                background-color: $confirmDeletehover;
+                                                background-color: $confirmDeleteHover;
+                                                cursor: pointer;
+                                            }
+
+                                            .confirmDelete:active {
+                                                background-color: $confirmDeleteActive;
                                                 cursor: pointer;
                                             }
                                         }
@@ -525,54 +531,55 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
 
-#mindrenewpostdiv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
-    width: 35vw;
-
-    background-color: $div_backcolor;
-    border-radius: $radius;
-
-    
-    h2 {
-        margin-bottom: 1.5rem;
-    }
-
-    form {
+    #mindrenewpostdiv {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 40vh;
-        width: 25vw;
-
-        * {
-            margin: 0.5rem;
+        align-items: center;
+        height: 70vh;
+        width: 35vw;
+    
+        background-color: $div_backcolor;
+        border-radius: $radius;
+    
+        
+        h2 {
+            margin-bottom: 1.5rem;
         }
-
-        input {
-            padding: 12px 20px;
-            border-radius: $radius;
-        }
-
-        input[type="submit"] {
-            background-color: $sumbit_button;
-        }
-
-        input[type="submit"]:hover {
-            background-color: $sumbit_button_hover;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:active {
-            background-color: $sumbit_button_active;
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 40vh;
+            width: 25vw;
+    
+            * {
+                margin: 0.5rem;
+            }
+    
+            input {
+                padding: 12px 20px;
+                border-radius: $radius;
+            }
+    
+            input[type="submit"] {
+                background-color: $sumbit_button;
+            }
+    
+            input[type="submit"]:hover {
+                background-color: $sumbit_button_hover;
+                cursor: pointer;
+            }
+    
+            input[type="submit"]:active {
+                background-color: $sumbit_button_active;
+            }
         }
     }
 }
+
 
 /* Updatepostsidan */
 
@@ -583,70 +590,140 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
 
-#mindreupdatediv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
-    width: 35vw;
-
-    background-color: $div_backcolor;
-    border-radius: $radius;
-
-    h2 {
-        margin-bottom: 1.5rem;
-    }
-
-    form {
+    #mindreupdatediv {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 40vh;
-        width: 25vw;
-
-        * {
-            margin: 0.5rem;
+        align-items: center;
+        height: 70vh;
+        width: 35vw;
+    
+        background-color: $div_backcolor;
+        border-radius: $radius;
+    
+        h2 {
+            margin-bottom: 1.5rem;
         }
-
-        input {
-            padding: 12px 20px;
-            border-radius: $radius;
-        }
-
-        input[type="submit"] {
-            background-color: $sumbit_button;
-        }
-
-        input[type="submit"]:hover {
-            background-color: $sumbit_button_hover;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:active {
-            background-color: $sumbit_button_active;
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 40vh;
+            width: 25vw;
+    
+            * {
+                margin: 0.5rem;
+            }
+    
+            input {
+                padding: 12px 20px;
+                border-radius: $radius;
+            }
+    
+            input[type="submit"] {
+                background-color: $sumbit_button;
+            }
+    
+            input[type="submit"]:hover {
+                background-color: $sumbit_button_hover;
+                cursor: pointer;
+            }
+    
+            input[type="submit"]:active {
+                background-color: $sumbit_button_active;
+            }
         }
     }
 }
+
 
 /* Profilsidan */
 
 #helaprofildiv {
-    height: 100vh;
+    height: auto;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    #mindreprofildiv {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        margin: 3rem 0;
+
+        .listProfilDiv {
+            height: auto;
+            width: 35vw;
+            padding: 4rem 6rem;
+            margin: 3rem 0;
+
+            background-color: $div_backcolor;
+            border-radius: $radius;
+
+            ol {
+                h1 {
+                    margin-bottom: 2.5rem;
+                }
+
+                img{
+                    max-width: 40%;
+                }
+
+                li {
+                    margin: 1rem 0;
+            
+                    p {
+                        margin-bottom: 1.5rem;
+                    }
+
+                    ul {
+                        margin-left: 2rem;
+
+                        li {
+                            p {
+                                margin: 0;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            div {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                margin-top: 3rem;
+
+                a {
+                    display: block;
+                    padding: 0.5em 2em;
+                    font-size: 1em;
+                    background-color: $sumbit_button;
+                    border-radius: $radius;
+                    color: $background_color;
+                }
+
+                a:hover {
+                    cursor: pointer;
+                    background-color: $sumbit_button_hover;
+                }
+
+                
+                a:active {
+                    background-color: $sumbit_button_active;
+                }
+            }
+        }
+    
+    }
 }
 
-#mindreprofildiv {
-    margin-top: 6rem;
-    margin-right: 25rem;
-    margin-left: 5rem;
-}
 
 /* EditProfilsidan */
 

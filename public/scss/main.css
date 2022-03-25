@@ -22,10 +22,6 @@ input {
   font-weight: 600;
 }
 
-img {
-  max-width: 5%;
-}
-
 /* Layout */
 body {
   background-color: black;
@@ -595,12 +591,22 @@ footer {
   cursor: pointer;
 }
 
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .cancelBtn:active {
+  background-color: #666666;
+  cursor: pointer;
+}
+
 #helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete {
   background-color: #ff2d2d;
 }
 
 #helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete:hover {
   background-color: #c52525;
+  cursor: pointer;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete:active {
+  background-color: #881919;
   cursor: pointer;
 }
 
@@ -660,7 +666,7 @@ footer {
           align-items: center;
 }
 
-#mindrenewpostdiv {
+#helanewpostdiv #mindrenewpostdiv {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -680,11 +686,11 @@ footer {
   border-radius: 6px;
 }
 
-#mindrenewpostdiv h2 {
+#helanewpostdiv #mindrenewpostdiv h2 {
   margin-bottom: 1.5rem;
 }
 
-#mindrenewpostdiv form {
+#helanewpostdiv #mindrenewpostdiv form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -699,25 +705,25 @@ footer {
   width: 25vw;
 }
 
-#mindrenewpostdiv form * {
+#helanewpostdiv #mindrenewpostdiv form * {
   margin: 0.5rem;
 }
 
-#mindrenewpostdiv form input {
+#helanewpostdiv #mindrenewpostdiv form input {
   padding: 12px 20px;
   border-radius: 6px;
 }
 
-#mindrenewpostdiv form input[type="submit"] {
+#helanewpostdiv #mindrenewpostdiv form input[type="submit"] {
   background-color: white;
 }
 
-#mindrenewpostdiv form input[type="submit"]:hover {
+#helanewpostdiv #mindrenewpostdiv form input[type="submit"]:hover {
   background-color: #b8b8b8;
   cursor: pointer;
 }
 
-#mindrenewpostdiv form input[type="submit"]:active {
+#helanewpostdiv #mindrenewpostdiv form input[type="submit"]:active {
   background-color: #b9a4a4;
 }
 
@@ -739,7 +745,7 @@ footer {
           align-items: center;
 }
 
-#mindreupdatediv {
+#helaupdatediv #mindreupdatediv {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -759,11 +765,11 @@ footer {
   border-radius: 6px;
 }
 
-#mindreupdatediv h2 {
+#helaupdatediv #mindreupdatediv h2 {
   margin-bottom: 1.5rem;
 }
 
-#mindreupdatediv form {
+#helaupdatediv #mindreupdatediv form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -778,31 +784,31 @@ footer {
   width: 25vw;
 }
 
-#mindreupdatediv form * {
+#helaupdatediv #mindreupdatediv form * {
   margin: 0.5rem;
 }
 
-#mindreupdatediv form input {
+#helaupdatediv #mindreupdatediv form input {
   padding: 12px 20px;
   border-radius: 6px;
 }
 
-#mindreupdatediv form input[type="submit"] {
+#helaupdatediv #mindreupdatediv form input[type="submit"] {
   background-color: white;
 }
 
-#mindreupdatediv form input[type="submit"]:hover {
+#helaupdatediv #mindreupdatediv form input[type="submit"]:hover {
   background-color: #b8b8b8;
   cursor: pointer;
 }
 
-#mindreupdatediv form input[type="submit"]:active {
+#helaupdatediv #mindreupdatediv form input[type="submit"]:active {
   background-color: #b9a4a4;
 }
 
 /* Profilsidan */
 #helaprofildiv {
-  height: 100vh;
+  height: auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -818,10 +824,85 @@ footer {
           align-items: center;
 }
 
-#mindreprofildiv {
-  margin-top: 6rem;
-  margin-right: 25rem;
-  margin-left: 5rem;
+#helaprofildiv #mindreprofildiv {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 3rem 0;
+}
+
+#helaprofildiv #mindreprofildiv .listProfilDiv {
+  height: auto;
+  width: 35vw;
+  padding: 4rem 6rem;
+  margin: 3rem 0;
+  background-color: rgba(199, 199, 199, 0.178);
+  border-radius: 6px;
+}
+
+#helaprofildiv #mindreprofildiv .listProfilDiv ol h1 {
+  margin-bottom: 2.5rem;
+}
+
+#helaprofildiv #mindreprofildiv .listProfilDiv ol img {
+  max-width: 40%;
+}
+
+#helaprofildiv #mindreprofildiv .listProfilDiv ol li {
+  margin: 1rem 0;
+}
+
+#helaprofildiv #mindreprofildiv .listProfilDiv ol li p {
+  margin-bottom: 1.5rem;
+}
+
+#helaprofildiv #mindreprofildiv .listProfilDiv ol li ul {
+  margin-left: 2rem;
+}
+
+#helaprofildiv #mindreprofildiv .listProfilDiv ol li ul li p {
+  margin: 0;
+}
+
+#helaprofildiv #mindreprofildiv .listProfilDiv div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 3rem;
+}
+
+#helaprofildiv #mindreprofildiv .listProfilDiv div a {
+  display: block;
+  padding: 0.5em 2em;
+  font-size: 1em;
+  background-color: white;
+  border-radius: 6px;
+  color: black;
+}
+
+#helaprofildiv #mindreprofildiv .listProfilDiv div a:hover {
+  cursor: pointer;
+  background-color: #b8b8b8;
+}
+
+#helaprofildiv #mindreprofildiv .listProfilDiv div a:active {
+  background-color: #b9a4a4;
 }
 
 /* EditProfilsidan */
