@@ -733,6 +733,7 @@ footer {
         #postList {
             display: flex;
             flex-direction: column-reverse;
+            width: 65vw;
 
             li {
                 margin: 3rem;
@@ -743,7 +744,7 @@ footer {
                 #divInListObject {
                     display: flex;
                     flex-direction: column;
-                    max-width: 50vw;
+                    max-width: 65vw;
 
                     #divForCreator {
                         display: flex;
@@ -784,6 +785,7 @@ footer {
                             display: flex;
                             flex-direction: row;
                             justify-content: flex-start;
+                            margin: 0;
 
                             a {
                                 display: block;

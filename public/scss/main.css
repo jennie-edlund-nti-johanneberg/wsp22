@@ -929,6 +929,7 @@ footer {
   -webkit-box-direction: reverse;
       -ms-flex-direction: column-reverse;
           flex-direction: column-reverse;
+  width: 65vw;
 }
 
 #helaprofildiv #mindreprofildiv #postList li {
@@ -946,7 +947,7 @@ footer {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  max-width: 50vw;
+  max-width: 65vw;
 }
 
 #helaprofildiv #mindreprofildiv #postList li #divInListObject #divForCreator {
@@ -1015,6 +1016,7 @@ footer {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
+  margin: 0;
 }
 
 #helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost div a {

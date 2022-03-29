@@ -109,11 +109,11 @@ div id="helaprofildiv"
                                         form class="likeForm" method="post" action="post/#{post['id']}/#{session[:id]}/like"
                                             img class="likeHeart" src="./img/heart_4.png" alt="heart"/
 
-                                        - i = 0
-                                        - likeCountPost.each do |like|      
-                                            - if like.first == post["id"]
-                                                - i += 1
-                                        p = i 
+                                    - i = 0
+                                    - likeCountPost.each do |like|      
+                                        - if like.first == post["id"]
+                                            - i += 1
+                                    p = i 
 
 
             div id="newPostDiv"
