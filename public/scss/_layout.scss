@@ -423,6 +423,44 @@ footer {
                                     padding: 3rem;
                                     border-radius: $radius;
 
+                                    .deleteChoice {
+                                        button {
+                                            width: 20vw;
+                                            border-style: none;
+                                            padding: 0.8em;
+                                            margin: 1rem;
+                                            border-radius: $radius;
+                                        }
+
+                                        .cancelBtn {
+                                            background-color: $cancelBtnBackground;
+                                        }
+
+                                        .cancelBtn:hover {
+                                            background-color: $cancelBtnHover;
+                                            cursor: pointer;
+                                        }
+
+                                        .cancelBtn:active {
+                                            background-color: $cancelBtnActive;
+                                            cursor: pointer;
+                                        }
+
+                                        .confirmDelete {
+                                            background-color: $confirmDeleteBackground;
+                                        }
+
+                                        .confirmDelete:hover {
+                                            background-color: $confirmDeleteHover;
+                                            cursor: pointer;
+                                        }
+
+                                        .confirmDelete:active {
+                                            background-color: $confirmDeleteActive;
+                                            cursor: pointer;
+                                        }
+                                    }
+
                                     form {
                                         display: flex;
                                         justify-content: center;
@@ -442,49 +480,14 @@ footer {
                                             margin-bottom: 2rem;
                                         }
 
-                                        .deleteChoice {
-                                            button {
-                                                width: 20vw;
-                                                border-style: none;
-                                                padding: 0.8em;
-                                                margin: 1rem;
-                                                border-radius: $radius;
-                                            }
-
-                                            .cancelBtn {
-                                                background-color: $cancelBtnBackground;
-                                            }
-
-                                            .cancelBtn:hover {
-                                                background-color: $cancelBtnHover;
-                                                cursor: pointer;
-                                            }
-
-                                            .cancelBtn:active {
-                                                background-color: $cancelBtnActive;
-                                                cursor: pointer;
-                                            }
-
-                                            .confirmDelete {
-                                                background-color: $confirmDeleteBackground;
-                                            }
-
-                                            .confirmDelete:hover {
-                                                background-color: $confirmDeleteHover;
-                                                cursor: pointer;
-                                            }
-
-                                            .confirmDelete:active {
-                                                background-color: $confirmDeleteActive;
-                                                cursor: pointer;
-                                            }
-                                        }
+                                        
                                     }
                                 }
-
                             }
 
                         }
+
+                    }
 
                         * {
                             margin: 0 2em 0 0;
@@ -497,17 +500,16 @@ footer {
                                 max-width: 100%;
                             }
                         }
-                    }
+                }
 
                     #underPostLike {
                         justify-content: flex-start;
                     }    
-                }
             }
-        
         }
     }
 }
+
 
 #newPostDiv {
     position: fixed;
@@ -849,6 +851,44 @@ footer {
                                     padding: 3rem;
                                     border-radius: $radius;
 
+                                    .deleteChoice {
+                                        button {
+                                            width: 20vw;
+                                            border-style: none;
+                                            padding: 0.8em;
+                                            margin: 1rem;
+                                            border-radius: $radius;
+                                        }
+
+                                        .cancelBtn {
+                                            background-color: $cancelBtnBackground;
+                                        }
+
+                                        .cancelBtn:hover {
+                                            background-color: $cancelBtnHover;
+                                            cursor: pointer;
+                                        }
+
+                                        .cancelBtn:active {
+                                            background-color: $cancelBtnActive;
+                                            cursor: pointer;
+                                        }
+
+                                        .confirmDelete {
+                                            background-color: $confirmDeleteBackground;
+                                        }
+
+                                        .confirmDelete:hover {
+                                            background-color: $confirmDeleteHover;
+                                            cursor: pointer;
+                                        }
+
+                                        .confirmDelete:active {
+                                            background-color: $confirmDeleteActive;
+                                            cursor: pointer;
+                                        }
+                                    }
+
                                     form {
                                         display: flex;
                                         justify-content: center;
@@ -868,49 +908,14 @@ footer {
                                             margin-bottom: 2rem;
                                         }
 
-                                        .deleteChoice {
-                                            button {
-                                                width: 20vw;
-                                                border-style: none;
-                                                padding: 0.8em;
-                                                margin: 1rem;
-                                                border-radius: $radius;
-                                            }
-
-                                            .cancelBtn {
-                                                background-color: $cancelBtnBackground;
-                                            }
-
-                                            .cancelBtn:hover {
-                                                background-color: $cancelBtnHover;
-                                                cursor: pointer;
-                                            }
-
-                                            .cancelBtn:active {
-                                                background-color: $cancelBtnActive;
-                                                cursor: pointer;
-                                            }
-
-                                            .confirmDelete {
-                                                background-color: $confirmDeleteBackground;
-                                            }
-
-                                            .confirmDelete:hover {
-                                                background-color: $confirmDeleteHover;
-                                                cursor: pointer;
-                                            }
-
-                                            .confirmDelete:active {
-                                                background-color: $confirmDeleteActive;
-                                                cursor: pointer;
-                                            }
-                                        }
+                                        
                                     }
                                 }
-
                             }
 
                         }
+
+                    }
 
                         * {
                             margin: 0 2em 0 0;
@@ -923,16 +928,17 @@ footer {
                                 max-width: 100%;
                             }
                         }
-                    }
+                }
 
                     #underPostLike {
                         justify-content: flex-start;
-                    }    
-                }
+                }    
             }
         }
     }
 }
+
+
 
 
 /* EditProfilsidan */

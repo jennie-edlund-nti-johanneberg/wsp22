@@ -561,6 +561,42 @@ footer {
   border-radius: 6px;
 }
 
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice button {
+  width: 20vw;
+  border-style: none;
+  padding: 0.8em;
+  margin: 1rem;
+  border-radius: 6px;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .cancelBtn {
+  background-color: #a7a7a7;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .cancelBtn:hover {
+  background-color: #868686;
+  cursor: pointer;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .cancelBtn:active {
+  background-color: #666666;
+  cursor: pointer;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete {
+  background-color: #ff2d2d;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete:hover {
+  background-color: #c52525;
+  cursor: pointer;
+}
+
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete:active {
+  background-color: #881919;
+  cursor: pointer;
+}
+
 #helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -590,55 +626,19 @@ footer {
   margin-bottom: 2rem;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice button {
-  width: 20vw;
-  border-style: none;
-  padding: 0.8em;
-  margin: 1rem;
-  border-radius: 6px;
-}
-
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn {
-  background-color: #a7a7a7;
-}
-
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn:hover {
-  background-color: #868686;
-  cursor: pointer;
-}
-
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn:active {
-  background-color: #666666;
-  cursor: pointer;
-}
-
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete {
-  background-color: #ff2d2d;
-}
-
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete:hover {
-  background-color: #c52525;
-  cursor: pointer;
-}
-
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete:active {
-  background-color: #881919;
-  cursor: pointer;
-}
-
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost * {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject * {
   margin: 0 2em 0 0;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost .likeForm {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .likeForm {
   width: 5vw;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject .divForUnderPost .likeForm img {
+#helapostsdiv #mindrepostsdiv #postList li #divInListObject .likeForm img {
   max-width: 100%;
 }
 
-#helapostsdiv #mindrepostsdiv #postList li #divInListObject #underPostLike {
+#helapostsdiv #mindrepostsdiv #postList li #underPostLike {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
@@ -1098,6 +1098,42 @@ footer {
   border-radius: 6px;
 }
 
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice button {
+  width: 20vw;
+  border-style: none;
+  padding: 0.8em;
+  margin: 1rem;
+  border-radius: 6px;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .cancelBtn {
+  background-color: #a7a7a7;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .cancelBtn:hover {
+  background-color: #868686;
+  cursor: pointer;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .cancelBtn:active {
+  background-color: #666666;
+  cursor: pointer;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete {
+  background-color: #ff2d2d;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete:hover {
+  background-color: #c52525;
+  cursor: pointer;
+}
+
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack .deleteChoice .confirmDelete:active {
+  background-color: #881919;
+  cursor: pointer;
+}
+
 #helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1127,55 +1163,19 @@ footer {
   margin-bottom: 2rem;
 }
 
-#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice button {
-  width: 20vw;
-  border-style: none;
-  padding: 0.8em;
-  margin: 1rem;
-  border-radius: 6px;
-}
-
-#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn {
-  background-color: #a7a7a7;
-}
-
-#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn:hover {
-  background-color: #868686;
-  cursor: pointer;
-}
-
-#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .cancelBtn:active {
-  background-color: #666666;
-  cursor: pointer;
-}
-
-#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete {
-  background-color: #ff2d2d;
-}
-
-#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete:hover {
-  background-color: #c52525;
-  cursor: pointer;
-}
-
-#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost #modalDiv .container #deleteBack form .deleteChoice .confirmDelete:active {
-  background-color: #881919;
-  cursor: pointer;
-}
-
-#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost * {
+#helaprofildiv #mindreprofildiv #postList li #divInListObject * {
   margin: 0 2em 0 0;
 }
 
-#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost .likeForm {
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .likeForm {
   width: 5vw;
 }
 
-#helaprofildiv #mindreprofildiv #postList li #divInListObject .divForUnderPost .likeForm img {
+#helaprofildiv #mindreprofildiv #postList li #divInListObject .likeForm img {
   max-width: 100%;
 }
 
-#helaprofildiv #mindreprofildiv #postList li #divInListObject #underPostLike {
+#helaprofildiv #mindreprofildiv #postList li #underPostLike {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
