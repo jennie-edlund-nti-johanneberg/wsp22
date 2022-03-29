@@ -489,6 +489,10 @@ footer {
 
                     }
 
+                    #underPostLike {
+                        justify-content: flex-start;
+                    }  
+
                         * {
                             margin: 0 2em 0 0;
                         }
@@ -500,11 +504,7 @@ footer {
                                 max-width: 100%;
                             }
                         }
-                }
-
-                    #underPostLike {
-                        justify-content: flex-start;
-                    }    
+                }   
             }
         }
     }
@@ -917,6 +917,10 @@ footer {
 
                     }
 
+                    #underPostLike {
+                        justify-content: flex-start;
+                    }  
+
                         * {
                             margin: 0 2em 0 0;
                         }
@@ -928,11 +932,7 @@ footer {
                                 max-width: 100%;
                             }
                         }
-                }
-
-                    #underPostLike {
-                        justify-content: flex-start;
-                }    
+                }  
             }
         }
     }

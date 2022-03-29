@@ -56,11 +56,12 @@ Vad ska göras:
     ☐ Fråga Emil om admin
     ✔ delete popup @done(22-03-21 15:49)
     ☐ unik problem fixa (för titel..)
-    ☐ New post ful, inte klar med profilsidan, också css för profiledit sidan
-    ☐ fix för delete modal
+    ✔ New post ful, inte klar med profilsidan, också css för profiledit sidan @done(22-03-29 14:15)
+    ✔ fix för delete modal @done(22-03-29 14:15)
     ☐ Vänd på post ordning på profil
     ☐ Tom titel går!!!! kan finnas fler??
     ✔ fixa för admin också @done(22-03-21 16:38)
+    ☐ likar på profilsida tas till index
     ☐ fixa css för allt
     ☐ för admin css
     ☐ Fixa modul.rb

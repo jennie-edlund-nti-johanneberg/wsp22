@@ -147,7 +147,12 @@ get('/showprofile/:id') do
 
     likeCountPost = db.execute("SELECT postid FROM likes")
 
-    slim(:"users/show", locals:{userinfo:result, posts:result_2, personality:result_3, likesCount:likeCountTotal, username_posts:creatorid, likeCountPost:likeCountPost})
+    likeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
+    newArr = likeArr.map do |el|
+        el = el.first
+    end
+
+    slim(:"users/show", locals:{userinfo:result, posts:result_2, personality:result_3, likesCount:likeCountTotal, username_posts:creatorid, likeCountPost:likeCountPost, likes:newArr})
 end
 
 get('/user/:id/edit') do
