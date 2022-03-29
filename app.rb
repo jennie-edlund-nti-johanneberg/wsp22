@@ -13,6 +13,33 @@ def db_called(path)
     return db
 end
 
+def unique(text, column, table)
+    db = db_called("db/database.db")
+    result = db.execute("SELECT #{column} FROM #{table}")
+    temparr = []
+    result.each do |title|
+        temparr << title['title']
+    end
+
+    if not temparr.include?(text)
+        session[:unique] = false
+        return true
+    else
+        session[:unique] = true
+        return false
+    end
+end
+
+def notempty(text)
+    if text == ""
+        session[:empty] = true
+        return false
+    else
+        session[:empty] = false
+        return true
+    end
+end
+
 # GET called
 
 get('/') do
@@ -322,14 +349,19 @@ end
 
 post('/post/new') do
     title = params[:title]
-    text = params[:text]
-    t = Time.now
-    time = t.strftime("%Y-%m-%d %H:%M")
-    db = db_called("db/database.db")
-    db.execute("INSERT INTO posts (title, text, creatorid, time) VALUES (?,?,?,?)", title, text, session[:id], time) #.first
-    # result = db.execute("SELECT id FROM posts WHERE title = ?", title).first
-    # db.execute("INSERT INTO user_posts_relation (userid, postid) VALUES (?,?)", session[:id], result["id"]) #.first
-    redirect('/posts/all')
+    if notempty(title) and unique(title, "title", "posts")
+        text = params[:text]
+        t = Time.now
+        time = t.strftime("%Y-%m-%d %H:%M")
+        db = db_called("db/database.db")
+        db.execute("INSERT INTO posts (title, text, creatorid, time) VALUES (?,?,?,?)", title, text, session[:id], time) #.first
+        # result = db.execute("SELECT id FROM posts WHERE title = ?", title).first
+        # db.execute("INSERT INTO user_posts_relation (userid, postid) VALUES (?,?)", session[:id], result["id"]) #.first
+        redirect('/posts/all')
+    else
+        route = "/newpost/#{session[:id]}"
+        redirect(route)
+    end
 end
 
 post('/post/:id/update') do
@@ -368,6 +400,8 @@ post('/post/:postid/:userid/like') do
         elsif session[:filter] == "Sea"
             redirect('/posts/sea')
         elsif session[:filter] == "Mountains"
+            redirect('/posts/mountains')
+        elsif session[:filter] == "Profil"
             redirect('/posts/mountains')
         else
             redirect('/posts/all')

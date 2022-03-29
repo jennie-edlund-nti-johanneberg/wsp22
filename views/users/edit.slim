@@ -1,6 +1,7 @@
 /Redigera profil
 div id="editProfile"
-    div id="smallereditProfile"              
+    div id="smallereditProfile"  
+        h1 Edit profile            
         form method="post" action="/user/#{user['id']}/update"
             label for="email" Email:
             input type="email" name="email" placeholder="name@gmail.com" value="#{user['email']}"
@@ -14,15 +15,21 @@ div id="editProfile"
             input type="date" name="birthday" placeholder="Enter birthday" min="1985-01-01" max="2010-01-01" value="#{user['birthday']}"
             br/
 
-            label Personality: 
-            input type="checkbox" name="woods" value="woods"
-            label for="woods" Woods
-            input type="checkbox" name="sea" value="sea"
-            label for="sea" Sea
-            input type="checkbox" name="mountains" value="mountains"
-            label for="mountians" Mountains
-            input type="checkbox" name="lakes" value="lakes"
-            label for="lakes" Lakes
-            br/
+            fieldset
+                legend Personality: 
+                div
+                    input type="checkbox" name="woods" value="woods"
+                    label for="woods" Woods
+
+                div
+                    input type="checkbox" name="sea" value="sea"
+                    label for="sea" Sea
+                div
+                    input type="checkbox" name="mountains" value="mountains"
+                    label for="mountians" Mountains
+                div
+                    input type="checkbox" name="lakes" value="lakes"
+                    label for="lakes" Lakes
+                br/
 
             input type="submit" value="Update"

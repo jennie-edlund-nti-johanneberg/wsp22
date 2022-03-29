@@ -176,8 +176,7 @@ footer {
     
             input[type="submit"]:active {
                 background-color: $sumbit_button_active;
-            }
-               
+            }  
         }
     }
 }
@@ -942,23 +941,74 @@ footer {
 
 
 
-
 /* EditProfilsidan */
 
 #editProfile {
-    height: 100vh;
+    height: auto;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    #smallereditProfile {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        padding: 5rem;
+        width: 35vw;
+        margin: 10rem;
+    
+        background-color: $div_backcolor;
+        border-radius: $radius;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: auto;
+            width: 25vw;
+    
+            * {
+                margin: 0.5rem;
+            }
+    
+            input {
+                padding: 12px 20px;
+                border-radius: $radius;
+            }
+
+            input[type="checkbox"] {
+                background-color: $sumbit_button;
+                cursor: pointer;
+            }
+
+            input[type="checkbox"]:hover {
+                background-color: $sumbit_button_hover;
+            }
+
+            input[type="checkbox"]:active {
+                background-color: $sumbit_button_active;
+            }
+    
+            input[type="submit"] {
+                background-color: $sumbit_button;
+            }
+    
+            input[type="submit"]:hover {
+                background-color: $sumbit_button_hover;
+                cursor: pointer;
+            }
+    
+            input[type="submit"]:active {
+                background-color: $sumbit_button_active;
+            }  
+        }
+    }
 }
 
-#smallereditProfile {
-    margin-top: 6rem;
-    margin-right: 25rem;
-    margin-left: 5rem;
-}
 
 /* Errorsidan */
 

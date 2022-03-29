@@ -82,9 +82,12 @@ div id="helaprofildiv"
                                 - if like.first == post["id"]
                                     - i += 1
 
-                            - if post["creatorid"] == session[:id]
+                            - if post["creatorid"] == session[:id] or session[:id] == 1
                                 div class="divForUnderPost"
-                                    p = "Your likes: #{i}" 
+                                    - if session[:id] == 1
+                                        p = "Likes on this post: #{i}"
+                                    - else
+                                        p = "Your likes: #{i}" 
 
                                     div
                                         a href="post/#{post['id']}/#{session[:id]}/edit" Update 

@@ -55,15 +55,25 @@ Vad ska göras:
     ✔ Kolla om användaren värkligen äger posten för delete eller redigering eller redigering för profil @done(22-03-20 22:06)
     ☐ Fråga Emil om admin
     ✔ delete popup @done(22-03-21 15:49)
-    ☐ unik problem fixa (för titel..)
     ✔ New post ful, inte klar med profilsidan, också css för profiledit sidan @done(22-03-29 14:15)
     ✔ fix för delete modal @done(22-03-29 14:15)
-    ☐ Vänd på post ordning på profil
+    ✔ Vänd på post ordning på profil @done(22-03-29 17:09)
+
+    ☐ unik problem fixa (för titel..)
     ☐ Tom titel går!!!! kan finnas fler??
+    -unique och empty-
+    ✔ new @done(22-03-29 17:53)
+    ☐ update
+    ☐ profil
+    ☐ login
+    ☐ registrering
+
+    ✔ när redigerar profil? ändars det? @done(22-03-29 17:14)
     ✔ fixa för admin också @done(22-03-21 16:38)
     ☐ likar på profilsida tas till index
-    ☐ fixa css för allt
-    ☐ för admin css
+    ☐ fixa css för felmedelande
+    ✔ css för edit profil @done(22-03-29 17:52)
+    ☐ för admin css och kan ändra på profiler ska kunna ta bort???
     ☐ Fixa modul.rb
     ☐ fixa projektrapporten
     ☐ validering (flera login, auth m.m, characters, mail m.m)

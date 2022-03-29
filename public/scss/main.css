@@ -1185,7 +1185,7 @@ footer {
 
 /* EditProfilsidan */
 #editProfile {
-  height: 100vh;
+  height: auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1201,10 +1201,76 @@ footer {
           align-items: center;
 }
 
-#smallereditProfile {
-  margin-top: 6rem;
-  margin-right: 25rem;
-  margin-left: 5rem;
+#editProfile #smallereditProfile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: auto;
+  padding: 5rem;
+  width: 35vw;
+  margin: 10rem;
+  background-color: rgba(199, 199, 199, 0.178);
+  border-radius: 6px;
+}
+
+#editProfile #smallereditProfile form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: auto;
+  width: 25vw;
+}
+
+#editProfile #smallereditProfile form * {
+  margin: 0.5rem;
+}
+
+#editProfile #smallereditProfile form input {
+  padding: 12px 20px;
+  border-radius: 6px;
+}
+
+#editProfile #smallereditProfile form input[type="checkbox"] {
+  background-color: white;
+  cursor: pointer;
+}
+
+#editProfile #smallereditProfile form input[type="checkbox"]:hover {
+  background-color: #b8b8b8;
+}
+
+#editProfile #smallereditProfile form input[type="checkbox"]:active {
+  background-color: #b9a4a4;
+}
+
+#editProfile #smallereditProfile form input[type="submit"] {
+  background-color: white;
+}
+
+#editProfile #smallereditProfile form input[type="submit"]:hover {
+  background-color: #b8b8b8;
+  cursor: pointer;
+}
+
+#editProfile #smallereditProfile form input[type="submit"]:active {
+  background-color: #b9a4a4;
 }
 
 /* Errorsidan */

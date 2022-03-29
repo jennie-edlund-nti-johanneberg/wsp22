@@ -12,3 +12,9 @@ div id="helanewpostdiv"
             br/
             
             input type="submit" value="New Post"/
+
+        - if session[:empty] 
+            h1 TITLE REQUIRED
+
+        - elsif session[:unique]
+            h1 TITLE NOT UNIQUE
