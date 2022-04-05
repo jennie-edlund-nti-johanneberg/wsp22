@@ -33,3 +33,7 @@ div id="editProfile"
                 br/
 
             input type="submit" value="Update"
+
+        - if session[:emptyOrNotUnique] 
+            article.inputError
+                h1 ALL INPUTS REQUIRED OR CREDANTIALS NOT UNIQUE

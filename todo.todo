@@ -62,16 +62,17 @@ Vad ska göras:
     ☐ unik problem fixa (för titel..)
     ☐ Tom titel går!!!! kan finnas fler??
     -unique och empty-
-    ✔ new @done(22-03-29 17:53)
+    ☐ new
     ☐ update
     ☐ profil
     ☐ login
-    ☐ registrering
+    ✔ registrering @done(22-04-05 14:48)
 
     ✔ när redigerar profil? ändars det? @done(22-03-29 17:14)
     ✔ fixa för admin också @done(22-03-21 16:38)
     ☐ likar på profilsida tas till index
     ☐ fixa css för felmedelande
+    ☐ Fixa before till att kolla att woods har woods
     ✔ css för edit profil @done(22-03-29 17:52)
     ☐ för admin css och kan ändra på profiler ska kunna ta bort???
     ☐ Fixa modul.rb

@@ -42,5 +42,9 @@ div id="helaregistreringsdiv"
             input type="submit" value="Sign Up"/ 
 
         - if session[:registerError]
-            article.registerError
+            article.inputError
                 h1 PASSWORDS NOT MATCHING 
+
+        - if session[:emptyOrNotUnique] 
+            article.inputError
+                h1 ALL INPUTS REQUIRED OR CREDANTIALS NOT UNIQUE

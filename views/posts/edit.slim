@@ -1,7 +1,7 @@
 /Redigera post
 div id="helaupdatediv"
     div id="mindreupdatediv"
-        h2 Edit post
+        h1 Edit post
 
         form method="post" action="/post/#{post['id']}/update"
             label for="title" Title: 
@@ -13,3 +13,11 @@ div id="helaupdatediv"
             br/
             
             input type="submit" value="Update"
+
+        - if session[:empty] 
+            article.inputError
+                h1 TITLE REQUIRED
+
+        - elsif session[:unique]
+            article.inputError
+                h1 TITLE NOT UNIQUE
