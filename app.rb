@@ -16,14 +16,18 @@ def db_called(path)
 end
 
 
-def is_unique(db, table, attribute, check)
+def isUnique(db, table, attribute, check)
     query = "SELECT * FROM #{table} WHERE #{attribute} = ?"
     result = db.execute(query, check)
+    # p result
+    p result.length
     if result.length == 0
-        session[:emptyOrNotUnique] = false
+        session[:notUnique] = false
+        p true
         return true
     else
-        session[:emptyOrNotUnique] = true
+        session[:notUnique] = true
+        p false
         return false
     end
 end
@@ -44,6 +48,8 @@ get('/') do
     session[:loginError] = false
     session[:registerError] = false
     session[:like] = false
+    session[:empty] = false
+    session[:notUnique] = false
     slim(:start)
 end
 
@@ -53,6 +59,7 @@ get('/showregister') do
 end
 
 get('/showlogin') do
+    session[:notUnique] = false
     session[:registerError] = false
     slim(:login)
 end
@@ -63,6 +70,8 @@ get('/logout') do
 end
 
 get('/posts/:filter') do
+    session[:notUnique] = false
+    session[:empty] = false
     id = session[:id]
     filter = params[:filter]
 
@@ -216,14 +225,18 @@ post('/register') do
 
     anyEmpty = false
     credentials.each do |credential|
+        p "empty"
         anyEmpty = anyEmpty || isEmpty(params[credential])
+        p "#{anyEmpty}"
     end
 
     credentials = [:username, :pwdigest, :email, :phonenumber]
 
     isNotUnique = false
     credentials.each do |credential|
-        isNotUnique = isNotUnique || !is_unique(db, "users", credential.to_s, params[credential])
+        p "yes"
+        isNotUnique = isNotUnique || !isUnique(db, "users", credential.to_s, params[credential])
+        p "#{isNotUnique}"
     end
 
     password = params[:password]
@@ -269,6 +282,8 @@ post('/register') do
 
             session[:auth] = true
             session[:user] = username
+            session[:empty] = false
+            session[:notUnique] = false
             redirect('/posts/all')
         else
             session[:registerError] = true
@@ -284,6 +299,10 @@ end
 post('/login') do
     username = params[:username]
     password = params[:password]
+
+    if isEmpty(username) || isEmpty(password)
+        redirect('/showlogin')
+    end
   
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM users WHERE username = ?", username).first
@@ -316,54 +335,65 @@ end
 post('/user/:id/update') do
     credentials = [:email, :phonenumber, :birthday]
     db = db_called("db/database.db")
+    id = params[:id].to_i
 
     anyEmpty = false
     credentials.each do |credential|
         anyEmpty = anyEmpty || isEmpty(params[credential])
     end
 
-    isNotUnique = false
-    credentials[0..credentials.length - 2].each do |credential|
-        isNotUnique = isNotUnique || !is_unique(db, "users", credential.to_s, params[credential])
-    end
+    if not anyEmpty
+        isNotUnique = false
+        credentials[0..credentials.length - 2].each do |credential|
+            result = db.execute("SELECT #{credential.to_s} FROM users WHERE id = ?", session[:id])
 
-    id = params[:id].to_i
-
-    if not anyEmpty and not isNotUnique
-
-        db.execute("UPDATE users SET email = ?, phonenumber = ?, birthday = ? WHERE id = ?", params[:email], params[:phonenumber], params[:birthday], id)
-        db.execute("DELETE FROM user_personality_relation WHERE userid = ?", id)
-
-        begin
-            woods = params[:woods]
-            if woods == "woods"
-                db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
-            end  
-        end
-
-        begin
-            sea = params[:sea]
-            if sea == "sea"
-                db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
+            if isUnique(db, "users", credential.to_s, params[credential]) || result != params[credential]
+                db.execute("UPDATE users SET #{credential.to_s} = ? WHERE id = ?", params[credential], id)
+            else
+                isNotUnique = true
             end
         end
 
-        begin
-            mountains = params[:mountains]
-            if mountains == "mountains"
-                db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
+        if not isNotUnique 
+            birthday = params[:birthday]
+            db.execute("UPDATE users SET birthday = ? WHERE id = ?", birthday, id)
+    
+            db.execute("DELETE FROM user_personality_relation WHERE userid = ?", id)
+            begin
+                woods = params[:woods]
+                if woods == "woods"
+                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
+                end  
             end
+    
+            begin
+                sea = params[:sea]
+                if sea == "sea"
+                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
+                end
+            end
+    
+            begin
+                mountains = params[:mountains]
+                if mountains == "mountains"
+                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
+                end
+            end
+    
+            begin
+                lakes = params[:lakes]
+                if lakes == "lakes"
+                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
+                end 
+            end
+            
+            session[:notUnique] = false
+            route = "/showprofile/#{id}"
+            redirect(route)
+        else
+            route = "/user/#{id}/edit"
+            redirect(route)
         end
-
-        begin
-            lakes = params[:lakes]
-            if lakes == "lakes"
-                db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
-            end 
-        end
-
-        route = "/showprofile/#{id}"
-        redirect(route)
     else
         route = "/user/#{id}/edit"
         redirect(route)
@@ -371,30 +401,94 @@ post('/user/:id/update') do
 end
 
 post('/post/new') do
-    title = params[:title]
-    if not isEmpty(title) and unique(title, "title", "posts")
-        text = params[:text]
-        t = Time.now
-        time = t.strftime("%Y-%m-%d %H:%M")
+    credentials = [:title, :text]
+    id = session[:id]
+
+    anyEmpty = false
+    credentials.each do |credential|
+        anyEmpty = anyEmpty || isEmpty(params[credential])
+    end
+
+
+    if not anyEmpty
+        title = params[:title]
         db = db_called("db/database.db")
-        db.execute("INSERT INTO posts (title, text, creatorid, time) VALUES (?,?,?,?)", title, text, session[:id], time)
-        redirect('/posts/all')
+        if isUnique(db, "posts", "title", title)
+            text = params[:text]
+            t = Time.now
+            time = t.strftime("%Y-%m-%d %H:%M")
+            db.execute("INSERT INTO posts (title, text, creatorid, time) VALUES (?,?,?,?)", title, text, session[:id], time)
+            redirect('/posts/all')
+        else
+            route = "/newpost/#{id}"
+            redirect(route)
+        end
     else
-        route = "/newpost/#{session[:id]}"
+        route = "/newpost/#{id}"
         redirect(route)
     end
 end
 
 post('/post/:id/update') do
     title = params[:title]
-    id = params[:id].to_i
-    if not isEmpty(title) and unique(title, "title", "posts")
-        db = db_called("db/database.db")
-        text = params[:text]
-        db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, id)
-        redirect('/posts/all')
+
+    arrTitle = [title]
+
+    if not isEmpty(title)
+        anyEmpty = false
     else
-        route = "/post/#{id}/#{session[:id]}/edit"
+        anyEmpty = true
+    end 
+
+    # credentials.each do |credential|
+    #     anyEmpty = anyEmpty || isEmpty(params[credential])
+    # end
+
+    # p "anyEmpty: #{anyEmpty}"
+
+    postid = params[:id].to_i
+    userid = session[:id]
+    
+    if not anyEmpty
+        db = db_called("db/database.db")
+        # result = db.execute("SELECT title FROM posts WHERE creatorid = ? AND id = ?", userid, postid).first
+ 
+
+        # arrTitle.each do |title|
+        result = db.execute("SELECT title FROM posts WHERE creatorid = ? AND id = ?", userid, postid).first
+
+        p "result: #{result}"
+        p "#{result.class}"
+        p "får ut: #{result['title']}"
+        p "title: #{title}"
+        p "#{title.class}"
+
+        if isUnique(db, "posts", "title", title)
+            text = params[:text]
+            db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
+            redirect('/posts/all')
+        elsif result['title'] == title
+            redirect('/posts/all')
+        else
+            route = "/post/#{postid}/#{userid}/edit"
+            redirect(route)
+        end
+        # end
+
+        # if isUnique(db, "posts", "title", title) || result != title
+        #     db = db_called("db/database.db")
+        #     text = params[:text]
+        #     db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
+        #     redirect('/posts/all')
+        # elsif result == title
+        #     redirect('/posts/all')
+        # else
+        #     route = "/post/#{postid}/#{userid}/edit"
+        #     redirect(route)
+        # end
+
+    else
+        route = "/post/#{postid}/#{userid}/edit"
         redirect(route)
     end
 end

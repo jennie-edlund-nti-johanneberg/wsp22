@@ -13,10 +13,10 @@ div id="helanewpostdiv"
             
             input type="submit" value="New Post"/
 
-        - if session[:empty] 
-            article.inputError
-                h1 TITLE REQUIRED
-
-        - elsif session[:unique]
+        - if session[:notUnique]
             article.inputError
                 h1 TITLE NOT UNIQUE
+
+        - if session[:empty]
+            article.inputError
+                h1 TITLE REQUIRED

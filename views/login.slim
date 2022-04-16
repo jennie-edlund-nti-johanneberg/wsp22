@@ -14,3 +14,7 @@ div id="helalogindiv"
         - if session[:loginError]
             article.registerError
                 h1 INVALID PASSWORD OR USERNAME
+
+        - if session[:empty]
+            article.inputError
+                h1 ALL INPUTS REQUIRED

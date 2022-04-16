@@ -59,20 +59,21 @@ Vad ska göras:
     ✔ fix för delete modal @done(22-03-29 14:15)
     ✔ Vänd på post ordning på profil @done(22-03-29 17:09)
 
-    ☐ unik problem fixa (för titel..)
-    ☐ Tom titel går!!!! kan finnas fler??
     -unique och empty-
-    ☐ new
-    ☐ update
-    ☐ profil
-    ☐ login
-    ✔ registrering @done(22-04-05 14:48)
+    ✔ new @done(22-04-05 19:28)
+    ✔ update @done(22-04-16 16:02)
+    ✔ profil (bithday loop och felmedelande vid rätt!!) @done(22-04-05 18:32)
+    ✔ login @done(22-04-05 19:08)
+    ✔ registrering (session unique) @done(22-04-05 19:02)
 
     ✔ när redigerar profil? ändars det? @done(22-03-29 17:14)
     ✔ fixa för admin också @done(22-03-21 16:38)
+    ✔ ha tillgång till update profil, post, new post?? kolla på get router @done(22-04-16 17:47)
+    ☐ tas felmedelandebort när går bort?
     ☐ likar på profilsida tas till index
     ☐ fixa css för felmedelande
     ☐ Fixa before till att kolla att woods har woods
+    ☐ inte kunna edit profil?
     ✔ css för edit profil @done(22-03-29 17:52)
     ☐ för admin css och kan ändra på profiler ska kunna ta bort???
     ☐ Fixa modul.rb
