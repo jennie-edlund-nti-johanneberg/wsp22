@@ -83,7 +83,7 @@ nav > ul > li > a:hover {
   height: 100vh;
 }
 
-article {
+.inputError {
   margin-top: 2rem;
 }
 

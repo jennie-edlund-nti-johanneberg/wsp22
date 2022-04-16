@@ -39,7 +39,7 @@ def isEmpty(text)
 end
 
 def isEmail(text)
-    if text.include?("@")
+    if text.include?('@') && text.include?('.')
         session[:isEmail] = true
         return true
     else
@@ -56,6 +56,7 @@ get('/') do
     session[:like] = false
     session[:empty] = false
     session[:notUnique] = false
+    session[:isEmail] = true
     slim(:start)
 end
 
@@ -67,6 +68,7 @@ end
 get('/showlogin') do
     session[:notUnique] = false
     session[:registerError] = false
+    session[:isEmail] = true
     slim(:login)
 end
 
@@ -76,6 +78,7 @@ get('/logout') do
     session[:like] = false
     session[:empty] = false
     session[:notUnique] = false
+    session[:isEmail] = true
     session[:auth] = false
     slim(:start)
 end
@@ -83,6 +86,7 @@ end
 get('/posts/:filter') do
     session[:notUnique] = false
     session[:empty] = false
+    session[:isEmail] = true
     id = session[:id]
     filter = params[:filter]
 
@@ -162,6 +166,7 @@ get('/showprofile/:id') do
     session[:like] = false
     session[:empty] = false
     session[:notUnique] = false
+    session[:isEmail] = true
     id = params[:id].to_i
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM users WHERE id = ?", id)
@@ -247,7 +252,6 @@ post('/register') do
     if not isEmail(params[:email])
         redirect('/showregister')
     end
-
 
     credentials = [:username, :pwdigest, :email, :phonenumber]
 
@@ -357,6 +361,11 @@ post('/user/:id/update') do
     anyEmpty = false
     credentials.each do |credential|
         anyEmpty = anyEmpty || isEmpty(params[credential])
+    end
+
+    if not isEmail(params[:email])
+        route = "/user/#{id}/edit"
+        redirect(route)
     end
 
     if not anyEmpty

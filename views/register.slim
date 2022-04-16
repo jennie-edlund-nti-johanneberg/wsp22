@@ -52,3 +52,7 @@ div id="helaregistreringsdiv"
         - if session[:empty]
             article.inputError
                 h1 ALL INPUTS REQUIRED
+
+        - if not session[:isEmail]
+            article.inputError
+                h1 EMAIL MUST CONTAIN "@" AND "."

@@ -66,6 +66,28 @@ Vad ska göras:
     ✔ login @done(22-04-05 19:08)
     ✔ registrering (session unique) @done(22-04-05 19:02)
 
+    -email && försvinner-
+    ✔ register @done(22-04-16 19:39)
+    ✔ edit profil @done(22-04-16 19:51)
+
+    -tecken långt && försvinner-
+    ☐ new
+    ☐ update
+    ☐ profil
+    ☐ login
+    ☐ registrering
+
+    -nummer && försvinner-
+    ☐ register
+    ☐ edit profil
+
+    -stress && försvinner-
+    ☐ new
+    ☐ update
+    ☐ profil
+    ☐ login
+    ☐ registrering
+
     ✔ när redigerar profil? ändars det? @done(22-03-29 17:14)
     ✔ fixa för admin också @done(22-03-21 16:38)
     ✔ ha tillgång till update profil, post, new post?? kolla på get router @done(22-04-16 17:47)
