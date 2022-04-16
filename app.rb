@@ -19,15 +19,11 @@ end
 def isUnique(db, table, attribute, check)
     query = "SELECT * FROM #{table} WHERE #{attribute} = ?"
     result = db.execute(query, check)
-    # p result
-    p result.length
     if result.length == 0
         session[:notUnique] = false
-        p true
         return true
     else
         session[:notUnique] = true
-        p false
         return false
     end
 end
@@ -38,6 +34,16 @@ def isEmpty(text)
         return true
     else
         session[:empty] = false
+        return false
+    end
+end
+
+def isEmail(text)
+    if text.include?("@")
+        session[:isEmail] = true
+        return true
+    else
+        session[:isEmail] = false
         return false
     end
 end
@@ -65,6 +71,11 @@ get('/showlogin') do
 end
 
 get('/logout') do
+    session[:loginError] = false
+    session[:registerError] = false
+    session[:like] = false
+    session[:empty] = false
+    session[:notUnique] = false
     session[:auth] = false
     slim(:start)
 end
@@ -146,6 +157,11 @@ get('/post/:postid/:userid/edit') do
 end
 
 get('/showprofile/:id') do
+    session[:loginError] = false
+    session[:registerError] = false
+    session[:like] = false
+    session[:empty] = false
+    session[:notUnique] = false
     id = params[:id].to_i
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM users WHERE id = ?", id)
@@ -225,18 +241,19 @@ post('/register') do
 
     anyEmpty = false
     credentials.each do |credential|
-        p "empty"
         anyEmpty = anyEmpty || isEmpty(params[credential])
-        p "#{anyEmpty}"
     end
+
+    if not isEmail(params[:email])
+        redirect('/showregister')
+    end
+
 
     credentials = [:username, :pwdigest, :email, :phonenumber]
 
     isNotUnique = false
     credentials.each do |credential|
-        p "yes"
         isNotUnique = isNotUnique || !isUnique(db, "users", credential.to_s, params[credential])
-        p "#{isNotUnique}"
     end
 
     password = params[:password]
@@ -401,17 +418,10 @@ post('/user/:id/update') do
 end
 
 post('/post/new') do
-    credentials = [:title, :text]
     id = session[:id]
+    title = params[:title]
 
-    anyEmpty = false
-    credentials.each do |credential|
-        anyEmpty = anyEmpty || isEmpty(params[credential])
-    end
-
-
-    if not anyEmpty
-        title = params[:title]
+    if not isEmpty(title)
         db = db_called("db/database.db")
         if isUnique(db, "posts", "title", title)
             text = params[:text]
@@ -440,28 +450,13 @@ post('/post/:id/update') do
         anyEmpty = true
     end 
 
-    # credentials.each do |credential|
-    #     anyEmpty = anyEmpty || isEmpty(params[credential])
-    # end
-
-    # p "anyEmpty: #{anyEmpty}"
-
     postid = params[:id].to_i
     userid = session[:id]
     
     if not anyEmpty
         db = db_called("db/database.db")
-        # result = db.execute("SELECT title FROM posts WHERE creatorid = ? AND id = ?", userid, postid).first
- 
-
-        # arrTitle.each do |title|
         result = db.execute("SELECT title FROM posts WHERE creatorid = ? AND id = ?", userid, postid).first
 
-        p "result: #{result}"
-        p "#{result.class}"
-        p "får ut: #{result['title']}"
-        p "title: #{title}"
-        p "#{title.class}"
 
         if isUnique(db, "posts", "title", title)
             text = params[:text]

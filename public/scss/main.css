@@ -83,6 +83,10 @@ nav > ul > li > a:hover {
   height: 100vh;
 }
 
+article {
+  margin-top: 2rem;
+}
+
 footer {
   height: 30vh;
   display: -webkit-box;

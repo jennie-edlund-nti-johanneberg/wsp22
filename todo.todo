@@ -69,11 +69,10 @@ Vad ska göras:
     ✔ när redigerar profil? ändars det? @done(22-03-29 17:14)
     ✔ fixa för admin också @done(22-03-21 16:38)
     ✔ ha tillgång till update profil, post, new post?? kolla på get router @done(22-04-16 17:47)
-    ☐ tas felmedelandebort när går bort?
-    ☐ likar på profilsida tas till index
-    ☐ fixa css för felmedelande
+    ✔ tas felmedelandebort när går bort? @done(22-04-16 18:11)
+    ✔ fixa css för felmedelande @done(22-04-16 18:16)
     ☐ Fixa before till att kolla att woods har woods
-    ☐ inte kunna edit profil?
+    ✔ inte kunna edit profil? @done(22-04-16 18:11)
     ✔ css för edit profil @done(22-03-29 17:52)
     ☐ för admin css och kan ändra på profiler ska kunna ta bort???
     ☐ Fixa modul.rb
@@ -83,6 +82,7 @@ Vad ska göras:
 
 Önskas: 
     ☐ när redigera sin profil ska personligheter va kvar!!
+    ☐ likar på profilsida tas till index
 
     
 https://css-tricks.com/the-checkbox-hack/
