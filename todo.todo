@@ -19,7 +19,7 @@ Fix typ:
     Ska relation tabeller ha eget id?
     Behövs rescue på index edit??
     ✔ SKA BILD VA I PUBIC? @done(22-03-01 13:38)
-    ☐ Se till att alla routes och filer är döpta rätt
+    ☐ Se till att alla routes och filer är döpta rätt (get och post med stor bokstav efter)
     ✔ personality på show profile @done(22-03-01 13:38)
     ☐ Model.rb, all databas grejs ska vara i en egen fil :)
 
@@ -73,6 +73,10 @@ Vad ska göras:
 
     ☐ var session time?
 
+    -before-
+    ☐ new post
+    ☐ post edit
+
     ✔ när redigerar profil? ändars det? @done(22-03-29 17:14)
     ✔ fixa för admin också @done(22-03-21 16:38)
     ✔ ha tillgång till update profil, post, new post?? kolla på get router @done(22-04-16 17:47)
@@ -82,13 +86,14 @@ Vad ska göras:
     ☐ likeCount kan uppdateras fler gånger??
     ✔ inte kunna edit profil? @done(22-04-16 18:11)
     ✔ css för edit profil @done(22-03-29 17:52)
-    ☐ för admin css och kan ändra på profiler ska kunna ta bort???
+    ✔ för admin css och kan ändra på profiler ska kunna ta bort??? @done(22-04-19 19:18)
     ☐ Fixa model.rb
+    ☐ ta bort onödiga komentarer och p
+    ☐ ta bort onödiga bilder i img
     ☐ fixa projektrapporten
     ☐ validering (flera login, auth m.m, characters, mail m.m)
     ☐ yardock och modul
     ☐ kolla presentationer
-    ☐ ta bort onödiga bilder i img
 
 Önskas: 
     ☐ när redigera sin profil ska personligheter va kvar!!

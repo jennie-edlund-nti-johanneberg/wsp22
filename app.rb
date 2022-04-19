@@ -7,6 +7,12 @@ require_relative 'model'
 
 enable :sessions
 
+#Before functions
+
+# Before
+
+# end
+
 #Functions
 
 def db_called(path)
@@ -61,7 +67,6 @@ def isNumber(number)
 end
 
 def logTime(id)
-
     tempTime = Time.now.to_i
     if session[:timeLogged] == nil
         session[:timeLogged] = 0
@@ -118,6 +123,11 @@ def posts(filter)
     end
 end
 
+def users(id)
+    db = db_called("db/database.db")
+    return db.execute("SELECT * FROM users WHERE id = ?", id)
+end
+
 def usernameAndId()
     db = db_called("db/database.db")
     return db.execute("SELECT DISTINCT username, id FROM users")
@@ -151,6 +161,11 @@ def isLiked()
     end
 
     return tempArr
+end
+
+def post(id)
+    db = db_called("db/database.db")
+    return db.execute("SELECT * FROM posts WHERE id = ?", id).first
 end
 
 # GET called
@@ -272,9 +287,10 @@ get('/post/:postid/:userid/edit') do
     userid = params[:userid].to_i
     if session[:id] == userid
         postid = params[:postid].to_i
-        db = db_called("db/database.db")
-        result = db.execute("SELECT * FROM posts WHERE id = ?", postid).first
-        slim(:"posts/edit", locals:{post:result})
+        post = post(postid)
+        # db = db_called("db/database.db")
+        # result = db.execute("SELECT * FROM posts WHERE id = ?", postid).first
+        slim(:"posts/edit", locals:{post:post})
     else
         redirect('/error/401')
     end
@@ -289,8 +305,11 @@ get('/showprofile/:id') do
     session[:isEmail] = true
     session[:isNumber] = true
     id = params[:id].to_i
-    db = db_called("db/database.db")
-    result = db.execute("SELECT * FROM users WHERE id = ?", id)
+
+    # db = db_called("db/database.db")
+    # result = db.execute("SELECT * FROM users WHERE id = ?", id)
+
+    userInfo = users(id)
 
     result_2 = db.execute("SELECT
             posts.id,
@@ -328,7 +347,7 @@ get('/showprofile/:id') do
         el = el.first
     end
 
-    slim(:"users/show", locals:{userinfo:result, posts:result_2, personality:result_3, likesCount:likeCountTotal, username_posts:creatorid, likeCountPost:likeCountPost, likes:newArr})
+    slim(:"users/show", locals:{userInfo:userInfo, posts:result_2, personality:result_3, likesCount:likeCountTotal, username_posts:creatorid, likeCountPost:likeCountPost, likes:newArr})
 end
 
 get('/user/:id/edit') do
@@ -588,7 +607,7 @@ end
 post('/post/:id/update') do
     title = params[:title]
 
-    arrTitle = [title]
+    # arrTitle = [title]
 
     if not isEmpty(title)
         anyEmpty = false
@@ -603,12 +622,14 @@ post('/post/:id/update') do
         db = db_called("db/database.db")
         result = db.execute("SELECT title FROM posts WHERE creatorid = ? AND id = ?", userid, postid).first
 
+        text = params[:text]
 
         if isUnique(db, "posts", "title", title)
-            text = params[:text]
+            # p "text till pots:#{text}"
             db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
             redirect('/posts/all')
-        elsif result['title'] == title
+        elsif result['title'] == title 
+            db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
             redirect('/posts/all')
         else
             route = "/post/#{postid}/#{userid}/edit"
