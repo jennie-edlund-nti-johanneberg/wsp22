@@ -123,6 +123,25 @@ def posts(filter)
     end
 end
 
+def post(id)
+    db = db_called("db/database.db")
+    return db.execute("SELECT * FROM posts WHERE id = ?", id).first
+end
+
+def postSpecificInfo(id)
+    db = db_called("db/database.db")
+
+    return db.execute("SELECT
+        posts.id,
+        posts.title,
+        posts.text,
+        posts.creatorid,
+        posts.time
+    FROM posts
+        INNER JOIN users ON users.id = posts.creatorid
+    WHERE users.id = ?", id)
+end
+
 def users(id)
     db = db_called("db/database.db")
     return db.execute("SELECT * FROM users WHERE id = ?", id)
@@ -130,7 +149,17 @@ end
 
 def usernameAndId()
     db = db_called("db/database.db")
-    return db.execute("SELECT DISTINCT username, id FROM users")
+    return db.execute("SELECT username, id FROM users")
+end
+
+def usersPersonality(id)
+    db = db_called("db/database.db")
+
+    return db.execute("SELECT
+        category.personality
+    FROM category
+        INNER JOIN user_personality_relation ON  category.id = user_personality_relation.categoryid
+    WHERE user_personality_relation.userid = ?", id)
 end
 
 def likeCountClient(id)
@@ -138,6 +167,17 @@ def likeCountClient(id)
     db.results_as_hash = false
 
     session[:likeCount] = db.execute("SELECT COUNT
+        (likes.postid)
+    FROM likes
+        INNER JOIN posts ON posts.id = likes.postid
+    WHERE creatorid = ?", id).first.first
+end
+
+def likeCountTotal(id)
+    db = db_called("db/database.db")
+    db.results_as_hash = false
+
+    return db.execute("SELECT COUNT
         (likes.postid)
     FROM likes
         INNER JOIN posts ON posts.id = likes.postid
@@ -163,10 +203,6 @@ def isLiked()
     return tempArr
 end
 
-def post(id)
-    db = db_called("db/database.db")
-    return db.execute("SELECT * FROM posts WHERE id = ?", id).first
-end
 
 # GET called
 
@@ -306,48 +342,73 @@ get('/showprofile/:id') do
     session[:isNumber] = true
     id = params[:id].to_i
 
-    # db = db_called("db/database.db")
+    db = db_called("db/database.db")
     # result = db.execute("SELECT * FROM users WHERE id = ?", id)
 
     userInfo = users(id)
 
-    result_2 = db.execute("SELECT
-            posts.id,
-            posts.title,
-            posts.text,
-            posts.creatorid,
-            posts.time
-        FROM posts
-            INNER JOIN users ON users.id = posts.creatorid
-        WHERE users.id = ?", id)
+    postSpecificInfo = postSpecificInfo(id)
 
-    result_3 = db.execute("SELECT
-            category.personality
-        FROM category
-            INNER JOIN user_personality_relation ON  category.id = user_personality_relation.categoryid
-        WHERE user_personality_relation.userid = ?", id)
+    # result_2 = db.execute("SELECT
+    #         posts.id,
+    #         posts.title,
+    #         posts.text,
+    #         posts.creatorid,
+    #         posts.time
+    #     FROM posts
+    #         INNER JOIN users ON users.id = posts.creatorid
+    #     WHERE users.id = ?", id)
 
-    creatorid = db.execute("SELECT DISTINCT
-        users.username,
-        posts.creatorid
-    FROM users
-        INNER JOIN posts ON users.id = posts.creatorid")
+    # p db.execute("SELECT
+    #     posts.id,
+    #     posts.title,
+    #     posts.text,
+    #     posts.creatorid,
+    #     posts.time
+    # FROM posts
+    #     INNER JOIN users ON users.id = posts.creatorid
+    # WHERE users.id = ?", id)
+
+    # p db.execute("SELECT
+    #     posts.id,
+    #     posts.title,
+    #     posts.text,
+    #     posts.creatorid,
+    #     posts.time
+    # FROM posts
+    #     INNER JOIN users ON users.id = posts.creatorid
+    # WHERE users.id = ?", id)
+
+    # result_3 = db.execute("SELECT
+    #         category.personality
+    #     FROM category
+    #         INNER JOIN user_personality_relation ON  category.id = user_personality_relation.categoryid
+    #     WHERE user_personality_relation.userid = ?", id)
+
+    usersPersonality = usersPersonality(id)
+
+    # creatorid = db.execute("SELECT DISTINCT
+    #     users.username,
+    #     posts.creatorid
+    # FROM users
+    #     INNER JOIN posts ON users.id = posts.creatorid")
+
+    usernameAndId = usernameAndId()
 
     db.results_as_hash = false
-    likeCountTotal = db.execute("SELECT COUNT
-        (likes.postid)
-    FROM likes
-        INNER JOIN posts ON posts.id = likes.postid
-    WHERE creatorid = ?", id).first.first
+    # likeCountTotal = db.execute("SELECT COUNT
+    #     (likes.postid)
+    # FROM likes
+    #     INNER JOIN posts ON posts.id = likes.postid
+    # WHERE creatorid = ?", id).first.first
 
-    likeCountPost = db.execute("SELECT postid FROM likes")
+    likeCountTotal = likeCountTotal(id)
 
-    likeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
-    newArr = likeArr.map do |el|
-        el = el.first
-    end
+    likeCountPost = likeCountPost()
 
-    slim(:"users/show", locals:{userInfo:userInfo, posts:result_2, personality:result_3, likesCount:likeCountTotal, username_posts:creatorid, likeCountPost:likeCountPost, likes:newArr})
+    isLiked = isLiked()
+
+    slim(:"users/show", locals:{userInfo:userInfo, posts:postSpecificInfo, personality:usersPersonality, likesCount:likeCountTotal, usernameAndId:usernameAndId, likeCountPost:likeCountPost, isLiked:isLiked})
 end
 
 get('/user/:id/edit') do

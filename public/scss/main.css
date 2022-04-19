@@ -646,6 +646,7 @@ footer {
 
 #helapostsdiv #mindrepostsdiv #postList li #divInListObject .likeForm img {
   max-width: 100%;
+  cursor: pointer;
 }
 
 #newPostDiv {
@@ -1185,6 +1186,7 @@ footer {
 
 #helaprofildiv #mindreprofildiv #postList li #divInListObject .likeForm img {
   max-width: 100%;
+  cursor: pointer;
 }
 
 /* EditProfilsidan */
