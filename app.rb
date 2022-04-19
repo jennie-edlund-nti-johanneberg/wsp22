@@ -43,6 +43,21 @@ def uniqueCredentials(credentials)
     return isNotUnique
 end
 
+def uniqueUserUpdate(credential, calledCredential, id)
+    db = db_called("db/database.db")
+    attribute = attributeSpecifikUsers(credential)
+
+    if isUnique(db, "users", credential, calledCredential)
+        db.execute("UPDATE users SET #{credential} = ? WHERE id = ?", calledCredential, id)
+
+    elsif attribute[credential].to_s == calledCredential   
+        isNotUnique = false
+    else
+        isNotUnique = true
+    end
+    return isNotUnique
+end
+
 def isEmpty(text)
     if text == ""
         session[:empty] = true
@@ -170,6 +185,16 @@ def login(username, password)
 end
 
 #Functions
+def attributeSpecifikUsers(credential)
+    db = db_called("db/database.db")
+    return db.execute("SELECT #{credential} FROM users WHERE id = ?", session[:id]).first
+end
+
+# def updateAttributeUsers(credential, attribute, id)
+#     db = db_called("db/database.db")
+#     db.execute("UPDATE users SET #{credential} = ? WHERE id = ?", params[credential], id)
+# end
+
 def filter(filter)
     if filter == "woods"
         session[:filter] = "Woods"
@@ -355,7 +380,7 @@ get('/posts/:filter') do
     #     filterid = 4
     # end
 
-    db = db_called("db/database.db")
+    # db = db_called("db/database.db")
 
     # if filter == "all"
     #     session[:filter] = "All Posts"
@@ -430,7 +455,7 @@ get('/showprofile/:id') do
     session[:isNumber] = true
     id = params[:id].to_i
 
-    db = db_called("db/database.db")
+    # db = db_called("db/database.db")
     # result = db.execute("SELECT * FROM users WHERE id = ?", id)
 
     userInfo = users(id)
@@ -483,7 +508,7 @@ get('/showprofile/:id') do
 
     usernameAndId = usernameAndId()
 
-    db.results_as_hash = false
+    # db.results_as_hash = false
     # likeCountTotal = db.execute("SELECT COUNT
     #     (likes.postid)
     # FROM likes
@@ -534,7 +559,7 @@ end
 # POST called
 
 post('/register') do
-    db = db_called("db/database.db")
+    # db = db_called("db/database.db")
     credentials = [:username, :password, :passwordConfirm, :email, :phonenumber, :birthday]
 
     anyEmpty = emptyCredentials(credentials)
@@ -574,7 +599,7 @@ post('/register') do
         if registration(params[:password], params[:passwordConfirm], params[:username], params[:email], params[:phonenumber], params[:birthday])
             
             # passwordDigest = BCrypt::Password.create(password)
-            # db = db_called("db/database.db")
+            db = db_called("db/database.db")
 
             # db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday) VALUES (?,?,?,?,?)", username, passwordDigest, params[:email], params[:phonenumber], params[:birthday]).first
             # result = db.execute("SELECT * FROM users WHERE username = ?", username).first
@@ -663,13 +688,15 @@ end
 
 post('/user/:id/update') do
     credentials = [:email, :phonenumber, :birthday]
-    db = db_called("db/database.db")
-    id = params[:id].to_i
 
-    anyEmpty = false
-    credentials.each do |credential|
-        anyEmpty = anyEmpty || isEmpty(params[credential])
-    end
+    # anyEmpty = false
+    # credentials.each do |credential|
+    #     anyEmpty = anyEmpty || isEmpty(params[credential])
+    # end
+
+    anyEmpty = emptyCredentials(credentials)
+
+    id = params[:id].to_i
 
     if not isEmail(params[:email])
         route = "/user/#{id}/edit"
@@ -684,17 +711,25 @@ post('/user/:id/update') do
     if not anyEmpty
         isNotUnique = false
         credentials[0..credentials.length - 2].each do |credential|
-            result = db.execute("SELECT #{credential.to_s} FROM users WHERE id = ?", session[:id]).first
+            # result = db.execute("SELECT #{credential.to_s} FROM users WHERE id = ?", session[:id]).first
+            
+            # attribute = attributeSpecifikUsers(credential.to_s)
 
-            if isUnique(db, "users", credential.to_s, params[credential])
-                db.execute("UPDATE users SET #{credential.to_s} = ? WHERE id = ?", params[credential], id)
-            elsif result[credential.to_s].to_s == params[credential]
-                isNotUnique = false
+            # if isUnique(db, "users", credential.to_s, params[credential])
+            #     updateAttributeUsers()
 
-            else
-                isNotUnique = true
-            end
+            #     # db.execute("UPDATE users SET #{credential.to_s} = ? WHERE id = ?", params[credential], id)
+            # elsif attribute[credential.to_s].to_s == params[credential]
+            #     isNotUnique = false
+
+            # else
+            #     isNotUnique = true
+            # end
+
+            uniqueUserUpdate(credential.to_s, params[credential], id)
         end
+
+        db = db_called("db/database.db")
 
         if not isNotUnique 
             birthday = params[:birthday]
