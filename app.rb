@@ -141,6 +141,34 @@ def registration(password, passConfirm, username, email, phonenumber, birthday)
     end
 end
 
+def login(username, password)
+    db = db_called("db/database.db")
+    user = usersByUsername(username).first
+
+    begin
+        pwdigest = user["pwdigest"]
+        id = user["id"]
+    
+        if BCrypt::Password.new(pwdigest) == password
+            session[:loginError] = false
+            session[:id] = id
+            session[:auth] = true
+            session[:user] = username
+            redirect('/posts/all')
+            
+        else
+            #WRONG PASSWORD
+            session[:loginError] = true
+            redirect('/showlogin')
+        end
+        
+    rescue => exception
+        #INVALID USERNAME
+        session[:loginError] = true
+        redirect('/showlogin')
+    end
+end
+
 #Functions
 def filter(filter)
     if filter == "woods"
@@ -599,33 +627,35 @@ post('/login') do
         if isEmpty(username) || isEmpty(password)
             redirect('/showlogin')
         end
-    
-        db = db_called("db/database.db")
-        result = db.execute("SELECT * FROM users WHERE username = ?", username).first
 
-        begin
-            pwdigest = result["pwdigest"]
-            id = result["id"]
+        login(username, password)
+    
+        # db = db_called("db/database.db")
+        # result = db.execute("SELECT * FROM users WHERE username = ?", username).first
+
+        # begin
+        #     pwdigest = result["pwdigest"]
+        #     id = result["id"]
         
-            if BCrypt::Password.new(pwdigest) == password
-                session[:loginError] = false
-                session[:id] = id
-                session[:auth] = true
-                session[:user] = username
-                redirect('/posts/all')
+        #     if BCrypt::Password.new(pwdigest) == password
+        #         session[:loginError] = false
+        #         session[:id] = id
+        #         session[:auth] = true
+        #         session[:user] = username
+        #         redirect('/posts/all')
                 
-            else
-                #WRONG PASSWORD
-                session[:loginError] = true
-                redirect('/showlogin')
-            end
+        #     else
+        #         #WRONG PASSWORD
+        #         session[:loginError] = true
+        #         redirect('/showlogin')
+        #     end
             
-        rescue => exception
-            #INVALID USERNAME
-            session[:loginError] = true
-            redirect('/showlogin')
+        # rescue => exception
+        #     #INVALID USERNAME
+        #     session[:loginError] = true
+        #     redirect('/showlogin')
             
-        end
+        # end
     else
         redirect('/showlogin')
     end
