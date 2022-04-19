@@ -71,13 +71,13 @@ def logTime(id)
     if session[:timeLogged] == nil
         session[:timeLogged] = 0
     end
-    p tempTime
-    p session[:timeLogged]
+    # p tempTime
+    # p session[:timeLogged]
     tempTime = tempTime - session[:timeLogged]
 
-    p tempTime
+    # p tempTime
 
-    if tempTime < 5
+    if tempTime < 3
         session[:timeLogged] = tempTime
         session[:stress] = true
         return false
@@ -414,10 +414,14 @@ end
 get('/user/:id/edit') do
     id = params[:id].to_i
     if session[:id] == id
-        db = db_called("db/database.db")
-        result = db.execute("SELECT * FROM users WHERE id = ?", id).first
-        checked = db.execute("SELECT categoryid FROM user_personality_relation WHERE userid = ?", id)
-        slim(:"users/edit", locals:{user:result, checked:checked})
+        # db = db_called("db/database.db")
+        # result = db.execute("SELECT * FROM users WHERE id = ?", id).first
+        user = users(id).first
+        # p ""
+        # p result
+        # p ""
+        # checked = db.execute("SELECT categoryid FROM user_personality_relation WHERE userid = ?", id)
+        slim(:"users/edit", locals:{user:user})
     else
         redirect('/error/401')
     end
