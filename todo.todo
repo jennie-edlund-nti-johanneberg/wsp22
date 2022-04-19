@@ -1,40 +1,29 @@
 Lite skit:
-    ☐ <input type="text" id="username" name="username" required>
-    ☐ <input type="text" id="fname" name="fname" autofocus><br>
-    ☐ <form action="/action_page.php" autocomplete="on">
+    <input type="text" id="username" name="username" required>
+    <input type="text" id="fname" name="fname" autofocus><br>
+    <form action="/action_page.php" autocomplete="on">
     ✔ def för db @done(22-03-08 15:26)
-
-Forms, fixa undantagshantering + tex maxlength och sånt:
-    ☐ Register
-    ☐ Login
-    ☐ New post
-    ☐ Update
-    ☐ Delete
-
-Validering:
-    ☐ Inlogg
-    ☐ Kolla presentation och cheat-sheet
 
 Koppla:
     ✔ Post till användare @done(22-03-20 22:07)
     ✔ Användare till personlighet @done(22-03-20 22:07)
     ✔ Användare till Likes vise versa @done(22-03-20 22:07)
-    ☐ Kopplas till login från logout eller?
-    ☐ Kunna ladda upp fil som bakgrundsbild?
+    ✔ Kopplas till login från logout eller? @done(22-04-19 13:58)
+    Kunna ladda upp fil som bakgrundsbild?
     ✔ Koppla javascrip @done(22-03-01 13:38)
 
 Fix typ:
     ☐ Before grejer fin kod?
-    ☐ Login och register båda samma undantag, kan vara som en funktion?
+    ✔ Login och register båda samma undantag, kan vara som en funktion? @done(22-04-19 13:57)
     ☐ .firts och är det ska va
-    ☐ Ska relation tabeller ha eget id?
-    ☐ Behövs rescue på index edit??
+    Ska relation tabeller ha eget id?
+    Behövs rescue på index edit??
     ✔ SKA BILD VA I PUBIC? @done(22-03-01 13:38)
     ☐ Se till att alla routes och filer är döpta rätt
     ✔ personality på show profile @done(22-03-01 13:38)
     ☐ Model.rb, all databas grejs ska vara i en egen fil :)
 
-Innan arbete:
+Innan arbete fix:
     ☐ ER-diagram
     ☐ Skisserna ska ändras? I alla fall lägga till Profilskiss.
 
@@ -43,7 +32,6 @@ Vad ska göras:
     ✔ likes total i nav @done(22-03-08 15:25)
     ✔ Likes per post @done(22-03-08 22:08)
     ✔ filter @done(22-03-15 17:19)
-    ☐ inte scrollas ner?
     ✔ kunna redigera sin profil @done(22-03-20 18:49)
     ✔ länk på update på posts är lång? @done(22-03-10 20:54)
     ✔ tid när inlägget läggs upp @done(22-03-10 20:09)
@@ -53,7 +41,9 @@ Vad ska göras:
     ✔ Admin som kan ta bort och redigera alla posts, användare 1 har admin och ska kunna se alla likes också @done(22-03-20 22:28)
     ✔ Ta bort likes relationer och annat när posts tas bort @done(22-03-20 19:14)
     ✔ Kolla om användaren värkligen äger posten för delete eller redigering eller redigering för profil @done(22-03-20 22:06)
-    ☐ Fråga Emil om admin
+    ✔ Fråga Emil om admin @done(22-04-19 13:45)
+    ☐ before block
+    ✔ Fråga om valedering och vad som behövs @done(22-04-19 13:45)
     ✔ delete popup @done(22-03-21 15:49)
     ✔ New post ful, inte klar med profilsidan, också css för profiledit sidan @done(22-03-29 14:15)
     ✔ fix för delete modal @done(22-03-29 14:15)
@@ -62,7 +52,7 @@ Vad ska göras:
     -unique och empty-
     ✔ new @done(22-04-05 19:28)
     ✔ update @done(22-04-16 16:02)
-    ✔ profil (bithday loop och felmedelande vid rätt!!) @done(22-04-05 18:32)
+    ✔ profil (bithday loop och felmedelande vid rätt!!) @done(22-04-16 21:23)
     ✔ login @done(22-04-05 19:08)
     ✔ registrering (session unique) @done(22-04-05 19:02)
 
@@ -70,23 +60,18 @@ Vad ska göras:
     ✔ register @done(22-04-16 19:39)
     ✔ edit profil @done(22-04-16 19:51)
 
-    -tecken långt && försvinner-
-    ☐ new
-    ☐ update
-    ☐ profil
-    ☐ login
-    ☐ registrering
-
     -nummer && försvinner-
-    ☐ register
-    ☐ edit profil
+    ✔ register @done(22-04-16 20:36)
+    ✔ edit profil @done(22-04-16 21:36)
 
-    -stress && försvinner-
+    -stress && försvinner- med session id
     ☐ new
     ☐ update
     ☐ profil
     ☐ login
     ☐ registrering
+
+    ☐ var session time?
 
     ✔ när redigerar profil? ändars det? @done(22-03-29 17:14)
     ✔ fixa för admin också @done(22-03-21 16:38)
@@ -94,17 +79,21 @@ Vad ska göras:
     ✔ tas felmedelandebort när går bort? @done(22-04-16 18:11)
     ✔ fixa css för felmedelande @done(22-04-16 18:16)
     ☐ Fixa before till att kolla att woods har woods
+    ☐ likeCount kan uppdateras fler gånger??
     ✔ inte kunna edit profil? @done(22-04-16 18:11)
     ✔ css för edit profil @done(22-03-29 17:52)
     ☐ för admin css och kan ändra på profiler ska kunna ta bort???
-    ☐ Fixa modul.rb
+    ☐ Fixa model.rb
     ☐ fixa projektrapporten
     ☐ validering (flera login, auth m.m, characters, mail m.m)
+    ☐ yardock och modul
     ☐ kolla presentationer
+    ☐ ta bort onödiga bilder i img
 
 Önskas: 
     ☐ när redigera sin profil ska personligheter va kvar!!
     ☐ likar på profilsida tas till index
+    ☐ inte scrollas ner?
 
     
 https://css-tricks.com/the-checkbox-hack/

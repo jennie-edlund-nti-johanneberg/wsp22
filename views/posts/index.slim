@@ -15,9 +15,9 @@ div id="helapostsdiv"
           li
             div id="divInListObject"
               div id="divForCreator"
-                - username_posts.each do |user|    
-                  - if post["creatorid"] == user["creatorid"]
-                    a href="/showprofile/#{user["creatorid"]}" #{user["username"]}
+                - usernameAndId.each do |user|    
+                  - if post["creatorid"] == user["id"]
+                    a href="/showprofile/#{user["id"]}" #{user["username"]}
                     p = post["time"]
 
               div id="divForContent"
@@ -74,7 +74,7 @@ div id="helapostsdiv"
 
               - else
                 div class="divForUnderPost" id="underPostLike"
-                  - if likes.include?(post["id"])
+                  - if isLiked.include?(post["id"])
                     form class="likeForm" method="post" action="post/#{post['id']}/#{session[:id]}/unlike"
                       img class="likeHeart" src="./img/heart_red.png" alt="heart"/
                   - else 

@@ -48,6 +48,111 @@ def isEmail(text)
     end
 end
 
+def isNumber(number)
+    answer = number.scan(/\D/).empty?
+
+    if answer
+        session[:isNumber] = true
+        return true
+    else
+        session[:isNumber] = false
+        return false
+    end
+end
+
+def logTime(id)
+
+    tempTime = Time.now.to_i
+    if session[:timeLogged] == nil
+        session[:timeLogged] = 0
+    end
+    p tempTime
+    p session[:timeLogged]
+    tempTime = tempTime - session[:timeLogged]
+
+    p tempTime
+
+    if tempTime < 5
+        session[:timeLogged] = tempTime
+        session[:stress] = true
+        return false
+    else
+        session[:timeLogged] = tempTime
+        session[:stress] = false
+        return true
+    end
+end
+
+def filter(filter)
+    if filter == "woods"
+        session[:filter] = "Woods"
+        return 1
+    elsif filter == "sea"
+        session[:filter] = "Sea"
+        return 2
+    elsif filter == "mountains"
+        session[:filter] = "Mountains"
+        return 3
+    elsif filter == "lakes"
+        session[:filter] = "Lakes"
+        return 4
+    else
+        session[:filter] = "All Posts"
+        return "all"
+    end
+end
+
+def posts(filter)
+    db = db_called("db/database.db")
+    filterId = filter(filter)
+
+    if filterId == "all"
+        session[:filter] = "All Posts"
+        return db.execute("SELECT * FROM posts")
+    else
+        return db.execute("SELECT * FROM posts WHERE creatorid IN (
+            SELECT DISTINCT
+                user_personality_relation.userid
+            FROM user_personality_relation
+                INNER JOIN category ON user_personality_relation.categoryid = ?)", filterId)
+    end
+end
+
+def usernameAndId()
+    db = db_called("db/database.db")
+    return db.execute("SELECT DISTINCT username, id FROM users")
+end
+
+def likeCountClient(id)
+    db = db_called("db/database.db")
+    db.results_as_hash = false
+
+    session[:likeCount] = db.execute("SELECT COUNT
+        (likes.postid)
+    FROM likes
+        INNER JOIN posts ON posts.id = likes.postid
+    WHERE creatorid = ?", id).first.first
+end
+
+def likeCountPost()
+    db = db_called("db/database.db")
+    db.results_as_hash = false
+
+    return db.execute("SELECT postid FROM likes")
+end
+
+def isLiked()
+    db = db_called("db/database.db")
+    db.results_as_hash = false
+
+    isLikeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
+    tempArr = isLikeArr.map do |el|
+        el = el.first
+    end
+
+    return tempArr
+end
+
 # GET called
 
 get('/') do
@@ -57,6 +162,8 @@ get('/') do
     session[:empty] = false
     session[:notUnique] = false
     session[:isEmail] = true
+    session[:isNumber] = true
+    session[:timeLogged] = 0
     slim(:start)
 end
 
@@ -69,6 +176,7 @@ get('/showlogin') do
     session[:notUnique] = false
     session[:registerError] = false
     session[:isEmail] = true
+    session[:isNumber] = true
     slim(:login)
 end
 
@@ -79,6 +187,7 @@ get('/logout') do
     session[:empty] = false
     session[:notUnique] = false
     session[:isEmail] = true
+    session[:isNumber] = true
     session[:auth] = false
     slim(:start)
 end
@@ -87,56 +196,67 @@ get('/posts/:filter') do
     session[:notUnique] = false
     session[:empty] = false
     session[:isEmail] = true
+    session[:isNumber] = true
     id = session[:id]
     filter = params[:filter]
 
-    if filter == "woods"
-        session[:filter] = "Woods"
-        filterid = 1
-    elsif filter == "sea"
-        session[:filter] = "Sea"
-        filterid = 2
-    elsif filter == "mountains"
-        session[:filter] = "Mountains"
-        filterid = 3
-    else
-        session[:filter] = "Lakes"
-        filterid = 4
-    end
+    # filterid = filter(filter)
+
+    # if filter == "woods"
+    #     session[:filter] = "Woods"
+    #     filterid = 1
+    # elsif filter == "sea"
+    #     session[:filter] = "Sea"
+    #     filterid = 2
+    # elsif filter == "mountains"
+    #     session[:filter] = "Mountains"
+    #     filterid = 3
+    # else
+    #     session[:filter] = "Lakes"
+    #     filterid = 4
+    # end
 
     db = db_called("db/database.db")
 
-    if filter == "all"
-        session[:filter] = "All Posts"
-        result = db.execute("SELECT * FROM posts")
-    else
-        result = db.execute("SELECT * FROM posts WHERE creatorid IN (
-            SELECT DISTINCT
-                user_personality_relation.userid
-            FROM user_personality_relation
-                INNER JOIN category ON user_personality_relation.categoryid = ?)", filterid)
-    end
+    # if filter == "all"
+    #     session[:filter] = "All Posts"
+    #     posts = db.execute("SELECT * FROM posts")
+    # else
+    #     posts = db.execute("SELECT * FROM posts WHERE creatorid IN (
+    #         SELECT DISTINCT
+    #             user_personality_relation.userid
+    #         FROM user_personality_relation
+    #             INNER JOIN category ON user_personality_relation.categoryid = ?)", filterid)
+    # end
 
-    creatorid = db.execute("SELECT DISTINCT
-        users.username,
-        posts.creatorid
-    FROM users
-        INNER JOIN posts ON users.id = posts.creatorid")
+    posts = posts(filter)
 
-    db.results_as_hash = false
-    session[:likeCount] = db.execute("SELECT COUNT
-            (likes.postid)
-        FROM likes
-            INNER JOIN posts ON posts.id = likes.postid
-        WHERE creatorid = ?", id).first.first
+    usernameAndId = usernameAndId()
+    # ("SELECT DISTINCT
+    #     users.username,
+    #     posts.creatorid
+    # FROM users
+    #     INNER JOIN posts ON users.id = posts.creatorid")
 
-    likeCountPost = db.execute("SELECT postid FROM likes")
-    likeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
-    newArr = likeArr.map do |el|
-        el = el.first
-    end
+    # db.results_as_hash = false
+    likeCountClient(id)
+
+    # session[:likeCount] = db.execute("SELECT COUNT
+    #         (likes.postid)
+    #     FROM likes
+    #         INNER JOIN posts ON posts.id = likes.postid
+    #     WHERE creatorid = ?", id).first.first
+
+
+
+    likeCountPost = likeCountPost()
+    isLiked = isLiked()
+    # likeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
+    # newArr = likeArr.map do |el|
+    #     el = el.first
+    # end
     
-    slim(:"posts/index", locals:{posts:result, username_posts:creatorid, likes:newArr, likeCountPost:likeCountPost})
+    slim(:"posts/index", locals:{posts:posts, usernameAndId:usernameAndId, isLiked:isLiked, likeCountPost:likeCountPost})
 end
 
 get('/newpost/:id') do
@@ -167,6 +287,7 @@ get('/showprofile/:id') do
     session[:empty] = false
     session[:notUnique] = false
     session[:isEmail] = true
+    session[:isNumber] = true
     id = params[:id].to_i
     db = db_called("db/database.db")
     result = db.execute("SELECT * FROM users WHERE id = ?", id)
@@ -253,6 +374,10 @@ post('/register') do
         redirect('/showregister')
     end
 
+    if not isNumber(params[:phonenumber])
+        redirect('/showregister')
+    end
+
     credentials = [:username, :pwdigest, :email, :phonenumber]
 
     isNotUnique = false
@@ -318,38 +443,42 @@ post('/register') do
 end
 
 post('/login') do
-    username = params[:username]
-    password = params[:password]
+    if logTime(session[:id])
+        username = params[:username]
+        password = params[:password]
 
-    if isEmpty(username) || isEmpty(password)
-        redirect('/showlogin')
-    end
-  
-    db = db_called("db/database.db")
-    result = db.execute("SELECT * FROM users WHERE username = ?", username).first
-
-    begin
-        pwdigest = result["pwdigest"]
-        id = result["id"]
-    
-        if BCrypt::Password.new(pwdigest) == password
-            session[:loginError] = false
-            session[:id] = id
-            session[:auth] = true
-            session[:user] = username
-            redirect('/posts/all')
-            
-        else
-            #WRONG PASSWORD
-            session[:loginError] = true
+        if isEmpty(username) || isEmpty(password)
             redirect('/showlogin')
         end
+    
+        db = db_called("db/database.db")
+        result = db.execute("SELECT * FROM users WHERE username = ?", username).first
+
+        begin
+            pwdigest = result["pwdigest"]
+            id = result["id"]
         
-    rescue => exception
-        #INVALID USERNAME
-        session[:loginError] = true
+            if BCrypt::Password.new(pwdigest) == password
+                session[:loginError] = false
+                session[:id] = id
+                session[:auth] = true
+                session[:user] = username
+                redirect('/posts/all')
+                
+            else
+                #WRONG PASSWORD
+                session[:loginError] = true
+                redirect('/showlogin')
+            end
+            
+        rescue => exception
+            #INVALID USERNAME
+            session[:loginError] = true
+            redirect('/showlogin')
+            
+        end
+    else
         redirect('/showlogin')
-        
     end
 end
 
@@ -368,13 +497,21 @@ post('/user/:id/update') do
         redirect(route)
     end
 
+    if not isNumber(params[:phonenumber])
+        route = "/user/#{id}/edit"
+        redirect(route)
+    end
+
     if not anyEmpty
         isNotUnique = false
         credentials[0..credentials.length - 2].each do |credential|
-            result = db.execute("SELECT #{credential.to_s} FROM users WHERE id = ?", session[:id])
+            result = db.execute("SELECT #{credential.to_s} FROM users WHERE id = ?", session[:id]).first
 
-            if isUnique(db, "users", credential.to_s, params[credential]) || result != params[credential]
+            if isUnique(db, "users", credential.to_s, params[credential])
                 db.execute("UPDATE users SET #{credential.to_s} = ? WHERE id = ?", params[credential], id)
+            elsif result[credential.to_s].to_s == params[credential]
+                isNotUnique = false
+
             else
                 isNotUnique = true
             end

@@ -9,7 +9,8 @@ div id="helalogindiv"
             input type="password" name="password" placeholder="Enter password" maxlength="10"
             br/
             input type="submit" value="Log In"/
-
+            
+        p "#{session[:stress]}"
             
         - if session[:loginError]
             article.registerError
@@ -18,3 +19,8 @@ div id="helalogindiv"
         - if session[:empty]
             article.inputError
                 h1 ALL INPUTS REQUIRED
+
+        - if session[:stress]
+            article.inputError
+                h1 SLOW DOWN!!
+                
