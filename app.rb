@@ -13,15 +13,14 @@ enable :sessions
 
 # end
 
-#Functions
-
+#Database called
 def db_called(path)
     db = SQLite3::Database.new(path)
     db.results_as_hash = true
     return db
 end
 
-
+#Verification
 def isUnique(db, table, attribute, check)
     query = "SELECT * FROM #{table} WHERE #{attribute} = ?"
     result = db.execute(query, check)
@@ -34,6 +33,16 @@ def isUnique(db, table, attribute, check)
     end
 end
 
+def uniqueCredentials(credentials)
+    db = db_called("db/database.db")
+
+    isNotUnique = false
+    credentials.each do |credential|
+        isNotUnique = isNotUnique || !isUnique(db, "users", credential.to_s, params[credential])
+    end
+    return isNotUnique
+end
+
 def isEmpty(text)
     if text == ""
         session[:empty] = true
@@ -42,6 +51,14 @@ def isEmpty(text)
         session[:empty] = false
         return false
     end
+end
+
+def emptyCredentials(credentials)
+    anyEmpty = false
+    credentials.each do |credential|
+        anyEmpty = anyEmpty || isEmpty(params[credential])
+    end
+    return anyEmpty
 end
 
 def isEmail(text)
@@ -88,6 +105,43 @@ def logTime(id)
     end
 end
 
+def passwordMatch(pw1, pw2)
+    if pw1 == pw2
+        return true
+    else
+        return false
+    end
+end
+
+# def personalityTest()
+
+    
+
+# end
+
+def registration(password, passConfirm, username, email, phonenumber, birthday)
+
+    if passwordMatch(password, passConfirm)
+        passwordDigest = BCrypt::Password.create(password)
+        db = db_called("db/database.db")
+        db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday) VALUES (?,?,?,?,?)", username, passwordDigest, email, phonenumber, birthday).first
+
+        # result = db.execute("SELECT * FROM users WHERE username = ?", username).first
+        user = usersByUsername(username).first
+        # p "user: #{user}"
+        session[:id] = user["id"]
+        session[:user] = username
+        session[:auth] = true
+        session[:empty] = false
+        session[:notUnique] = false
+        return true
+    else
+        session[:registerError] = true
+        redirect('/showregister')
+    end
+end
+
+#Functions
 def filter(filter)
     if filter == "woods"
         session[:filter] = "Woods"
@@ -147,6 +201,11 @@ def users(id)
     return db.execute("SELECT * FROM users WHERE id = ?", id)
 end
 
+def usersByUsername(username)
+    db = db_called("db/database.db")
+    return db.execute("SELECT * FROM users WHERE username = ?", username)
+end
+
 def usernameAndId()
     db = db_called("db/database.db")
     return db.execute("SELECT username, id FROM users")
@@ -204,7 +263,8 @@ def isLiked()
 end
 
 
-# GET called
+
+# GET route
 
 get('/') do
     session[:loginError] = false
@@ -447,40 +507,50 @@ end
 
 post('/register') do
     db = db_called("db/database.db")
-    credentials = [:username, :password, :passwordconfirm, :email, :phonenumber, :birthday]
+    credentials = [:username, :password, :passwordConfirm, :email, :phonenumber, :birthday]
 
-    anyEmpty = false
-    credentials.each do |credential|
-        anyEmpty = anyEmpty || isEmpty(params[credential])
-    end
+    anyEmpty = emptyCredentials(credentials)
+    # anyEmpty = false
+    # credentials.each do |credential|
+    #     anyEmpty = anyEmpty || isEmpty(params[credential])
+    # end
 
-    if not isEmail(params[:email])
-        redirect('/showregister')
-    end
-
-    if not isNumber(params[:phonenumber])
-        redirect('/showregister')
-    end
+    
 
     credentials = [:username, :pwdigest, :email, :phonenumber]
 
-    isNotUnique = false
-    credentials.each do |credential|
-        isNotUnique = isNotUnique || !isUnique(db, "users", credential.to_s, params[credential])
-    end
+    # isNotUnique = false
+    # credentials.each do |credential|
+    #     isNotUnique = isNotUnique || !isUnique(db, "users", credential.to_s, params[credential])
+    # end
 
-    password = params[:password]
-    passwordconfirm = params[:passwordconfirm]
+    isNotUnique = uniqueCredentials(credentials)
 
     if not anyEmpty and not isNotUnique
-        if password == passwordconfirm
-            username = params[:username]
-            passwordDigest = BCrypt::Password.create(password)
-            db = db_called("db/database.db")
 
-            db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday) VALUES (?,?,?,?,?)", username, passwordDigest, params[:email], params[:phonenumber], params[:birthday]).first
-            result = db.execute("SELECT * FROM users WHERE username = ?", username).first
-            session[:id] = result["id"]
+        if not isEmail(params[:email])
+            redirect('/showregister')
+        end
+    
+        if not isNumber(params[:phonenumber])
+            redirect('/showregister')
+        end
+
+        # password = params[:password]
+        # passwordConfirm = params[:passwordConfirm]
+        # username = params[:username]
+        # email = params[:email]
+        # phonenumber = params[:phonenumber]
+        # birthday = params[:birthday]
+
+        if registration(params[:password], params[:passwordConfirm], params[:username], params[:email], params[:phonenumber], params[:birthday])
+            
+            # passwordDigest = BCrypt::Password.create(password)
+            # db = db_called("db/database.db")
+
+            # db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday) VALUES (?,?,?,?,?)", username, passwordDigest, params[:email], params[:phonenumber], params[:birthday]).first
+            # result = db.execute("SELECT * FROM users WHERE username = ?", username).first
+            # session[:id] = result["id"]
 
             begin
                 woods = params[:woods]
@@ -510,16 +580,11 @@ post('/register') do
                 end 
             end
 
-            session[:auth] = true
-            session[:user] = username
-            session[:empty] = false
-            session[:notUnique] = false
             redirect('/posts/all')
-        else
-            session[:registerError] = true
-            redirect('/showregister')
+        # else
+        #     session[:registerError] = true
+        #     redirect('/showregister')
         end
-
     else
         # route = "/post/#{id}/#{session[:id]}/edit"
         redirect('/showregister')
