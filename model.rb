@@ -7,7 +7,6 @@ end
 
 #Verification
 def auth(userid)
-    p "auth"
     if session[:id] != userid
         redirect("/error/401/")
     end
@@ -95,11 +94,7 @@ def logTime(id)
     if session[:timeLogged] == nil
         session[:timeLogged] = 0
     end
-    # p tempTime
-    # p session[:timeLogged]
     tempTime = tempTime - session[:timeLogged]
-
-    # p tempTime
 
     if tempTime < 3
         session[:timeLogged] = tempTime
@@ -135,7 +130,6 @@ def registration(password, passConfirm, username, email, phonenumber, birthday)
 
         # result = db.execute("SELECT * FROM users WHERE username = ?", username).first
         user = usersByUsername(username).first
-        # p "user: #{user}"
         session[:id] = user["id"]
         session[:user] = username
         session[:auth] = true
@@ -298,7 +292,6 @@ def postUpdate(title, postid, userid)
         text = params[:text]
 
         if isUnique(db, "posts", "title", title)
-            # p "text till pots:#{text}"
             db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
             redirect('/posts/all')
         elsif result['title'] == title 

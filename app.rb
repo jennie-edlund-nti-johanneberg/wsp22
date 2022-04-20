@@ -8,26 +8,22 @@ require_relative 'model'
 enable :sessions
 
 #Before functions
-protected_routes = ["/logout", "/posts/:filter", "/newpost/:userid", "/post/:postid/:userid/edit", "/showprofile/:id", "/user/:id/edit",]
+# protected_routes = ["/logout", "/posts/:filter", "/newpost/:userid", "/post/:postid/:userid/edit", "/showprofile/:id", "/user/:id/edit"]
+unProtectedRoutes = ['/', '/showregister', '/showlogin']
 
 before do
-    p "rrrr: #{request.path_info}"
+    path = request.path_info
+    pathInclude = unProtectedRoutes.include?(path)
+    pathMethod = request.request_method
 
-    # protected_routes.each do |route|
-    #     if request.path_info.match(route)
-    #         s = request.path_info.gsub(route, "")
-    #         p s
-    #         p session[:id]
-    #         if session[:id] != s.to_i
-    #             p "INTE SAMMA ID"
-    #             redirect('/error/401')
-    #         end
-    #     end
-    # end
+
+    if not pathInclude and not session[:auth] and path != "/error/401" and pathMethod == "GET"
+        redirect("/error/401")
+    end
 end
 
-# GET route
 
+# GET route
 get('/') do
     session[:loginError] = false
     session[:registerError] = false
@@ -37,11 +33,13 @@ get('/') do
     session[:isEmail] = true
     session[:isNumber] = true
     session[:timeLogged] = 0
+    session[:auth] = false
     slim(:start)
 end
 
 get('/showregister') do
     session[:loginError] = false
+    session[:auth] = false
     slim(:register)
 end
 
@@ -50,6 +48,7 @@ get('/showlogin') do
     session[:registerError] = false
     session[:isEmail] = true
     session[:isNumber] = true
+    session[:auth] = false
     slim(:login)
 end
 
@@ -142,12 +141,15 @@ get('/error/:id') do
     slim(:error, locals: {errorId:errorId, errorMsg:errorMsg})
 end
 
-get('/*') do
-    redirect('/error/404')
+# get('/*') do
+#     redirect('/error/404')
+# end
+
+not_found do
+    redirect("/error/404")
 end
 
 # POST called
-
 post('/register') do
     credentials = [:username, :password, :passwordConfirm, :email, :phonenumber, :birthday]
     anyEmpty = emptyCredentials(credentials)

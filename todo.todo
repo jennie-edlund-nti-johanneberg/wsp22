@@ -72,15 +72,16 @@ Vad ska göras:
     -before-
     ☐ new post
     ☐ post edit
+    ☐ Fixa before till att kolla att woods har woods
 
     ✔ när redigerar profil? ändars det? @done(22-03-29 17:14)
     ✔ fixa för admin också @done(22-03-21 16:38)
     ✔ ha tillgång till update profil, post, new post?? kolla på get router @done(22-04-16 17:47)
     ✔ tas felmedelandebort när går bort? @done(22-04-16 18:11)
     ✔ fixa css för felmedelande @done(22-04-16 18:16)
-    ☐ Fixa before till att kolla att woods har woods
+
     ☐ before
-        ☐ session[:auth]
+        ✔ session[:auth] @done(22-04-20 22:14)
         ☐ sessions i allmänhet
 
     ✔ auth @done(22-04-20 20:10)
@@ -101,14 +102,33 @@ Vad ska göras:
     ✔ inte kunna edit profil? @done(22-04-16 18:11)
     ✔ css för edit profil @done(22-03-29 17:52)
     ✔ för admin css och kan ändra på profiler ska kunna ta bort??? @done(22-04-19 19:18)
-    ☐ Fixa model.rb
+    ✔ Fixa model.rb @done(22-04-20 20:25)
     ☐ ta bort onödiga komentarer och p
     ☐ ta bort onödiga bilder i img
     ☐ ta bort test.rb
     ☐ fixa projektrapporten
+        ☐ skissar
+            ☐ error
+            ✔ login @done(22-04-20 23:07)
+            ✔ register @done(22-04-20 23:08)
+            ✔ start @done(22-04-20 23:08)
+
+            ✔ post @done(22-04-20 23:08)
+                ✔ edit @done(22-04-20 23:07)
+                ✔ index @done(22-04-20 23:08)
+                ✔ new @done(22-04-20 23:07)
+
+            ☐ users
+                ☐ edit
+                ☐ show
+
     ☐ validering (flera login, auth m.m, characters, mail m.m)
-    ☐ yardock och modul
+    ☐ misc i mapp och dokumentation behövs?
+    ☐ andra onödiga grejor så som mappar, filer, bilder osv
     ☐ kolla presentationer
+    ☐ todo.todo
+    ☐ yardock och modul
+    ☐ utvärdering
 
 Önskas: 
     ☐ när redigera sin profil ska personligheter va kvar!!
