@@ -111,9 +111,10 @@ footer {
 
 #startinfodiv {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: baseline;
-    margin-top: 5rem;
+    margin: 5rem;
     height: 100vh;
 }
 

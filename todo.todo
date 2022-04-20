@@ -83,20 +83,21 @@ Vad ska göras:
         ☐ session[:auth]
         ☐ sessions i allmänhet
 
-    ☐ auth
+    ✔ auth @done(22-04-20 20:10)
         ✔ new @done(22-04-20 19:34)
         ✔ edit @done(22-04-20 19:35)
-        ☐ delete
+        ✔ delete @done(22-04-20 20:10)
         ✔ profil @done(22-04-20 19:48)
         ✔ profil edit @done(22-04-20 19:48)
-        ☐ like
-        ☐ unlike
+        ✔ like @done(22-04-20 20:10)
+        ✔ unlike @done(22-04-20 20:10)
 
     -fix
     ☐ login
     ☐ registrering
+    ☐ update profil
 
-    ☐ likeCount kan uppdateras fler gånger??
+    ✔ likeCount kan uppdateras fler gånger?? @done(22-04-20 20:13)
     ✔ inte kunna edit profil? @done(22-04-16 18:11)
     ✔ css för edit profil @done(22-03-29 17:52)
     ✔ för admin css och kan ändra på profiler ska kunna ta bort??? @done(22-04-19 19:18)
