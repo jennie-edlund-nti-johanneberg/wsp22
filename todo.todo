@@ -83,6 +83,15 @@ Vad ska göras:
     ✔ tas felmedelandebort när går bort? @done(22-04-16 18:11)
     ✔ fixa css för felmedelande @done(22-04-16 18:16)
     ☐ Fixa before till att kolla att woods har woods
+    ☐ beforeblock
+        ☐ new
+        ☐ edit
+        ☐ delete
+        ☐ profil
+        ☐ profil edit
+        ☐ like
+        ☐ unlike
+
     ☐ likeCount kan uppdateras fler gånger??
     ✔ inte kunna edit profil? @done(22-04-16 18:11)
     ✔ css för edit profil @done(22-03-29 17:52)

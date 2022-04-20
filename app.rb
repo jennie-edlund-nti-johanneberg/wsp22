@@ -214,6 +214,30 @@ def filter(filter)
     end
 end
 
+def filterRoute()
+    if session[:filter] == "Lakes"
+        redirect('/posts/lakes')
+    elsif session[:filter] == "Woods"
+        redirect('/posts/woods')
+    elsif session[:filter] == "Sea"
+        redirect('/posts/sea')
+    elsif session[:filter] == "Mountains"
+        redirect('/posts/mountains')
+    else
+        redirect('/posts/all')
+    end
+end
+
+def insertLike(userid, postid)
+    db = db_called("db/database.db")
+    db.execute("INSERT INTO likes (userid,postid) VALUES (?,?)", userid, postid)
+end
+
+def deleteLike(userid, postid)
+    db = db_called("db/database.db")
+    db.execute("DELETE FROM likes WHERE postid = ? AND userid = ?", postid, userid)
+end
+
 def posts(filter)
     db = db_called("db/database.db")
     filterId = filter(filter)
@@ -269,7 +293,6 @@ def postNew(title, text)
 end
 
 def postUpdate(title, postid, userid)
-
     if not isEmpty(title)
         anyEmpty = false
     else
@@ -297,6 +320,18 @@ def postUpdate(title, postid, userid)
     else
         route = "/post/#{postid}/#{userid}/edit"
         redirect(route)
+    end
+
+end
+
+def postDelete(userid, postid)
+    if userid == session[:id]
+        db = db_called("db/database.db")
+        db.execute("DELETE FROM posts WHERE id = ?", postid)
+        db.execute("DELETE FROM likes WHERE postid = ?", postid)
+        redirect('/posts/all')
+    else
+        redirect('/error/401')
     end
 
 end
@@ -917,37 +952,43 @@ end
 
 post('/post/:postid/:userid/delete') do
     userid = params[:userid].to_i
-    if userid == session[:id]
-        postid = params[:postid].to_i
-        db = db_called("db/database.db")
-        db.execute("DELETE FROM posts WHERE id = ?", postid)
-        db.execute("DELETE FROM likes WHERE postid = ?", postid)
-        redirect('/posts/all')
-    else
-        redirect('/error/401')
-    end
+    postid = params[:postid].to_i
+
+    postDelete(userid, postid)
+    # if userid == session[:id]
+    #     postid = params[:postid].to_i
+    #     db = db_called("db/database.db")
+    #     db.execute("DELETE FROM posts WHERE id = ?", postid)
+    #     db.execute("DELETE FROM likes WHERE postid = ?", postid)
+    #     redirect('/posts/all')
+    # else
+    #     redirect('/error/401')
+    # end
 end
 
 post('/post/:postid/:userid/like') do
     userid = params[:userid].to_i
     if userid == session[:id]
         postid = params[:postid].to_i
-        db = db_called("db/database.db")
-        db.execute("INSERT INTO likes (userid,postid) VALUES (?,?)", userid, postid)
+        # db = db_called("db/database.db")
+        # db.execute("INSERT INTO likes (userid,postid) VALUES (?,?)", userid, postid)
+        insertLike(userid, postid)
 
-        if session[:filter] == "Lakes"
-            redirect('/posts/lakes')
-        elsif session[:filter] == "Woods"
-            redirect('/posts/woods')
-        elsif session[:filter] == "Sea"
-            redirect('/posts/sea')
-        elsif session[:filter] == "Mountains"
-            redirect('/posts/mountains')
-        elsif session[:filter] == "Profil"
-            redirect('/posts/mountains')
-        else
-            redirect('/posts/all')
-        end
+        # if session[:filter] == "Lakes"
+        #     redirect('/posts/lakes')
+        # elsif session[:filter] == "Woods"
+        #     redirect('/posts/woods')
+        # elsif session[:filter] == "Sea"
+        #     redirect('/posts/sea')
+        # elsif session[:filter] == "Mountains"
+        #     redirect('/posts/mountains')
+        # elsif session[:filter] == "Profil"
+        #     redirect('/posts/mountains')
+        # else
+        #     redirect('/posts/all')
+        # end
+
+        filterRoute()
         
     else
         redirect('/error/401')
@@ -958,20 +999,22 @@ post('/post/:postid/:userid/unlike') do
     userid = params[:userid].to_i
     if userid == session[:id]
         postid = params[:postid].to_i
-        db = db_called("db/database.db")
-        db.execute("DELETE FROM likes WHERE postid = ? AND userid = ?", postid, userid)
+        # db = db_called("db/database.db")
+        # db.execute("DELETE FROM likes WHERE postid = ? AND userid = ?", postid, userid)
+        deleteLike(userid, postid)
 
-        if session[:filter] == "Lakes"
-            redirect('/posts/lakes')
-        elsif session[:filter] == "Woods"
-            redirect('/posts/woods')
-        elsif session[:filter] == "Sea"
-            redirect('/posts/sea')
-        elsif session[:filter] == "Mountains"
-            redirect('/posts/mountains')
-        else
-            redirect('/posts/all')
-        end
+        # if session[:filter] == "Lakes"
+        #     redirect('/posts/lakes')
+        # elsif session[:filter] == "Woods"
+        #     redirect('/posts/woods')
+        # elsif session[:filter] == "Sea"
+        #     redirect('/posts/sea')
+        # elsif session[:filter] == "Mountains"
+        #     redirect('/posts/mountains')
+        # else
+        #     redirect('/posts/all')
+        # end
+        filterRoute()
         
     else
         redirect('/error/401')
