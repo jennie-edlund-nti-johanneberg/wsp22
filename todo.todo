@@ -82,14 +82,19 @@ Vad ska göras:
     ☐ before
         ☐ session[:auth]
         ☐ sessions i allmänhet
+
     ☐ auth
         ✔ new @done(22-04-20 19:34)
         ✔ edit @done(22-04-20 19:35)
         ☐ delete
-        ☐ profil
-        ☐ profil edit
+        ✔ profil @done(22-04-20 19:48)
+        ✔ profil edit @done(22-04-20 19:48)
         ☐ like
         ☐ unlike
+
+    -fix
+    ☐ login
+    ☐ registrering
 
     ☐ likeCount kan uppdateras fler gånger??
     ✔ inte kunna edit profil? @done(22-04-16 18:11)

@@ -506,7 +506,7 @@ get('/post/:postid/:userid/edit') do
     slim(:"posts/edit", locals:{post:post})
 end
 
-get('/showprofile/:id') do
+get('/showprofile/:userid') do
     session[:loginError] = false
     session[:registerError] = false
     session[:like] = false
@@ -514,88 +514,24 @@ get('/showprofile/:id') do
     session[:notUnique] = false
     session[:isEmail] = true
     session[:isNumber] = true
-    id = params[:id].to_i
+    userid = params[:userid].to_i
 
-    userInfo = users(id)
-
-    postSpecificInfo = postSpecificInfo(id)
-
-    # result_2 = db.execute("SELECT
-    #         posts.id,
-    #         posts.title,
-    #         posts.text,
-    #         posts.creatorid,
-    #         posts.time
-    #     FROM posts
-    #         INNER JOIN users ON users.id = posts.creatorid
-    #     WHERE users.id = ?", id)
-
-    # p db.execute("SELECT
-    #     posts.id,
-    #     posts.title,
-    #     posts.text,
-    #     posts.creatorid,
-    #     posts.time
-    # FROM posts
-    #     INNER JOIN users ON users.id = posts.creatorid
-    # WHERE users.id = ?", id)
-
-    # p db.execute("SELECT
-    #     posts.id,
-    #     posts.title,
-    #     posts.text,
-    #     posts.creatorid,
-    #     posts.time
-    # FROM posts
-    #     INNER JOIN users ON users.id = posts.creatorid
-    # WHERE users.id = ?", id)
-
-    # result_3 = db.execute("SELECT
-    #         category.personality
-    #     FROM category
-    #         INNER JOIN user_personality_relation ON  category.id = user_personality_relation.categoryid
-    #     WHERE user_personality_relation.userid = ?", id)
-
-    usersPersonality = usersPersonality(id)
-
-    # creatorid = db.execute("SELECT DISTINCT
-    #     users.username,
-    #     posts.creatorid
-    # FROM users
-    #     INNER JOIN posts ON users.id = posts.creatorid")
-
+    userInfo = users(userid)
+    postSpecificInfo = postSpecificInfo(userid)
+    usersPersonality = usersPersonality(userid)
     usernameAndId = usernameAndId()
-
-    # db.results_as_hash = false
-    # likeCountTotal = db.execute("SELECT COUNT
-    #     (likes.postid)
-    # FROM likes
-    #     INNER JOIN posts ON posts.id = likes.postid
-    # WHERE creatorid = ?", id).first.first
-
-    likeCountTotal = likeCountTotal(id)
-
+    likeCountTotal = likeCountTotal(userid)
     likeCountPost = likeCountPost()
-
     isLiked = isLiked()
 
     slim(:"users/show", locals:{userInfo:userInfo, posts:postSpecificInfo, personality:usersPersonality, likesCount:likeCountTotal, usernameAndId:usernameAndId, likeCountPost:likeCountPost, isLiked:isLiked})
 end
 
-get('/user/:id/edit') do
-    id = params[:id].to_i
-    if session[:id] == id
-        # db = db_called("db/database.db")
-        # result = db.execute("SELECT * FROM users WHERE id = ?", id).first
-        user = users(id).first
-        # p ""
-        # p result
-        # p ""
-        # checked = db.execute("SELECT categoryid FROM user_personality_relation WHERE userid = ?", id)
-        slim(:"users/edit", locals:{user:user})
-    else
-        redirect('/error/401')
-    end
+get('/user/:userid/edit') do
+    userid = params[:userid].to_i
+    auth(userid)
+    user = users(userid).first
+    slim(:"users/edit", locals:{user:user})
 end
 
 get('/error/:id') do
@@ -617,24 +553,10 @@ end
 # POST called
 
 post('/register') do
-    # db = db_called("db/database.db")
     credentials = [:username, :password, :passwordConfirm, :email, :phonenumber, :birthday]
-
     anyEmpty = emptyCredentials(credentials)
-    # anyEmpty = false
-    # credentials.each do |credential|
-    #     anyEmpty = anyEmpty || isEmpty(params[credential])
-    # end
-
-    
 
     credentials = [:username, :pwdigest, :email, :phonenumber]
-
-    # isNotUnique = false
-    # credentials.each do |credential|
-    #     isNotUnique = isNotUnique || !isUnique(db, "users", credential.to_s, params[credential])
-    # end
-
     isNotUnique = uniqueCredentials(credentials)
 
     if not anyEmpty and not isNotUnique
@@ -647,22 +569,10 @@ post('/register') do
             redirect('/showregister')
         end
 
-        # password = params[:password]
-        # passwordConfirm = params[:passwordConfirm]
-        # username = params[:username]
-        # email = params[:email]
-        # phonenumber = params[:phonenumber]
-        # birthday = params[:birthday]
-
         if registration(params[:password], params[:passwordConfirm], params[:username], params[:email], params[:phonenumber], params[:birthday])
             
-            # passwordDigest = BCrypt::Password.create(password)
+
             db = db_called("db/database.db")
-
-            # db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday) VALUES (?,?,?,?,?)", username, passwordDigest, params[:email], params[:phonenumber], params[:birthday]).first
-            # result = db.execute("SELECT * FROM users WHERE username = ?", username).first
-            # session[:id] = result["id"]
-
             begin
                 woods = params[:woods]
                 if woods == "woods"
@@ -692,12 +602,8 @@ post('/register') do
             end
 
             redirect('/posts/all')
-        # else
-        #     session[:registerError] = true
-        #     redirect('/showregister')
         end
     else
-        # route = "/post/#{id}/#{session[:id]}/edit"
         redirect('/showregister')
     end  
 end
@@ -712,33 +618,6 @@ post('/login') do
         end
 
         login(username, password)
-    
-        # db = db_called("db/database.db")
-        # result = db.execute("SELECT * FROM users WHERE username = ?", username).first
-
-        # begin
-        #     pwdigest = result["pwdigest"]
-        #     id = result["id"]
-        
-        #     if BCrypt::Password.new(pwdigest) == password
-        #         session[:loginError] = false
-        #         session[:id] = id
-        #         session[:auth] = true
-        #         session[:user] = username
-        #         redirect('/posts/all')
-                
-        #     else
-        #         #WRONG PASSWORD
-        #         session[:loginError] = true
-        #         redirect('/showlogin')
-        #     end
-            
-        # rescue => exception
-        #     #INVALID USERNAME
-        #     session[:loginError] = true
-        #     redirect('/showlogin')
-            
-        # end
     else
         redirect('/showlogin')
     end
@@ -747,10 +626,6 @@ end
 post('/user/:id/update') do
     credentials = [:email, :phonenumber, :birthday]
 
-    # anyEmpty = false
-    # credentials.each do |credential|
-    #     anyEmpty = anyEmpty || isEmpty(params[credential])
-    # end
 
     anyEmpty = emptyCredentials(credentials)
 
