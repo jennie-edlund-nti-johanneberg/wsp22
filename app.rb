@@ -249,6 +249,58 @@ def postSpecificInfo(id)
     WHERE users.id = ?", id)
 end
 
+def postNew(title, text)
+    if not isEmpty(title)
+        db = db_called("db/database.db")
+        if isUnique(db, "posts", "title", title)
+            t = Time.now
+            time = t.strftime("%Y-%m-%d %H:%M")
+            db.execute("INSERT INTO posts (title, text, creatorid, time) VALUES (?,?,?,?)", title, text, session[:id], time)
+            redirect('/posts/all')
+        else
+            route = "/newpost/#{id}"
+            redirect(route)
+        end
+    else
+        route = "/newpost/#{id}"
+        redirect(route)
+    end
+
+end
+
+def postUpdate(title, postid, userid)
+
+    if not isEmpty(title)
+        anyEmpty = false
+    else
+        anyEmpty = true
+    end 
+
+    if not anyEmpty
+        db = db_called("db/database.db")
+        result = db.execute("SELECT title FROM posts WHERE creatorid = ? AND id = ?", userid, postid).first
+
+        text = params[:text]
+
+        if isUnique(db, "posts", "title", title)
+            # p "text till pots:#{text}"
+            db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
+            redirect('/posts/all')
+        elsif result['title'] == title 
+            db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
+            redirect('/posts/all')
+        else
+            route = "/post/#{postid}/#{userid}/edit"
+            redirect(route)
+        end
+
+    else
+        route = "/post/#{postid}/#{userid}/edit"
+        redirect(route)
+    end
+
+end
+
 def users(id)
     db = db_called("db/database.db")
     return db.execute("SELECT * FROM users WHERE id = ?", id)
@@ -313,6 +365,16 @@ def isLiked()
     end
 
     return tempArr
+end
+
+def updateBirthday(birthday, id)
+    db = db_called("db/database.db")
+    return db.execute("UPDATE users SET birthday = ? WHERE id = ?", birthday, id)
+end
+
+def deletePersonalityUser(id)
+    db = db_called("db/database.db")
+    return db.execute("DELETE FROM user_personality_relation WHERE userid = ?", id)
 end
 
 
@@ -733,9 +795,13 @@ post('/user/:id/update') do
 
         if not isNotUnique 
             birthday = params[:birthday]
-            db.execute("UPDATE users SET birthday = ? WHERE id = ?", birthday, id)
+            # db.execute("UPDATE users SET birthday = ? WHERE id = ?", birthday, id)
+            updateBirthday(birthday, id)
     
-            db.execute("DELETE FROM user_personality_relation WHERE userid = ?", id)
+            # db.execute("DELETE FROM user_personality_relation WHERE userid = ?", id)
+            deletePersonalityUser(id)
+
+            db = db_called("db/database.db")
             begin
                 woods = params[:woods]
                 if woods == "woods"
@@ -780,74 +846,73 @@ end
 post('/post/new') do
     id = session[:id]
     title = params[:title]
+    text = params[:text]
 
-    if not isEmpty(title)
-        db = db_called("db/database.db")
-        if isUnique(db, "posts", "title", title)
-            text = params[:text]
-            t = Time.now
-            time = t.strftime("%Y-%m-%d %H:%M")
-            db.execute("INSERT INTO posts (title, text, creatorid, time) VALUES (?,?,?,?)", title, text, session[:id], time)
-            redirect('/posts/all')
-        else
-            route = "/newpost/#{id}"
-            redirect(route)
-        end
-    else
-        route = "/newpost/#{id}"
-        redirect(route)
-    end
+    postNew(title, text)
+    # if not isEmpty(title)
+    #     db = db_called("db/database.db")
+    #     if isUnique(db, "posts", "title", title)
+    #         text = params[:text]
+    #         t = Time.now
+    #         time = t.strftime("%Y-%m-%d %H:%M")
+    #         db.execute("INSERT INTO posts (title, text, creatorid, time) VALUES (?,?,?,?)", title, text, session[:id], time)
+    #         redirect('/posts/all')
+    #     else
+    #         route = "/newpost/#{id}"
+    #         redirect(route)
+    #     end
+    # else
+    #     route = "/newpost/#{id}"
+    #     redirect(route)
+    # end
 end
 
 post('/post/:id/update') do
     title = params[:title]
+    postid = params[:id].to_i
+    userid = session[:id]
 
     # arrTitle = [title]
 
-    if not isEmpty(title)
-        anyEmpty = false
-    else
-        anyEmpty = true
-    end 
+    postUpdate(title, postid, userid)
 
-    postid = params[:id].to_i
-    userid = session[:id]
+
     
-    if not anyEmpty
-        db = db_called("db/database.db")
-        result = db.execute("SELECT title FROM posts WHERE creatorid = ? AND id = ?", userid, postid).first
+    # if not anyEmpty
+    #     db = db_called("db/database.db")
+    #     result = db.execute("SELECT title FROM posts WHERE creatorid = ? AND id = ?", userid, postid).first
 
-        text = params[:text]
+    #     text = params[:text]
 
-        if isUnique(db, "posts", "title", title)
-            # p "text till pots:#{text}"
-            db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
-            redirect('/posts/all')
-        elsif result['title'] == title 
-            db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
-            redirect('/posts/all')
-        else
-            route = "/post/#{postid}/#{userid}/edit"
-            redirect(route)
-        end
-        # end
+    #     if isUnique(db, "posts", "title", title)
+    #         # p "text till pots:#{text}"
+    #         db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
+    #         redirect('/posts/all')
+    #     elsif result['title'] == title 
+    #         db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
+    #         redirect('/posts/all')
+    #     else
+    #         route = "/post/#{postid}/#{userid}/edit"
+    #         redirect(route)
+    #     end
+    #     # end
 
-        # if isUnique(db, "posts", "title", title) || result != title
-        #     db = db_called("db/database.db")
-        #     text = params[:text]
-        #     db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
-        #     redirect('/posts/all')
-        # elsif result == title
-        #     redirect('/posts/all')
-        # else
-        #     route = "/post/#{postid}/#{userid}/edit"
-        #     redirect(route)
-        # end
+    #     # if isUnique(db, "posts", "title", title) || result != title
+    #     #     db = db_called("db/database.db")
+    #     #     text = params[:text]
+    #     #     db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
+    #     #     redirect('/posts/all')
+    #     # elsif result == title
+    #     #     redirect('/posts/all')
+    #     # else
+    #     #     route = "/post/#{postid}/#{userid}/edit"
+    #     #     redirect(route)
+    #     # end
 
-    else
-        route = "/post/#{postid}/#{userid}/edit"
-        redirect(route)
-    end
+    # else
+    #     route = "/post/#{postid}/#{userid}/edit"
+    #     redirect(route)
+    # end
 end
 
 post('/post/:postid/:userid/delete') do
