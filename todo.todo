@@ -13,15 +13,13 @@ Koppla:
     ✔ Koppla javascrip @done(22-03-01 13:38)
 
 Fix typ:
-    ☐ Before grejer fin kod?
     ✔ Login och register båda samma undantag, kan vara som en funktion? @done(22-04-19 13:57)
-    ☐ .firts och är det ska va
+    ✔ .firts och är det ska va @done(22-04-20 12:01)
     Ska relation tabeller ha eget id?
     Behövs rescue på index edit??
     ✔ SKA BILD VA I PUBIC? @done(22-03-01 13:38)
     ☐ Se till att alla routes och filer är döpta rätt (get och post med stor bokstav efter)
     ✔ personality på show profile @done(22-03-01 13:38)
-    ☐ Model.rb, all databas grejs ska vara i en egen fil :)
 
 Innan arbete fix:
     ☐ ER-diagram
@@ -42,7 +40,6 @@ Vad ska göras:
     ✔ Ta bort likes relationer och annat när posts tas bort @done(22-03-20 19:14)
     ✔ Kolla om användaren värkligen äger posten för delete eller redigering eller redigering för profil @done(22-03-20 22:06)
     ✔ Fråga Emil om admin @done(22-04-19 13:45)
-    ☐ before block
     ✔ Fråga om valedering och vad som behövs @done(22-04-19 13:45)
     ✔ delete popup @done(22-03-21 15:49)
     ✔ New post ful, inte klar med profilsidan, också css för profiledit sidan @done(22-03-29 14:15)
@@ -70,7 +67,6 @@ Vad ska göras:
     ☐ profil
     ☐ login
     ☐ registrering
-
     ☐ var session time?
 
     -before-
@@ -83,9 +79,12 @@ Vad ska göras:
     ✔ tas felmedelandebort när går bort? @done(22-04-16 18:11)
     ✔ fixa css för felmedelande @done(22-04-16 18:16)
     ☐ Fixa before till att kolla att woods har woods
-    ☐ beforeblock
-        ☐ new
-        ☐ edit
+    ☐ before
+        ☐ session[:auth]
+        ☐ sessions i allmänhet
+    ☐ auth
+        ✔ new @done(22-04-20 19:34)
+        ✔ edit @done(22-04-20 19:35)
         ☐ delete
         ☐ profil
         ☐ profil edit
@@ -99,6 +98,7 @@ Vad ska göras:
     ☐ Fixa model.rb
     ☐ ta bort onödiga komentarer och p
     ☐ ta bort onödiga bilder i img
+    ☐ ta bort test.rb
     ☐ fixa projektrapporten
     ☐ validering (flera login, auth m.m, characters, mail m.m)
     ☐ yardock och modul

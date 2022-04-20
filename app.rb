@@ -8,10 +8,23 @@ require_relative 'model'
 enable :sessions
 
 #Before functions
+protected_routes = ["/logout", "/posts/:filter", "/newpost/:userid", "/post/:postid/:userid/edit", "/showprofile/:id", "/user/:id/edit",]
 
-# Before
+before do
+    p "rrrr: #{request.path_info}"
 
-# end
+    # protected_routes.each do |route|
+    #     if request.path_info.match(route)
+    #         s = request.path_info.gsub(route, "")
+    #         p s
+    #         p session[:id]
+    #         if session[:id] != s.to_i
+    #             p "INTE SAMMA ID"
+    #             redirect('/error/401')
+    #         end
+    #     end
+    # end
+end
 
 #Database called
 def db_called(path)
@@ -21,6 +34,13 @@ def db_called(path)
 end
 
 #Verification
+def auth(userid)
+    p "auth"
+    if session[:id] != userid
+        redirect("/error/401/")
+    end
+end
+
 def isUnique(db, table, attribute, check)
     query = "SELECT * FROM #{table} WHERE #{attribute} = ?"
     result = db.execute(query, check)
@@ -461,85 +481,29 @@ get('/posts/:filter') do
     id = session[:id]
     filter = params[:filter]
 
-    # filterid = filter(filter)
-
-    # if filter == "woods"
-    #     session[:filter] = "Woods"
-    #     filterid = 1
-    # elsif filter == "sea"
-    #     session[:filter] = "Sea"
-    #     filterid = 2
-    # elsif filter == "mountains"
-    #     session[:filter] = "Mountains"
-    #     filterid = 3
-    # else
-    #     session[:filter] = "Lakes"
-    #     filterid = 4
-    # end
-
-    # db = db_called("db/database.db")
-
-    # if filter == "all"
-    #     session[:filter] = "All Posts"
-    #     posts = db.execute("SELECT * FROM posts")
-    # else
-    #     posts = db.execute("SELECT * FROM posts WHERE creatorid IN (
-    #         SELECT DISTINCT
-    #             user_personality_relation.userid
-    #         FROM user_personality_relation
-    #             INNER JOIN category ON user_personality_relation.categoryid = ?)", filterid)
-    # end
-
     posts = posts(filter)
-
     usernameAndId = usernameAndId()
-    # ("SELECT DISTINCT
-    #     users.username,
-    #     posts.creatorid
-    # FROM users
-    #     INNER JOIN posts ON users.id = posts.creatorid")
-
-    # db.results_as_hash = false
     likeCountClient(id)
-
-    # session[:likeCount] = db.execute("SELECT COUNT
-    #         (likes.postid)
-    #     FROM likes
-    #         INNER JOIN posts ON posts.id = likes.postid
-    #     WHERE creatorid = ?", id).first.first
-
-
-
     likeCountPost = likeCountPost()
     isLiked = isLiked()
-    # likeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
-    # newArr = likeArr.map do |el|
-    #     el = el.first
-    # end
     
     slim(:"posts/index", locals:{posts:posts, usernameAndId:usernameAndId, isLiked:isLiked, likeCountPost:likeCountPost})
 end
 
-get('/newpost/:id') do
-    id = params[:id].to_i
-    if session[:id] == id
-        slim(:"posts/new")
-    else
-        redirect('/error/401')
-    end
+get('/newpost/:userid') do
+    userid = params[:userid].to_i
+    auth(userid)
+    slim(:"posts/new")
 end
 
 get('/post/:postid/:userid/edit') do
     userid = params[:userid].to_i
-    if session[:id] == userid
-        postid = params[:postid].to_i
-        post = post(postid)
-        # db = db_called("db/database.db")
-        # result = db.execute("SELECT * FROM posts WHERE id = ?", postid).first
-        slim(:"posts/edit", locals:{post:post})
-    else
-        redirect('/error/401')
-    end
+    auth(userid)
+
+    postid = params[:postid].to_i
+    post = post(postid)
+
+    slim(:"posts/edit", locals:{post:post})
 end
 
 get('/showprofile/:id') do
@@ -551,9 +515,6 @@ get('/showprofile/:id') do
     session[:isEmail] = true
     session[:isNumber] = true
     id = params[:id].to_i
-
-    # db = db_called("db/database.db")
-    # result = db.execute("SELECT * FROM users WHERE id = ?", id)
 
     userInfo = users(id)
 
