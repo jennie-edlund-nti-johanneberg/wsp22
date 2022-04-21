@@ -10,8 +10,6 @@ div id="helalogindiv"
             br/
             input type="submit" value="Log In"/
             
-        p "#{session[:stress]}"
-            
         - if session[:loginError]
             article.registerError
                 h1 INVALID PASSWORD OR USERNAME

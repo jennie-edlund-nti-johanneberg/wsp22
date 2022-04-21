@@ -50,3 +50,7 @@ div id="editProfile"
         - if not session[:isNumber]
             article.inputError
                 h1 PHONENUMNER MUST ONLY CONTAIN NUMBERS
+
+        - if session[:stress]
+            article.inputError
+                h1 SLOW DOWN!!

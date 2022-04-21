@@ -89,14 +89,17 @@ def isNumber(number)
     end
 end
 
-def logTime(id)
+def logTime()
     tempTime = Time.now.to_i
+    # p tempTime
+
     if session[:timeLogged] == nil
         session[:timeLogged] = 0
     end
-    tempTime = tempTime - session[:timeLogged]
+    difTime = tempTime - session[:timeLogged]
+    # p tempTime
 
-    if tempTime < 3
+    if difTime < 2
         session[:timeLogged] = tempTime
         session[:stress] = true
         return false

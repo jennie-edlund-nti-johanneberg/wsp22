@@ -151,63 +151,67 @@ end
 
 # POST called
 post('/register') do
-    credentials = [:username, :password, :passwordConfirm, :email, :phonenumber, :birthday]
-    anyEmpty = emptyCredentials(credentials)
+    if logTime()
+        credentials = [:username, :password, :passwordConfirm, :email, :phonenumber, :birthday]
+        anyEmpty = emptyCredentials(credentials)
 
-    credentials = [:username, :pwdigest, :email, :phonenumber]
-    isNotUnique = uniqueCredentials(credentials)
+        credentials = [:username, :pwdigest, :email, :phonenumber]
+        isNotUnique = uniqueCredentials(credentials)
 
-    if not anyEmpty and not isNotUnique
+        if not anyEmpty and not isNotUnique
 
-        if not isEmail(params[:email])
-            redirect('/showregister')
-        end
-    
-        if not isNumber(params[:phonenumber])
-            redirect('/showregister')
-        end
-
-        if registration(params[:password], params[:passwordConfirm], params[:username], params[:email], params[:phonenumber], params[:birthday])
-            
-
-            db = db_called("db/database.db")
-            begin
-                woods = params[:woods]
-                if woods == "woods"
-                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
-                end  
+            if not isEmail(params[:email])
+                redirect('/showregister')
+            end
+        
+            if not isNumber(params[:phonenumber])
+                redirect('/showregister')
             end
 
-            begin
-                sea = params[:sea]
-                if sea == "sea"
-                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
+            if registration(params[:password], params[:passwordConfirm], params[:username], params[:email], params[:phonenumber], params[:birthday])
+                
+
+                db = db_called("db/database.db")
+                begin
+                    woods = params[:woods]
+                    if woods == "woods"
+                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
+                    end  
                 end
-            end
 
-            begin
-                mountains = params[:mountains]
-                if mountains == "mountains"
-                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
+                begin
+                    sea = params[:sea]
+                    if sea == "sea"
+                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
+                    end
                 end
-            end
 
-            begin
-                lakes = params[:lakes]
-                if lakes == "lakes"
-                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
-                end 
-            end
+                begin
+                    mountains = params[:mountains]
+                    if mountains == "mountains"
+                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
+                    end
+                end
 
-            redirect('/posts/all')
-        end
+                begin
+                    lakes = params[:lakes]
+                    if lakes == "lakes"
+                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
+                    end 
+                end
+
+                redirect('/posts/all')
+            end
+        else
+            redirect('/showregister')
+        end  
     else
         redirect('/showregister')
-    end  
+    end
 end
 
 post('/login') do
-    if logTime(session[:id])
+    if logTime()
         username = params[:username]
         password = params[:password]
 
@@ -222,63 +226,68 @@ post('/login') do
 end
 
 post('/user/:userid/update') do
-    credentials = [:email, :phonenumber, :birthday]
-    anyEmpty = emptyCredentials(credentials)
     userid = params[:userid].to_i
+    if logTime()
+        credentials = [:email, :phonenumber, :birthday]
+        anyEmpty = emptyCredentials(credentials)
 
-    if not isEmail(params[:email])
-        route = "/user/#{userid}/edit"
-        redirect(route)
-    end
-
-    if not isNumber(params[:phonenumber])
-        route = "/user/#{userid}/edit"
-        redirect(route)
-    end
-
-    if not anyEmpty
-        isNotUnique = false
-        credentials[0..credentials.length - 2].each do |credential|
-            uniqueUserUpdate(credential.to_s, params[credential], userid)
+        if not isEmail(params[:email])
+            route = "/user/#{userid}/edit"
+            redirect(route)
         end
 
-        if not isNotUnique 
-            birthday = params[:birthday]
-            updateBirthday(birthday, userid)
-            deletePersonalityUser(userid)
-
-            db = db_called("db/database.db")
-            begin
-                woods = params[:woods]
-                if woods == "woods"
-                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
-                end  
-            end
-    
-            begin
-                sea = params[:sea]
-                if sea == "sea"
-                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
-                end
-            end
-    
-            begin
-                mountains = params[:mountains]
-                if mountains == "mountains"
-                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
-                end
-            end
-    
-            begin
-                lakes = params[:lakes]
-                if lakes == "lakes"
-                    db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
-                end 
-            end
-            
-            session[:notUnique] = false
-            route = "/showprofile/#{userid}"
+        if not isNumber(params[:phonenumber])
+            route = "/user/#{userid}/edit"
             redirect(route)
+        end
+
+        if not anyEmpty
+            isNotUnique = false
+            credentials[0..credentials.length - 2].each do |credential|
+                uniqueUserUpdate(credential.to_s, params[credential], userid)
+            end
+
+            if not isNotUnique 
+                birthday = params[:birthday]
+                updateBirthday(birthday, userid)
+                deletePersonalityUser(userid)
+
+                db = db_called("db/database.db")
+                begin
+                    woods = params[:woods]
+                    if woods == "woods"
+                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
+                    end  
+                end
+        
+                begin
+                    sea = params[:sea]
+                    if sea == "sea"
+                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
+                    end
+                end
+        
+                begin
+                    mountains = params[:mountains]
+                    if mountains == "mountains"
+                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
+                    end
+                end
+        
+                begin
+                    lakes = params[:lakes]
+                    if lakes == "lakes"
+                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
+                    end 
+                end
+                
+                session[:notUnique] = false
+                route = "/showprofile/#{userid}"
+                redirect(route)
+            else
+                route = "/user/#{userid}/edit"
+                redirect(route)
+            end
         else
             route = "/user/#{userid}/edit"
             redirect(route)

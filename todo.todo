@@ -22,7 +22,7 @@ Fix typ:
     ✔ personality på show profile @done(22-03-01 13:38)
 
 Innan arbete fix:
-    ☐ ER-diagram
+    ✔ ER-diagram @done(22-04-21 13:39)
     ☐ Skisserna ska ändras? I alla fall lägga till Profilskiss.
 
 Vad ska göras:
@@ -64,10 +64,11 @@ Vad ska göras:
     -stress && försvinner- med session id
     ☐ new
     ☐ update
-    ☐ profil
-    ☐ login
-    ☐ registrering
-    ☐ var session time?
+    ✔ profil @done(22-04-21 13:39)
+    ✔ login @done(22-04-21 13:30)
+    ✔ registrering @done(22-04-21 13:34)
+    ☐ like
+    ☐ unlike
 
     -before-
     ☐ new post
