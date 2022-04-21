@@ -1,7 +1,4 @@
 Lite skit:
-    <input type="text" id="username" name="username" required>
-    <input type="text" id="fname" name="fname" autofocus><br>
-    <form action="/action_page.php" autocomplete="on">
     ✔ def för db @done(22-03-08 15:26)
 
 Koppla:
@@ -52,6 +49,13 @@ Vad ska göras:
     ✔ profil (bithday loop och felmedelande vid rätt!!) @done(22-04-16 21:23)
     ✔ login @done(22-04-05 19:08)
     ✔ registrering (session unique) @done(22-04-05 19:02)
+
+    -tom-
+    new
+    update
+    profil
+    login
+    regi
 
     -email && försvinner-
     ✔ register @done(22-04-16 19:39)

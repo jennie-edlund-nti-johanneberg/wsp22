@@ -2,9 +2,9 @@
 
 # p protected_routes.include?("/logout")
 
-protected_routes = ["/logout", "/posts/*", "/newpost/:userid", "/post/:postid/:userid/edit", "/showprofile/:id", "/user/:id/edit"]
-temp = "/posts/all"
-p protected_routes.include?(temp)
+# protected_routes = ["/logout", "/posts/*", "/newpost/:userid", "/post/:postid/:userid/edit", "/showprofile/:id", "/user/:id/edit"]
+# temp = "/posts/all"
+# p protected_routes.include?(temp)
 # before do
 #     p "request: #{request.path_info}"
 #     # if not session[:auth] && protected_routes.include?(request.path_info)
@@ -25,3 +25,10 @@ p protected_routes.include?(temp)
 #     slim(:"posts/new")
 
 # end
+
+protectedRoutes = ["/logout", "/posts/", "/newpost/", "/post/", "/showprofile/", "/user/"]
+answer = []
+protectedRoutes.each do |route|
+    answer << route.scan(/\w+/).first
+    p answer
+end

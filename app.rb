@@ -8,16 +8,22 @@ require_relative 'model'
 enable :sessions
 
 #Before functions
-# protected_routes = ["/logout", "/posts/:filter", "/newpost/:userid", "/post/:postid/:userid/edit", "/showprofile/:id", "/user/:id/edit"]
+protectedRoutes = ["/logout", "/posts/", "/newpost/", "/post/", "/showprofile/", "/user/"]
 unProtectedRoutes = ['/', '/showregister', '/showlogin']
 
 before do
     path = request.path_info
-    pathInclude = unProtectedRoutes.include?(path)
+    fixedPath = path.scan(/\w+/).first
     pathMethod = request.request_method
+    
+    answer = []
+    protectedRoutes.each do |route|
+        answer << route.scan(/\w+/).first
+    end
 
+    pathInclude = answer.include?(fixedPath)
 
-    if not pathInclude and not session[:auth] and path != "/error/401" and pathMethod == "GET"
+    if pathInclude and not session[:auth] and path != "/error/401" and pathMethod == "GET"
         redirect("/error/401")
     end
 end
@@ -140,10 +146,6 @@ get('/error/:id') do
 
     slim(:error, locals: {errorId:errorId, errorMsg:errorMsg})
 end
-
-# get('/*') do
-#     redirect('/error/404')
-# end
 
 not_found do
     redirect("/error/404")

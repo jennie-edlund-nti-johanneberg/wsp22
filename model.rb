@@ -50,7 +50,7 @@ def uniqueUserUpdate(credential, calledCredential, id)
 end
 
 def isEmpty(text)
-    if text == ""
+    if text == "" && text.scan(/ /).empty?
         session[:empty] = true
         return true
     else
@@ -62,8 +62,10 @@ end
 def emptyCredentials(credentials)
     anyEmpty = false
     credentials.each do |credential|
+        p params[credential]
         anyEmpty = anyEmpty || isEmpty(params[credential])
     end
+    p anyEmpty
     return anyEmpty
 end
 
@@ -91,13 +93,11 @@ end
 
 def logTime()
     tempTime = Time.now.to_i
-    # p tempTime
 
     if session[:timeLogged] == nil
         session[:timeLogged] = 0
     end
     difTime = tempTime - session[:timeLogged]
-    # p tempTime
 
     if difTime < 2
         session[:timeLogged] = tempTime
