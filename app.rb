@@ -153,7 +153,7 @@ post('/login') do
     end
 end
 
-post('/user/:userid/edit') do
+post('/user/:userid/update') do
     userid = params[:userid].to_i
     if logTime()
         credentials = [:email, :phonenumber, :birthday]
@@ -190,7 +190,7 @@ post('/post/new') do
     end
 end
 
-post('/post/:id/edit') do
+post('/post/:id/update') do
     userid = session[:id]
     postid = params[:id].to_i
     if logTime()
