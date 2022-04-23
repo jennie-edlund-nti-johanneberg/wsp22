@@ -3,9 +3,11 @@ require 'slim'
 require 'sqlite3'
 require 'bcrypt'
 
-require_relative 'model'
+require_relative 'model/model.rb'
 
 enable :sessions
+
+include Model
 
 #Before functions
 protectedRoutes = ["/logout", "/posts/", "/newpost/", "/post/", "/showprofile/", "/user/"]
@@ -28,29 +30,50 @@ before do
     end
 end
 
-# GET route
+# Display Landing Page
+
+# @see Model#resetStart
 get('/') do
     resetStart()
 
     slim(:start)
 end
 
+# Displays a register form
+
+# @see Model#restartReg
 get('/showregister') do
     restartReg()
 
     slim(:register)
 end
 
+# Displays a login form
+
+# @see Model#restartLogin
 get('/showlogin') do
     restartLogin()
     slim(:login)
 end
 
+# Displays Landing Page from logout
+
+# @see Model#resetStart
 get('/logout') do
     resetStart()
     slim(:start)
 end
 
+# Displays all posts according to the filter
+
+# @param [String] :filter, the filter to filter the posts by 
+
+# @see Model#restartPosts
+# @see Model#posts
+# @see Model#usernameAndId
+# @see Model#likeCountClient
+# @see Model#likeCountPost
+# @see Model#isLiked
 get('/posts/:filter') do
     restartPosts()
     filter = params[:filter]
@@ -64,6 +87,13 @@ get('/posts/:filter') do
     slim(:"posts/index", locals:{posts:posts, usernameAndId:usernameAndId, isLiked:isLiked, likeCountPost:likeCountPost})
 end
 
+
+# Displays a new post form
+
+# @param [Integer] :userid, The client ID
+
+# @see Model#auth
+# @see Model#likeCountClient
 get('/newpost/:userid') do
     userid = params[:userid].to_i
     auth(userid)
@@ -71,21 +101,42 @@ get('/newpost/:userid') do
     slim(:"posts/new")
 end
 
+# Displays a edit post form
+
+# @param [Integer] :userid, The client ID
+# @param [Integer] :postid, The ID of the post
+
+# @see Model#auth
+# @see Model#likeCountClient
+# @see Model#post
 get('/post/:postid/:userid/edit') do
     userid = params[:userid].to_i
-    auth(userid)
-
-    likeCountClient(session[:id])
     postid = params[:postid].to_i
+
+    auth(userid)
+    likeCountClient(session[:id])
     post = post(postid)
 
     slim(:"posts/edit", locals:{post:post})
 end
 
+#Displays a single Profile
+
+# @param [Integer] :userid, The client ID
+
+# @see Model#restartProfil
+# @see Model#users
+# @see Model#postSpecificInfo
+# @see Model#usersPersonality
+# @see Model#usernameAndId
+# @see Model#likeCountTotal
+# @see Model#likeCountPost
+# @see Model#isLiked
+# @see Model#likeCountClient
 get('/showprofile/:userid') do
-    restartProfil()
     userid = params[:userid].to_i
 
+    restartProfil()
     userInfo = users(userid)
     postSpecificInfo = postSpecificInfo(userid)
     usersPersonality = usersPersonality(userid)
@@ -98,15 +149,26 @@ get('/showprofile/:userid') do
     slim(:"users/show", locals:{userInfo:userInfo, posts:postSpecificInfo, personality:usersPersonality, likesCount:likeCountTotal, usernameAndId:usernameAndId, likeCountPost:likeCountPost, isLiked:isLiked})
 end
 
+# Displays a edit user form
+
+# @param [Integer] :userid, The client ID
+
+# @see Model#auth
+# @see Model#likeCountClient
+# @see Model#users
 get('/user/:userid/edit') do
     userid = params[:userid].to_i
-    auth(userid)
 
+    auth(userid)
     likeCountClient(session[:id])
     user = users(userid).first
+
     slim(:"users/edit", locals:{user:user})
 end
 
+# Displays an error message
+
+# @param [Integer] :id, The ID of the error
 get('/error/:id') do
     errors = {
         401 => "Not authorized",
@@ -119,11 +181,17 @@ get('/error/:id') do
     slim(:error, locals: {errorId:errorId, errorMsg:errorMsg})
 end
 
+#Catches not found routes and redirects to '/error/:id'
 not_found do
     redirect("/error/404")
 end
 
-# POST called
+# Attempts register 
+
+# @see Model#logTime
+# @see Model#emptyCredentials
+# @see Model#uniqueCredentials
+# @see Model#registration
 post('/register') do
     if logTime()
         credentials = [:username, :password, :passwordConfirm, :email, :phonenumber, :birthday]
@@ -138,6 +206,14 @@ post('/register') do
     end
 end
 
+# Attempts login 
+
+# @param [String] :username, The username
+# @param [String] :password, The password
+
+# @see Model#logTime
+# @see Model#isEmpty
+# @see Model#authenticationLogin
 post('/login') do
     if logTime()
         username = params[:username]
@@ -153,6 +229,17 @@ post('/login') do
     end
 end
 
+# Updates an existing user
+
+# @param [Integer] :userid, The client ID
+# @param [String] :email, The new user email
+# @param [String] :phonenumber, The new user phonenumber
+
+# @see Model#logTime
+# @see Model#emptyCredentials
+# @see Model#isEmail
+# @see Model#isNumber
+# @see Model#upadteProfil
 post('/user/:userid/update') do
     userid = params[:userid].to_i
     if logTime()
@@ -177,6 +264,13 @@ post('/user/:userid/update') do
     end
 end
 
+# Creates a new article
+
+# @param [String] :title, The title of the post
+# @param [String] :text, The text of the post
+
+# @see Model#logTime
+# @see Model#postNew
 post('/post/new') do
     id = session[:id]
     if logTime()
@@ -190,6 +284,13 @@ post('/post/new') do
     end
 end
 
+# Updates an existing post
+
+# @param [Integer] :postid, The ID of the post
+# @param [String] :title, The new title of the post
+
+# @see Model#logTime
+# @see Model#postUpdate
 post('/post/:id/update') do
     userid = session[:id]
     postid = params[:id].to_i
@@ -202,6 +303,12 @@ post('/post/:id/update') do
     end
 end
 
+# Deletes an existing article
+
+# @param [Integer] :userid, The client ID
+# @param [String] :postid, The ID of the post
+
+# @see Model#postDelete
 post('/post/:postid/:userid/delete') do
     userid = params[:userid].to_i
     postid = params[:postid].to_i
@@ -209,6 +316,14 @@ post('/post/:postid/:userid/delete') do
     postDelete(userid, postid)
 end
 
+# Likes a post
+
+# @param [Integer] :userid, The client ID
+# @param [String] :postid, The ID of the post
+
+# @see Model#auth
+# @see Model#insertLike
+# @see Model#filterRoute
 post('/post/:postid/:userid/like') do
     userid = params[:userid].to_i
     auth(userid)
@@ -218,6 +333,14 @@ post('/post/:postid/:userid/like') do
     filterRoute()
 end
 
+# Unlikes a post
+
+# @param [Integer] :userid, The client ID
+# @param [String] :postid, The ID of the post
+
+# @see Model#auth
+# @see Model#deleteLike
+# @see Model#filterRoute
 post('/post/:postid/:userid/unlike') do
     userid = params[:userid].to_i
     auth(userid)
