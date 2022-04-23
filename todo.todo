@@ -108,7 +108,7 @@ Vad ska göras:
     ✔ css för edit profil @done(22-03-29 17:52)
     ✔ för admin css och kan ändra på profiler ska kunna ta bort??? @done(22-04-19 19:18)
     ✔ Fixa model.rb @done(22-04-20 20:25)
-    ☐ minska tid på stress
+    ✔ minska tid på stress @done(22-04-23 17:34)
     ✔ ta bort onödiga komentarer och p @done(22-04-23 17:33)
         ✔ model.rb @done(22-04-23 17:02)
         ✔ app.rb @done(22-04-23 17:24)
@@ -129,7 +129,9 @@ Vad ska göras:
         ✔ start @done(22-04-23 17:32)
     ✔ ta bort onödiga bilder i img @done(22-04-23 17:16)
     ✔ ta bort test.rb @done(22-04-23 17:16)
-    ☐ läs genom filer som har text
+    ✔ läs genom filer som har text @done(22-04-23 18:52)
+    ☐ capybara
+
     ☐ fixa projektrapporten
         ✔ skissar @done(22-04-21 21:32)
             ✔ error @done(22-04-21 21:06)
@@ -147,8 +149,8 @@ Vad ska göras:
                 ✔ show @done(22-04-21 21:31)
 
     ✔ validering (flera login, auth m.m, characters, mail m.m) @done(22-04-23 15:10)
-    ☐ misc i mapp och dokumentation behövs?
-    ☐ andra onödiga grejor så som mappar, filer, bilder osv
+    ✔ misc i mapp och dokumentation behövs? @done(22-04-23 17:34)
+    ✔ andra onödiga grejor så som mappar, filer, bilder osv @done(22-04-23 17:34)
     ☐ kolla presentationer
     ☐ todo.todo
     ☐ yardock och modul
