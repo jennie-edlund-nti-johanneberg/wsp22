@@ -4,7 +4,6 @@ let formsHearts = document.querySelectorAll('.likeForm')
 hearts.forEach((heart, index) => {
     
     heart.addEventListener('click', () => {
-        // console.log('click')
         formsHearts[index].submit()
     })
 })

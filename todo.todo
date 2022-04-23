@@ -15,7 +15,7 @@ Fix typ:
     Ska relation tabeller ha eget id?
     Behövs rescue på index edit??
     ✔ SKA BILD VA I PUBIC? @done(22-03-01 13:38)
-    ☐ Se till att alla routes och filer är döpta rätt (get och post med stor bokstav efter)
+    ✔ Se till att alla routes och filer är döpta rätt (get och post med stor bokstav efter) @done(22-04-23 17:01)
     ✔ personality på show profile @done(22-03-01 13:38)
 
 Innan arbete fix:
@@ -109,9 +109,27 @@ Vad ska göras:
     ✔ för admin css och kan ändra på profiler ska kunna ta bort??? @done(22-04-19 19:18)
     ✔ Fixa model.rb @done(22-04-20 20:25)
     ☐ minska tid på stress
-    ☐ ta bort onödiga komentarer och p
-    ☐ ta bort onödiga bilder i img
-    ☐ ta bort test.rb
+    ✔ ta bort onödiga komentarer och p @done(22-04-23 17:33)
+        ✔ model.rb @done(22-04-23 17:02)
+        ✔ app.rb @done(22-04-23 17:24)
+        ✔ img @done(22-04-23 17:14)
+        ✔ js @done(22-04-23 17:25)
+        ✔ layout and variables @done(22-04-23 17:25)
+        ✔ post @done(22-04-23 17:27)
+            ✔ edit.slim @done(22-04-23 17:25)
+            ✔ index.slim @done(22-04-23 17:26)
+            ✔ new.slim @done(22-04-23 17:27)
+        ✔ user @done(22-04-23 17:32)
+            ✔ edit @done(22-04-23 17:27)
+            ✔ show @done(22-04-23 17:28)
+        ✔ error @done(22-04-23 17:29)
+        ✔ layout @done(22-04-23 17:29)
+        ✔ login @done(22-04-23 17:30)
+        ✔ regigiter @done(22-04-23 17:30)
+        ✔ start @done(22-04-23 17:32)
+    ✔ ta bort onödiga bilder i img @done(22-04-23 17:16)
+    ✔ ta bort test.rb @done(22-04-23 17:16)
+    ☐ läs genom filer som har text
     ☐ fixa projektrapporten
         ✔ skissar @done(22-04-21 21:32)
             ✔ error @done(22-04-21 21:06)

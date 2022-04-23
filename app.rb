@@ -10,8 +10,6 @@ enable :sessions
 #Before functions
 protectedRoutes = ["/logout", "/posts/", "/newpost/", "/post/", "/showprofile/", "/user/"]
 
-# unProtectedRoutes = ['/', '/showregister', '/showlogin']
-
 before do
     path = request.path_info
     fixedPath = path.scan(/\w+/).first
@@ -146,7 +144,6 @@ post('/login') do
         password = params[:password]
 
         if isEmpty(username) || isEmpty(password)
-            p "was empty"
             redirect('/showlogin')
         end
 

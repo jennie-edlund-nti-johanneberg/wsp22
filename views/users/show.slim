@@ -62,7 +62,6 @@ div id="helaprofildiv"
                     - if info["id"] == session[:id]  
                         a id="editProfileLink" href="/user/#{session[:id]}/edit" Edit profile 
 
-            / - if session[:id] != 1
             ol id="postList"
                 - posts.each do |post|
                     li

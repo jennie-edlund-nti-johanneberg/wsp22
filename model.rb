@@ -151,7 +151,7 @@ def logTime()
     end
     difTime = tempTime - session[:timeLogged]
 
-    if difTime < 3
+    if difTime < 1.5
         session[:timeLogged] = tempTime
         session[:stress] = true
         return false
@@ -169,12 +169,6 @@ def passwordMatch(pw1, pw2)
         return false
     end
 end
-
-# def personalityTest()
-
-    
-
-# end
 
 def authenticationReg(password, passConfirm, username, email, phonenumber, birthday)
     if passwordMatch(password, passConfirm)
@@ -260,34 +254,6 @@ def registration(anyEmpty, isNotUnique)
 
         if authenticationReg(params[:password], params[:passwordConfirm], params[:username], params[:email], params[:phonenumber], params[:birthday])
             personalityUpdate()
-            # db = db_called("db/database.db")
-            # begin
-            #     woods = params[:woods]
-            #     if woods == "woods"
-            #         db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
-            #     end  
-            # end
-
-            # begin
-            #     sea = params[:sea]
-            #     if sea == "sea"
-            #         db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
-            #     end
-            # end
-
-            # begin
-            #     mountains = params[:mountains]
-            #     if mountains == "mountains"
-            #         db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
-            #     end
-            # end
-
-            # begin
-            #     lakes = params[:lakes]
-            #     if lakes == "lakes"
-            #         db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
-            #     end 
-            # end
 
             redirect('/posts/all')
         end
@@ -326,11 +292,6 @@ def attributeSpecifikUsers(credential)
     db = db_called("db/database.db")
     return db.execute("SELECT #{credential} FROM users WHERE id = ?", session[:id]).first
 end
-
-# def updateAttributeUsers(credential, attribute, id)
-#     db = db_called("db/database.db")
-#     db.execute("UPDATE users SET #{credential} = ? WHERE id = ?", params[credential], id)
-# end
 
 def filter(filter)
     if filter == "woods"
