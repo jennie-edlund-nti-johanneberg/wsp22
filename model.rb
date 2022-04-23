@@ -5,6 +5,50 @@ def db_called(path)
     return db
 end
 
+
+#Restat sessoins
+def resetStart()
+    session[:loginError] = false
+    session[:registerError] = false
+    session[:like] = false
+    session[:empty] = false
+    session[:notUnique] = false
+    session[:isEmail] = true
+    session[:isNumber] = true
+    session[:auth] = false
+end
+
+def restartReg()
+    session[:loginError] = false
+    session[:auth] = false
+end
+
+def restartLogin()
+    session[:registerError] = false
+    session[:notUnique] = false
+    session[:isEmail] = true
+    session[:isNumber] = true
+    session[:auth] = false
+end
+
+def restartPosts()
+    session[:notUnique] = false
+    session[:empty] = false
+    session[:isEmail] = true
+    session[:isNumber] = true
+end
+
+def restartProfil()
+    session[:loginError] = false
+    session[:registerError] = false
+    session[:like] = false
+    session[:empty] = false
+    session[:notUnique] = false
+    session[:isEmail] = true
+    session[:isNumber] = true
+end
+
+
 #Verification
 def auth(userid)
     if session[:id] != userid
@@ -50,7 +94,10 @@ def uniqueUserUpdate(credential, calledCredential, id)
 end
 
 def isEmpty(text)
-    if text == "" && text.scan(/ /).empty?
+    if text == nil
+        session[:empty] = true
+        return true
+    elsif text.scan(/ /).empty? == false || text == ""
         session[:empty] = true
         return true
     else
@@ -62,15 +109,16 @@ end
 def emptyCredentials(credentials)
     anyEmpty = false
     credentials.each do |credential|
-        p params[credential]
         anyEmpty = anyEmpty || isEmpty(params[credential])
     end
-    p anyEmpty
     return anyEmpty
 end
 
 def isEmail(text)
-    if text.include?('@') && text.include?('.')
+    if text == nil
+        session[:isEmail] = true
+        return true
+    elsif text.include?('@') && text.include?('.')
         session[:isEmail] = true
         return true
     else
@@ -80,7 +128,11 @@ def isEmail(text)
 end
 
 def isNumber(number)
-    answer = number.scan(/\D/).empty?
+    if number != nil
+        answer = number.scan(/\D/).empty?
+    else
+        answer == false
+    end
 
     if answer
         session[:isNumber] = true
@@ -99,7 +151,7 @@ def logTime()
     end
     difTime = tempTime - session[:timeLogged]
 
-    if difTime < 2
+    if difTime < 3
         session[:timeLogged] = tempTime
         session[:stress] = true
         return false
@@ -124,14 +176,12 @@ end
 
 # end
 
-def registration(password, passConfirm, username, email, phonenumber, birthday)
-
+def authenticationReg(password, passConfirm, username, email, phonenumber, birthday)
     if passwordMatch(password, passConfirm)
         passwordDigest = BCrypt::Password.create(password)
         db = db_called("db/database.db")
         db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday) VALUES (?,?,?,?,?)", username, passwordDigest, email, phonenumber, birthday).first
 
-        # result = db.execute("SELECT * FROM users WHERE username = ?", username).first
         user = usersByUsername(username).first
         session[:id] = user["id"]
         session[:user] = username
@@ -145,7 +195,7 @@ def registration(password, passConfirm, username, email, phonenumber, birthday)
     end
 end
 
-def login(username, password)
+def authenticationLogin(username, password)
     db = db_called("db/database.db")
     user = usersByUsername(username).first
 
@@ -153,7 +203,7 @@ def login(username, password)
         pwdigest = user["pwdigest"]
         id = user["id"]
     
-        if BCrypt::Password.new(pwdigest) == password
+        if passwordMatch(BCrypt::Password.new(pwdigest), password)
             session[:loginError] = false
             session[:id] = id
             session[:auth] = true
@@ -161,19 +211,117 @@ def login(username, password)
             redirect('/posts/all')
             
         else
-            #WRONG PASSWORD
             session[:loginError] = true
             redirect('/showlogin')
         end
         
     rescue => exception
-        #INVALID USERNAME
         session[:loginError] = true
         redirect('/showlogin')
     end
 end
 
 #Functions
+def personalityUpdate()
+    db = db_called("db/database.db")
+
+    woods = params[:woods]
+    sea = params[:sea]
+    mountains = params[:mountains]
+    lakes = params[:lakes]
+
+    if woods == "woods"
+        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
+    end  
+
+    if sea == "sea"
+        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
+    end
+
+    if mountains == "mountains"
+        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
+    end
+
+    if lakes == "lakes"
+        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
+    end 
+end 
+
+def registration(anyEmpty, isNotUnique)
+    if not anyEmpty and not isNotUnique
+
+        if not isEmail(params[:email])
+            redirect('/showregister')
+        end
+    
+        if not isNumber(params[:phonenumber])
+            redirect('/showregister')
+        end
+
+        if authenticationReg(params[:password], params[:passwordConfirm], params[:username], params[:email], params[:phonenumber], params[:birthday])
+            personalityUpdate()
+            # db = db_called("db/database.db")
+            # begin
+            #     woods = params[:woods]
+            #     if woods == "woods"
+            #         db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
+            #     end  
+            # end
+
+            # begin
+            #     sea = params[:sea]
+            #     if sea == "sea"
+            #         db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
+            #     end
+            # end
+
+            # begin
+            #     mountains = params[:mountains]
+            #     if mountains == "mountains"
+            #         db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
+            #     end
+            # end
+
+            # begin
+            #     lakes = params[:lakes]
+            #     if lakes == "lakes"
+            #         db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
+            #     end 
+            # end
+
+            redirect('/posts/all')
+        end
+    else
+        redirect('/showregister')
+    end  
+end
+
+def upadteProfil(userid, anyEmpty, credentials)
+    if not anyEmpty
+        isNotUnique = false
+        credentials[0..credentials.length - 2].each do |credential|
+            uniqueUserUpdate(credential.to_s, params[credential], userid)
+        end
+
+        if not isNotUnique 
+            birthday = params[:birthday]
+            updateBirthday(birthday, userid)
+            deletePersonalityUser(userid)
+            personalityUpdate()
+            
+            session[:notUnique] = false
+            route = "/showprofile/#{userid}"
+            redirect(route)
+        else
+            route = "/user/#{userid}/edit"
+            redirect(route)
+        end
+    else
+        route = "/user/#{userid}/edit"
+        redirect(route)
+    end
+end
+
 def attributeSpecifikUsers(credential)
     db = db_called("db/database.db")
     return db.execute("SELECT #{credential} FROM users WHERE id = ?", session[:id]).first
@@ -262,7 +410,7 @@ def postSpecificInfo(id)
     WHERE users.id = ?", id)
 end
 
-def postNew(title, text)
+def postNew(title, text, id)
     if not isEmpty(title)
         db = db_called("db/database.db")
         if isUnique(db, "posts", "title", title)

@@ -9,13 +9,14 @@ enable :sessions
 
 #Before functions
 protectedRoutes = ["/logout", "/posts/", "/newpost/", "/post/", "/showprofile/", "/user/"]
-unProtectedRoutes = ['/', '/showregister', '/showlogin']
+
+# unProtectedRoutes = ['/', '/showregister', '/showlogin']
 
 before do
     path = request.path_info
     fixedPath = path.scan(/\w+/).first
     pathMethod = request.request_method
-    
+
     answer = []
     protectedRoutes.each do |route|
         answer << route.scan(/\w+/).first
@@ -25,56 +26,35 @@ before do
 
     if pathInclude and not session[:auth] and path != "/error/401" and pathMethod == "GET"
         redirect("/error/401")
+
     end
 end
 
-
 # GET route
 get('/') do
-    session[:loginError] = false
-    session[:registerError] = false
-    session[:like] = false
-    session[:empty] = false
-    session[:notUnique] = false
-    session[:isEmail] = true
-    session[:isNumber] = true
-    session[:timeLogged] = 0
-    session[:auth] = false
+    resetStart()
+
     slim(:start)
 end
 
 get('/showregister') do
-    session[:loginError] = false
-    session[:auth] = false
+    restartReg()
+
     slim(:register)
 end
 
 get('/showlogin') do
-    session[:notUnique] = false
-    session[:registerError] = false
-    session[:isEmail] = true
-    session[:isNumber] = true
-    session[:auth] = false
+    restartLogin()
     slim(:login)
 end
 
 get('/logout') do
-    session[:loginError] = false
-    session[:registerError] = false
-    session[:like] = false
-    session[:empty] = false
-    session[:notUnique] = false
-    session[:isEmail] = true
-    session[:isNumber] = true
-    session[:auth] = false
+    resetStart()
     slim(:start)
 end
 
 get('/posts/:filter') do
-    session[:notUnique] = false
-    session[:empty] = false
-    session[:isEmail] = true
-    session[:isNumber] = true
+    restartPosts()
     filter = params[:filter]
 
     posts = posts(filter)
@@ -105,13 +85,7 @@ get('/post/:postid/:userid/edit') do
 end
 
 get('/showprofile/:userid') do
-    session[:loginError] = false
-    session[:registerError] = false
-    session[:like] = false
-    session[:empty] = false
-    session[:notUnique] = false
-    session[:isEmail] = true
-    session[:isNumber] = true
+    restartProfil()
     userid = params[:userid].to_i
 
     userInfo = users(userid)
@@ -160,53 +134,7 @@ post('/register') do
         credentials = [:username, :pwdigest, :email, :phonenumber]
         isNotUnique = uniqueCredentials(credentials)
 
-        if not anyEmpty and not isNotUnique
-
-            if not isEmail(params[:email])
-                redirect('/showregister')
-            end
-        
-            if not isNumber(params[:phonenumber])
-                redirect('/showregister')
-            end
-
-            if registration(params[:password], params[:passwordConfirm], params[:username], params[:email], params[:phonenumber], params[:birthday])
-                
-
-                db = db_called("db/database.db")
-                begin
-                    woods = params[:woods]
-                    if woods == "woods"
-                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
-                    end  
-                end
-
-                begin
-                    sea = params[:sea]
-                    if sea == "sea"
-                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
-                    end
-                end
-
-                begin
-                    mountains = params[:mountains]
-                    if mountains == "mountains"
-                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
-                    end
-                end
-
-                begin
-                    lakes = params[:lakes]
-                    if lakes == "lakes"
-                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
-                    end 
-                end
-
-                redirect('/posts/all')
-            end
-        else
-            redirect('/showregister')
-        end  
+        registration(anyEmpty, isNotUnique)
     else
         redirect('/showregister')
     end
@@ -218,10 +146,11 @@ post('/login') do
         password = params[:password]
 
         if isEmpty(username) || isEmpty(password)
+            p "was empty"
             redirect('/showlogin')
         end
 
-        login(username, password)
+        authenticationLogin(username, password)
     else
         redirect('/showlogin')
     end
@@ -243,57 +172,8 @@ post('/user/:userid/update') do
             redirect(route)
         end
 
-        if not anyEmpty
-            isNotUnique = false
-            credentials[0..credentials.length - 2].each do |credential|
-                uniqueUserUpdate(credential.to_s, params[credential], userid)
-            end
+        upadteProfil(userid, anyEmpty, credentials)
 
-            if not isNotUnique 
-                birthday = params[:birthday]
-                updateBirthday(birthday, userid)
-                deletePersonalityUser(userid)
-
-                db = db_called("db/database.db")
-                begin
-                    woods = params[:woods]
-                    if woods == "woods"
-                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
-                    end  
-                end
-        
-                begin
-                    sea = params[:sea]
-                    if sea == "sea"
-                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
-                    end
-                end
-        
-                begin
-                    mountains = params[:mountains]
-                    if mountains == "mountains"
-                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
-                    end
-                end
-        
-                begin
-                    lakes = params[:lakes]
-                    if lakes == "lakes"
-                        db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
-                    end 
-                end
-                
-                session[:notUnique] = false
-                route = "/showprofile/#{userid}"
-                redirect(route)
-            else
-                route = "/user/#{userid}/edit"
-                redirect(route)
-            end
-        else
-            route = "/user/#{userid}/edit"
-            redirect(route)
-        end
     else
         route = "/user/#{userid}/edit"
         redirect(route)
@@ -302,18 +182,27 @@ end
 
 post('/post/new') do
     id = session[:id]
-    title = params[:title]
-    text = params[:text]
+    if logTime()
+        title = params[:title]
+        text = params[:text]
 
-    postNew(title, text)
+        postNew(title, text, id)
+    else
+        route = "/newpost/#{id}"
+        redirect(route)
+    end
 end
 
 post('/post/:id/update') do
-    title = params[:title]
-    postid = params[:id].to_i
     userid = session[:id]
-
-    postUpdate(title, postid, userid)
+    postid = params[:id].to_i
+    if logTime()
+        title = params[:title]
+        postUpdate(title, postid, userid)
+    else
+        route = "/post/#{postid}/#{userid}/edit"
+        redirect(route)
+    end
 end
 
 post('/post/:postid/:userid/delete') do

@@ -26,9 +26,15 @@
 
 # end
 
-protectedRoutes = ["/logout", "/posts/", "/newpost/", "/post/", "/showprofile/", "/user/"]
-answer = []
-protectedRoutes.each do |route|
-    answer << route.scan(/\w+/).first
-    p answer
-end
+# protectedRoutes = ["/logout", "/posts/", "/newpost/", "/post/", "/showprofile/", "/user/"]
+# answer = []
+# protectedRoutes.each do |route|
+#     answer << route.scan(/\w+/).first
+#     p answer
+# end
+
+# temp = "401/asdiojasdoiajsd"
+
+# p temp.to_i.to_s
+
+p "401/asdiojasdoiajsd".to_i

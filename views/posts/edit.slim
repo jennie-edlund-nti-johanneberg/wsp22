@@ -16,8 +16,12 @@ div id="helaupdatediv"
 
         - if session[:empty] 
             article.inputError
-                h1 TITLE REQUIRED
+                h1 TITLE REQUIRED AND NO BLANKSPACES
 
         - if session[:notUnique]
             article.inputError
                 h1 TITLE NOT UNIQUE
+
+        - if session[:stress]
+            article.inputError
+                h1 SLOW DOWN!!
