@@ -181,7 +181,7 @@ get('/error/:id') do
     slim(:error, locals: {errorId:errorId, errorMsg:errorMsg})
 end
 
-#Catches not found routes and redirects to '/error/:id'
+# Catches not found routes and redirects to '/error/:id'
 not_found do
     redirect("/error/404")
 end

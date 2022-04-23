@@ -85,9 +85,9 @@ Vad ska göras:
     ✔ tas felmedelandebort när går bort? @done(22-04-16 18:11)
     ✔ fixa css för felmedelande @done(22-04-16 18:16)
 
-    ☐ before
+    ✔ before @done(22-04-23 22:52)
         ✔ session[:auth] @done(22-04-20 22:14)
-        ☐ sessions i allmänhet
+        sessions i allmänhet
 
     ✔ auth @done(22-04-20 20:10)
         ✔ new @done(22-04-20 19:34)
@@ -130,7 +130,6 @@ Vad ska göras:
     ✔ ta bort onödiga bilder i img @done(22-04-23 17:16)
     ✔ ta bort test.rb @done(22-04-23 17:16)
     ✔ läs genom filer som har text @done(22-04-23 18:52)
-    ☐ capybara
 
     ☐ fixa projektrapporten
         ✔ skissar @done(22-04-21 21:32)
@@ -151,12 +150,15 @@ Vad ska göras:
     ✔ validering (flera login, auth m.m, characters, mail m.m) @done(22-04-23 15:10)
     ✔ misc i mapp och dokumentation behövs? @done(22-04-23 17:34)
     ✔ andra onödiga grejor så som mappar, filer, bilder osv @done(22-04-23 17:34)
-    ☐ kolla presentationer
+    ✔ kolla presentationer @done(22-04-23 22:51)
     ☐ todo.todo
-        ☐ app
+        ✔ app @done(22-04-23 22:51)
+            ☐ catches
         ☐ model
         ☐ before-block
-    ☐ yardock och modul
+    ☐ yardock och module
+    ☐ cheat sheat
+    ☐ beskriv mapp
     ☐ utvärdering
 
 Önskas: 
