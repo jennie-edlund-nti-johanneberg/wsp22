@@ -1,14 +1,15 @@
 module Model
 
-    #Database called
+    # Attempts to open a new database connection
+
+    # @return [Array], containing all the data from the database
     def db_called(path)
         db = SQLite3::Database.new(path)
         db.results_as_hash = true
         return db
     end
 
-
-    #Restat sessoins
+    # Attempts to reset sessions
     def resetStart()
         session[:loginError] = false
         session[:registerError] = false
@@ -20,11 +21,13 @@ module Model
         session[:auth] = false
     end
 
+    # Attempts to reset sessions
     def restartReg()
         session[:loginError] = false
         session[:auth] = false
     end
 
+    # Attempts to reset sessions
     def restartLogin()
         session[:registerError] = false
         session[:notUnique] = false
@@ -33,6 +36,7 @@ module Model
         session[:auth] = false
     end
 
+    # Attempts to reset sessions
     def restartPosts()
         session[:notUnique] = false
         session[:empty] = false
@@ -40,6 +44,7 @@ module Model
         session[:isNumber] = true
     end
 
+    # Attempts to reset sessions
     def restartProfil()
         session[:loginError] = false
         session[:registerError] = false
@@ -50,14 +55,23 @@ module Model
         session[:isNumber] = true
     end
 
+    # Attempts to check if the user is authorized
 
-    #Verification
+    # @param [Integer] userid, The user ID
     def auth(userid)
         if session[:id] != userid
             redirect("/error/401/")
         end
     end
 
+    # Attempts to verify the inputs uniqueness
+
+    # @param [Hash] db, containing all the data from the database
+    # @param [Sting] table, the table that will be selected 
+    # @param [Sting] attribute, the attribute that will be selected 
+    # @param [Sting] check, the user's input
+
+    # @return [Bloolean] wheter the input is unique or not
     def isUnique(db, table, attribute, check)
         query = "SELECT * FROM #{table} WHERE #{attribute} = ?"
         result = db.execute(query, check)
@@ -70,6 +84,14 @@ module Model
         end
     end
 
+    # Attempts to verify the credentials uniqueness
+
+    # @param [Array] credentials, the inputform's credentials 
+
+    # @see Model#db_called
+    # @see Model#isUnique
+
+    # @return [Bloolean] wheter the credential is unique or not
     def uniqueCredentials(credentials)
         db = db_called("db/database.db")
 
@@ -80,6 +102,18 @@ module Model
         return isNotUnique
     end
 
+    # Attempts to update the user's iformation
+
+    # @param [Sting] credential, the inputform's credential 
+    # @param [Sting] calledCredential, the user's input 
+    # @param [Integer] id, the user's ID
+
+
+    # @see Model#db_called
+    # @see Model#attributeSpecifikUsers
+    # @see Model#isUnique
+
+    # @return [Bloolean] wheter the credential is unique or not
     def uniqueUserUpdate(credential, calledCredential, id)
         db = db_called("db/database.db")
         attribute = attributeSpecifikUsers(credential)
@@ -95,6 +129,11 @@ module Model
         return isNotUnique
     end
 
+    # Attempts to check if the inputs are empty
+
+    # @param [Sting] text, the user's input
+
+    # @return [Bloolean] wheter the input is empyt or not
     def isEmpty(text)
         if text == nil
             session[:empty] = true
@@ -107,7 +146,7 @@ module Model
             return false
         end
     end
-
+#
     def emptyCredentials(credentials)
         anyEmpty = false
         credentials.each do |credential|
