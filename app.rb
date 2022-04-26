@@ -9,9 +9,10 @@ enable :sessions
 
 include Model
 
-#Before functions
+
 protectedRoutes = ["/logout", "/posts/", "/newpost/", "/post/", "/showprofile/", "/user/"]
 
+# Attempts to check if the client has authorization
 before do
     path = request.path_info
     fixedPath = path.scan(/\w+/).first
@@ -26,7 +27,6 @@ before do
 
     if pathInclude and not session[:auth] and path != "/error/401" and pathMethod == "GET"
         redirect("/error/401")
-
     end
 end
 

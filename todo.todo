@@ -152,15 +152,16 @@ Vad ska göras:
     ✔ andra onödiga grejor så som mappar, filer, bilder osv @done(22-04-23 17:34)
     ✔ kolla presentationer @done(22-04-23 22:51)
     ☐ todo.todo
-    ☐ yardock och module
+    ✔ yardock och module @done(22-04-26 19:25)
         ✔ app @done(22-04-23 22:51)
-            ☐ catches
-        ☐ model
-        ☐ before-block
-    ☐ posts
-    ☐ users
+            ✔ catches @done(22-04-26 19:25)
+        ✔ model @done(22-04-26 19:18)
+        ✔ before-block @done(22-04-26 19:25)
+    ✔ posts @done(22-04-26 19:18)
+    ✔ users @done(22-04-26 19:18)
     ✔ cheat sheat @done(22-04-26 18:28)
     ✔ beskriv mapp @done(22-04-26 18:28)
+    ☐ tid
     ☐ utvärdering
 
 Önskas: 

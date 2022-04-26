@@ -2,7 +2,7 @@ module Model
 
     # Attempts to open a new database connection
 
-    # @return [Array], containing all the data from the database
+    # @return [Array] containing all the data from the database
     def db_called(path)
         db = SQLite3::Database.new(path)
         db.results_as_hash = true
