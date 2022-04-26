@@ -67,11 +67,11 @@ module Model
     # Attempts to verify the inputs uniqueness
 
     # @param [Hash] db, containing all the data from the database
-    # @param [Sting] table, the table that will be selected 
-    # @param [Sting] attribute, the attribute that will be selected 
-    # @param [Sting] check, the user's input
+    # @param [String] table, the table that will be selected 
+    # @param [String] attribute, the attribute that will be selected 
+    # @param [String] check, the user's input
 
-    # @return [Bloolean] wheter the input is unique or not
+    # @return [Boolean] whether the input is unique or not
     def isUnique(db, table, attribute, check)
         query = "SELECT * FROM #{table} WHERE #{attribute} = ?"
         result = db.execute(query, check)
@@ -91,7 +91,7 @@ module Model
     # @see Model#db_called
     # @see Model#isUnique
 
-    # @return [Bloolean] wheter the credential is unique or not
+    # @return [Boolean] whether the credential is unique or not
     def uniqueCredentials(credentials)
         db = db_called("db/database.db")
 
@@ -104,8 +104,8 @@ module Model
 
     # Attempts to update the user's iformation
 
-    # @param [Sting] credential, the inputform's credential 
-    # @param [Sting] calledCredential, the user's input 
+    # @param [String] credential, the inputform's credential 
+    # @param [String] calledCredential, the user's input 
     # @param [Integer] id, the user's ID
 
 
@@ -113,7 +113,7 @@ module Model
     # @see Model#attributeSpecifikUsers
     # @see Model#isUnique
 
-    # @return [Bloolean] wheter the credential is unique or not
+    # @return [Boolean] whether the credential is unique or not
     def uniqueUserUpdate(credential, calledCredential, id)
         db = db_called("db/database.db")
         attribute = attributeSpecifikUsers(credential)
@@ -131,9 +131,9 @@ module Model
 
     # Attempts to check if the inputs are empty
 
-    # @param [Sting] text, the user's input
+    # @param [String] text, the user's input
 
-    # @return [Bloolean] wheter the input is empyt or not
+    # @return [Boolean] whether the input is empyt or not
     def isEmpty(text)
         if text == nil
             session[:empty] = true
@@ -146,7 +146,14 @@ module Model
             return false
         end
     end
-#
+
+    # Attempts to verify the if the credentials are empty
+
+    # @param [Array] credentials, the inputform's credentials 
+
+    # @see Model#isEmpty
+
+    # @return [Boolean] whether the credential is unique or not
     def emptyCredentials(credentials)
         anyEmpty = false
         credentials.each do |credential|
@@ -155,6 +162,11 @@ module Model
         return anyEmpty
     end
 
+    # Attempts to check if the inputs contain "@" and "."
+
+    # @param [String] text, the user's input
+
+    # @return [Boolean] whether the input is an email or not
     def isEmail(text)
         if text == nil
             session[:isEmail] = true
@@ -168,6 +180,11 @@ module Model
         end
     end
 
+    # Attempts to check if the inputs cointain only numbers
+
+    # @param [String] number, the user's input
+
+    # @return [Boolean] whether the input only cointain numbers
     def isNumber(number)
         if number != nil
             answer = number.scan(/\D/).empty?
@@ -184,6 +201,9 @@ module Model
         end
     end
 
+    # Attempts to check if too many inputs are recieved in close proximity
+
+    # @return [Boolean] whether the inputs are recieved in close proximity
     def logTime()
         tempTime = Time.now.to_i
 
@@ -203,6 +223,12 @@ module Model
         end
     end
 
+    # Attempts to check if the passwords match
+
+    # @param [String] pw1, the first password
+    # @param [String] pw2, the second password
+
+    # @return [Boolean] whether the passwords match
     def passwordMatch(pw1, pw2)
         if pw1 == pw2
             return true
@@ -211,6 +237,20 @@ module Model
         end
     end
 
+    # Attempts to check if user can register
+
+    # @param [String] password, the password input
+    # @param [String] passConfirm, the password confirm input
+    # @param [String] username, the user's username
+    # @param [String] email, the user's email
+    # @param [String] phonenumber, the user's phonenumber
+    # @param [String] birthday, the user's birthday
+
+    # @see Model#passwordMatch
+    # @see Model#db_called
+    # @see Model#usersByUsername
+
+    # @return [Boolean] whether the user registration succeeds 
     def authenticationReg(password, passConfirm, username, email, phonenumber, birthday)
         if passwordMatch(password, passConfirm)
             passwordDigest = BCrypt::Password.create(password)
@@ -230,6 +270,15 @@ module Model
         end
     end
 
+    # Attempts to check if user can login
+
+    # @param [String] username, the user's username
+    # @param [String] password, the user's password
+
+    # @see Model#db_called
+    # @see Model#usersByUsername
+    # @see Model#passwordMatch
+    # @see Model#passwordMatch
     def authenticationLogin(username, password)
         db = db_called("db/database.db")
         user = usersByUsername(username).first
@@ -256,7 +305,14 @@ module Model
         end
     end
 
-    #Functions
+    # Attempts to update user's personality
+
+    # @param [String] :woods, value "wood" if box is checked
+    # @param [String] :sea, value "sea" if box is checked
+    # @param [String] :mountains, value "mountains" if box is checked
+    # @param [String] :lakes, value "lakes" if box is checked
+
+    # @see Model#db_called
     def personalityUpdate()
         db = db_called("db/database.db")
 
@@ -282,6 +338,21 @@ module Model
         end 
     end 
 
+    # Attempts to register user
+
+    # @param [String] anyEmpty, true or false whether the credentials were empty
+    # @param [String] isNotUnique, true or false whether the credentials were unique
+    # @param [String] :email, the user's email
+    # @param [String] :phonenumber, the user's phonenumber
+    # @param [String] :password, the password input
+    # @param [String] :passwordConfirm, the password confirm input
+    # @param [String] :username, the user's username
+    # @param [String] :birthday, the user's birthday
+
+    # @see Model#isEmail
+    # @see Model#isNumber
+    # @see Model#authenticationReg
+    # @see Model#personalityUpdate
     def registration(anyEmpty, isNotUnique)
         if not anyEmpty and not isNotUnique
 
@@ -302,7 +373,17 @@ module Model
             redirect('/showregister')
         end  
     end
+    # Attempts to update user profile
 
+    # @param [Integer] userid, the user ID
+    # @param [String] anyEmpty, true or false whether the credentials were empty
+    # @param [Array] credentials, the inputform's credentials 
+    # @param [String] :birthday, the user's birthday
+
+    # @see Model#uniqueUserUpdate
+    # @see Model#updateBirthday
+    # @see Model#deletePersonalityUser
+    # @see Model#personalityUpdate
     def upadteProfil(userid, anyEmpty, credentials)
         if not anyEmpty
             isNotUnique = false
@@ -329,11 +410,23 @@ module Model
         end
     end
 
+    # Finds the information under a specific attribution for a specific user
+
+    # @param [String] credential, the inputform's credential 
+
+    # @see Model#db_called
+
+    # @return [Boolean] the information under a specific attribution for a specific user
     def attributeSpecifikUsers(credential)
         db = db_called("db/database.db")
         return db.execute("SELECT #{credential} FROM users WHERE id = ?", session[:id]).first
     end
 
+    # Attempts to check what ID the fitler value gives
+
+    # @param [String] filter, the filter value
+
+    # @return [Integer] the ID the filter value gives
     def filter(filter)
         if filter == "woods"
             session[:filter] = "Woods"
@@ -353,6 +446,7 @@ module Model
         end
     end
 
+    # Attempts to check what route the filter gives
     def filterRoute()
         if session[:filter] == "Lakes"
             redirect('/posts/lakes')
@@ -367,16 +461,36 @@ module Model
         end
     end
 
+    # Attempts to insert userid and postid into likes
+
+    # @param [Integer] userid, the user ID
+    # @param [Integer] postid, the ID of the post
+
+    # @see Model#db_called
     def insertLike(userid, postid)
         db = db_called("db/database.db")
         db.execute("INSERT INTO likes (userid,postid) VALUES (?,?)", userid, postid)
     end
 
+    # Attempts to delete userid and postid from likes
+
+    # @param [Integer] userid, the user ID
+    # @param [Integer] postid, the ID of the post
+
+    # @see Model#db_called
     def deleteLike(userid, postid)
         db = db_called("db/database.db")
         db.execute("DELETE FROM likes WHERE postid = ? AND userid = ?", postid, userid)
     end
 
+    # Finds all posts according to the filter value
+
+    # @param [String] filter, the filter value
+
+    # @see Model#db_called
+    # @see Model#filter
+
+    # @return [Boolean] all posts according to the filter value
     def posts(filter)
         db = db_called("db/database.db")
         filterId = filter(filter)
@@ -393,11 +507,25 @@ module Model
         end
     end
 
+    # Finds one specific post
+
+    # @param [Integer] id, the ID of the post
+
+    # @see Model#db_called
+
+    # @return [Boolean] one specific post
     def post(id)
         db = db_called("db/database.db")
         return db.execute("SELECT * FROM posts WHERE id = ?", id).first
     end
 
+    # Finds specific information on user's own posts
+
+    # @param [Integer] id, the user's ID
+
+    # @see Model#db_called
+
+    # @return [Boolean] specific information on user's own posts
     def postSpecificInfo(id)
         db = db_called("db/database.db")
 
@@ -411,7 +539,7 @@ module Model
             INNER JOIN users ON users.id = posts.creatorid
         WHERE users.id = ?", id)
     end
-
+#
     def postNew(title, text, id)
         if not isEmpty(title)
             db = db_called("db/database.db")
@@ -430,7 +558,7 @@ module Model
         end
 
     end
-
+    #params
     def postUpdate(title, postid, userid)
         if not isEmpty(title)
             anyEmpty = false
