@@ -69,7 +69,7 @@ module Model
     # @param [Hash] db, containing all the data from the database
     # @param [String] table, the table that will be selected 
     # @param [String] attribute, the attribute that will be selected 
-    # @param [String] check, the user's input
+    # @param [String] check, the user input
 
     # @return [Boolean] whether the input is unique or not
     def isUnique(db, table, attribute, check)
@@ -102,11 +102,11 @@ module Model
         return isNotUnique
     end
 
-    # Attempts to update the user's iformation
+    # Attempts to update the user information
 
     # @param [String] credential, the inputform's credential 
-    # @param [String] calledCredential, the user's input 
-    # @param [Integer] id, the user's ID
+    # @param [String] calledCredential, the user input 
+    # @param [Integer] id, the user ID
 
 
     # @see Model#db_called
@@ -131,7 +131,7 @@ module Model
 
     # Attempts to check if the inputs are empty
 
-    # @param [String] text, the user's input
+    # @param [String] text, the user input
 
     # @return [Boolean] whether the input is empyt or not
     def isEmpty(text)
@@ -164,7 +164,7 @@ module Model
 
     # Attempts to check if the inputs contain "@" and "."
 
-    # @param [String] text, the user's input
+    # @param [String] text, the user input
 
     # @return [Boolean] whether the input is an email or not
     def isEmail(text)
@@ -182,7 +182,7 @@ module Model
 
     # Attempts to check if the inputs cointain only numbers
 
-    # @param [String] number, the user's input
+    # @param [String] number, the user input
 
     # @return [Boolean] whether the input only cointain numbers
     def isNumber(number)
@@ -241,10 +241,10 @@ module Model
 
     # @param [String] password, the password input
     # @param [String] passConfirm, the password confirm input
-    # @param [String] username, the user's username
-    # @param [String] email, the user's email
-    # @param [String] phonenumber, the user's phonenumber
-    # @param [String] birthday, the user's birthday
+    # @param [String] username, the user username
+    # @param [String] email, the user email
+    # @param [String] phonenumber, the user phonenumber
+    # @param [String] birthday, the user birthday
 
     # @see Model#passwordMatch
     # @see Model#db_called
@@ -272,8 +272,8 @@ module Model
 
     # Attempts to check if user can login
 
-    # @param [String] username, the user's username
-    # @param [String] password, the user's password
+    # @param [String] username, the user username
+    # @param [String] password, the user password
 
     # @see Model#db_called
     # @see Model#usersByUsername
@@ -305,7 +305,7 @@ module Model
         end
     end
 
-    # Attempts to update user's personality
+    # Attempts to update user personality
 
     # @param [String] :woods, value "wood" if box is checked
     # @param [String] :sea, value "sea" if box is checked
@@ -342,12 +342,12 @@ module Model
 
     # @param [String] anyEmpty, true or false whether the credentials were empty
     # @param [String] isNotUnique, true or false whether the credentials were unique
-    # @param [String] :email, the user's email
-    # @param [String] :phonenumber, the user's phonenumber
+    # @param [String] :email, the user email
+    # @param [String] :phonenumber, the user phonenumber
     # @param [String] :password, the password input
     # @param [String] :passwordConfirm, the password confirm input
-    # @param [String] :username, the user's username
-    # @param [String] :birthday, the user's birthday
+    # @param [String] :username, the user username
+    # @param [String] :birthday, the user birthday
 
     # @see Model#isEmail
     # @see Model#isNumber
@@ -378,7 +378,7 @@ module Model
     # @param [Integer] userid, the user ID
     # @param [String] anyEmpty, true or false whether the credentials were empty
     # @param [Array] credentials, the inputform's credentials 
-    # @param [String] :birthday, the user's birthday
+    # @param [String] :birthday, the user birthday
 
     # @see Model#uniqueUserUpdate
     # @see Model#updateBirthday
@@ -416,7 +416,7 @@ module Model
 
     # @see Model#db_called
 
-    # @return [Boolean] the information under a specific attribution for a specific user
+    # @return [Array] the information under a specific attribution for a specific user
     def attributeSpecifikUsers(credential)
         db = db_called("db/database.db")
         return db.execute("SELECT #{credential} FROM users WHERE id = ?", session[:id]).first
@@ -464,7 +464,7 @@ module Model
     # Attempts to insert userid and postid into likes
 
     # @param [Integer] userid, the user ID
-    # @param [Integer] postid, the ID of the post
+    # @param [Integer] postid, the post ID
 
     # @see Model#db_called
     def insertLike(userid, postid)
@@ -475,7 +475,7 @@ module Model
     # Attempts to delete userid and postid from likes
 
     # @param [Integer] userid, the user ID
-    # @param [Integer] postid, the ID of the post
+    # @param [Integer] postid, the post ID
 
     # @see Model#db_called
     def deleteLike(userid, postid)
@@ -490,7 +490,7 @@ module Model
     # @see Model#db_called
     # @see Model#filter
 
-    # @return [Boolean] all posts according to the filter value
+    # @return [Array] all posts according to the filter value
     def posts(filter)
         db = db_called("db/database.db")
         filterId = filter(filter)
@@ -509,11 +509,11 @@ module Model
 
     # Finds one specific post
 
-    # @param [Integer] id, the ID of the post
+    # @param [Integer] id, the post ID
 
     # @see Model#db_called
 
-    # @return [Boolean] one specific post
+    # @return [Array] one specific post
     def post(id)
         db = db_called("db/database.db")
         return db.execute("SELECT * FROM posts WHERE id = ?", id).first
@@ -521,11 +521,11 @@ module Model
 
     # Finds specific information on user's own posts
 
-    # @param [Integer] id, the user's ID
+    # @param [Integer] id, the user ID
 
     # @see Model#db_called
 
-    # @return [Boolean] specific information on user's own posts
+    # @return [Array] specific information on user's own posts
     def postSpecificInfo(id)
         db = db_called("db/database.db")
 
@@ -539,7 +539,16 @@ module Model
             INNER JOIN users ON users.id = posts.creatorid
         WHERE users.id = ?", id)
     end
-#
+
+    # Attempts to create a new post
+
+    # @param [Integer] title, the post title
+    # @param [Integer] text, the post text
+    # @param [Integer] id, the user ID
+
+    # @see Model#isEmpty
+    # @see Model#db_called
+    # @see Model#isUnique
     def postNew(title, text, id)
         if not isEmpty(title)
             db = db_called("db/database.db")
@@ -556,9 +565,18 @@ module Model
             route = "/newpost/#{id}"
             redirect(route)
         end
-
     end
-    #params
+
+    # Attempts to update a post
+
+    # @param [Integer] title, the post title
+    # @param [Integer] postid, the post ID
+    # @param [Integer] userid, the user ID
+    # @param [Integer] :text, the post text
+
+    # @see Model#isEmpty
+    # @see Model#db_called
+    # @see Model#isUnique
     def postUpdate(title, postid, userid)
         if not isEmpty(title)
             anyEmpty = false
@@ -587,9 +605,15 @@ module Model
             route = "/post/#{postid}/#{userid}/edit"
             redirect(route)
         end
-
     end
 
+    # Attempts to delete a post
+
+    # @param [Integer] postid, the post ID
+    # @param [Integer] userid, the user ID
+
+    # @see Model#auth
+    # @see Model#db_called
     def postDelete(userid, postid)
         auth(userid)
         
@@ -599,21 +623,47 @@ module Model
         redirect('/posts/all')
     end
 
+    # Finds a specific user information by ID
+
+    # @param [Integer] id, the user ID
+
+    # @see Model#db_called
+
+    # @return [Array] specific user information by ID
     def users(id)
         db = db_called("db/database.db")
         return db.execute("SELECT * FROM users WHERE id = ?", id)
     end
 
+    # Finds a specific user information by username
+
+    # @param [Integer] username, the user username
+
+    # @see Model#db_called
+
+    # @return [Array] specific user information by username
     def usersByUsername(username)
         db = db_called("db/database.db")
         return db.execute("SELECT * FROM users WHERE username = ?", username)
     end
 
+    # Finds all usernames and ID of the users
+
+    # @see Model#db_called
+
+    # @return [Array] all usernames and ID of the users
     def usernameAndId()
         db = db_called("db/database.db")
         return db.execute("SELECT username, id FROM users")
     end
 
+    # Finds the personalitys of a specific user
+
+    # @param [Integer] id, the user ID
+
+    # @see Model#db_called
+
+    # @return [Array] the personalitys of a specific user
     def usersPersonality(id)
         db = db_called("db/database.db")
 
@@ -624,6 +674,11 @@ module Model
         WHERE user_personality_relation.userid = ?", id)
     end
 
+    # Finds the total likes of the client
+
+    # @param [Integer] id, the user ID
+
+    # @see Model#db_called
     def likeCountClient(id)
         db = db_called("db/database.db")
         db.results_as_hash = false
@@ -635,6 +690,13 @@ module Model
         WHERE creatorid = ?", id).first.first
     end
 
+    # Finds the total likes of a specific user
+
+    # @param [Integer] id, the user ID
+
+    # @see Model#db_called
+
+    # @return [Integer] the total likes of a specific user
     def likeCountTotal(id)
         db = db_called("db/database.db")
         db.results_as_hash = false
@@ -646,6 +708,11 @@ module Model
         WHERE creatorid = ?", id).first.first
     end
 
+    # Finds all the postids from the "likes" table
+
+    # @see Model#db_called
+
+    # @return [Array] all the postids from the "likes" table
     def likeCountPost()
         db = db_called("db/database.db")
         db.results_as_hash = false
@@ -653,6 +720,11 @@ module Model
         return db.execute("SELECT postid FROM likes")
     end
 
+    # Finds the posts that a specific user liked
+
+    # @see Model#db_called
+
+    # @return [Array] the posts that a specific user liked
     def isLiked()
         db = db_called("db/database.db")
         db.results_as_hash = false
@@ -665,13 +737,24 @@ module Model
         return tempArr
     end
 
+    # Updates the user birthday
+
+    # @param [Integer] birthday, the user birthday
+    # @param [Integer] id, the user ID
+
+    # @see Model#db_called
     def updateBirthday(birthday, id)
         db = db_called("db/database.db")
-        return db.execute("UPDATE users SET birthday = ? WHERE id = ?", birthday, id)
+        db.execute("UPDATE users SET birthday = ? WHERE id = ?", birthday, id)
     end
 
+    # Deletes the user personalitys from the "user_personality_relation" table
+
+    # @param [Integer] id, the user ID
+
+    # @see Model#db_called
     def deletePersonalityUser(id)
         db = db_called("db/database.db")
-        return db.execute("DELETE FROM user_personality_relation WHERE userid = ?", id)
+        db.execute("DELETE FROM user_personality_relation WHERE userid = ?", id)
     end
 end

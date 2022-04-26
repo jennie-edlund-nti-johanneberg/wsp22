@@ -131,7 +131,7 @@ Vad ska göras:
     ✔ ta bort test.rb @done(22-04-23 17:16)
     ✔ läs genom filer som har text @done(22-04-23 18:52)
 
-    ☐ fixa projektrapporten
+    ✔ fixa projektrapporten @done(22-04-26 18:27)
         ✔ skissar @done(22-04-21 21:32)
             ✔ error @done(22-04-21 21:06)
             ✔ login @done(22-04-20 23:07)
@@ -152,16 +152,18 @@ Vad ska göras:
     ✔ andra onödiga grejor så som mappar, filer, bilder osv @done(22-04-23 17:34)
     ✔ kolla presentationer @done(22-04-23 22:51)
     ☐ todo.todo
+    ☐ yardock och module
         ✔ app @done(22-04-23 22:51)
             ☐ catches
         ☐ model
         ☐ before-block
-    ☐ yardock och module
-    ☐ cheat sheat
-    ☐ beskriv mapp
+    ☐ posts
+    ☐ users
+    ✔ cheat sheat @done(22-04-26 18:28)
+    ✔ beskriv mapp @done(22-04-26 18:28)
     ☐ utvärdering
 
 Önskas: 
-    ☐ när redigera sin profil ska personligheter va kvar!!
-    ☐ likar på profilsida tas till index
-    ☐ inte scrollas ner?
+    när redigera sin profil ska personligheter va kvar!!
+    likar på profilsida tas till index
+    inte scrollas ner?

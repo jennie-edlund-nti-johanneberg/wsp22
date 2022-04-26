@@ -104,7 +104,7 @@ end
 # Displays a edit post form
 
 # @param [Integer] :userid, The client ID
-# @param [Integer] :postid, The ID of the post
+# @param [Integer] :postid, The post ID
 
 # @see Model#auth
 # @see Model#likeCountClient
@@ -266,8 +266,8 @@ end
 
 # Creates a new article
 
-# @param [String] :title, The title of the post
-# @param [String] :text, The text of the post
+# @param [String] :title, The post title
+# @param [String] :text, The post text
 
 # @see Model#logTime
 # @see Model#postNew
@@ -286,8 +286,8 @@ end
 
 # Updates an existing post
 
-# @param [Integer] :postid, The ID of the post
-# @param [String] :title, The new title of the post
+# @param [Integer] :postid, The post ID
+# @param [String] :title, The new post title
 
 # @see Model#logTime
 # @see Model#postUpdate
@@ -306,7 +306,7 @@ end
 # Deletes an existing article
 
 # @param [Integer] :userid, The client ID
-# @param [String] :postid, The ID of the post
+# @param [String] :postid, The post ID
 
 # @see Model#postDelete
 post('/post/:postid/:userid/delete') do
@@ -319,7 +319,7 @@ end
 # Likes a post
 
 # @param [Integer] :userid, The client ID
-# @param [String] :postid, The ID of the post
+# @param [String] :postid, The post ID
 
 # @see Model#auth
 # @see Model#insertLike
@@ -336,7 +336,7 @@ end
 # Unlikes a post
 
 # @param [Integer] :userid, The client ID
-# @param [String] :postid, The ID of the post
+# @param [String] :postid, The post ID
 
 # @see Model#auth
 # @see Model#deleteLike
