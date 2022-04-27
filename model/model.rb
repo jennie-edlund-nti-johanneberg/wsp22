@@ -9,58 +9,17 @@ module Model
         return db
     end
 
-    # Attempts to reset sessions
-    def resetStart()
-        session[:loginError] = false
-        session[:registerError] = false
-        session[:like] = false
-        session[:empty] = false
-        session[:notUnique] = false
-        session[:isEmail] = true
-        session[:isNumber] = true
-        session[:auth] = false
-    end
-
-    # Attempts to reset sessions
-    def restartReg()
-        session[:loginError] = false
-        session[:auth] = false
-    end
-
-    # Attempts to reset sessions
-    def restartLogin()
-        session[:registerError] = false
-        session[:notUnique] = false
-        session[:isEmail] = true
-        session[:isNumber] = true
-        session[:auth] = false
-    end
-
-    # Attempts to reset sessions
-    def restartPosts()
-        session[:notUnique] = false
-        session[:empty] = false
-        session[:isEmail] = true
-        session[:isNumber] = true
-    end
-
-    # Attempts to reset sessions
-    def restartProfil()
-        session[:loginError] = false
-        session[:registerError] = false
-        session[:like] = false
-        session[:empty] = false
-        session[:notUnique] = false
-        session[:isEmail] = true
-        session[:isNumber] = true
-    end
-
     # Attempts to check if the user is authorized
 
-    # @param [Integer] userid, The user ID
-    def auth(userid)
-        if session[:id] != userid
-            redirect("/error/401/")
+    # @param [Integer] sessionid, The user ID from sessions
+    # @param [Integer] userid, The user ID from params
+
+    # @return [Boolean] whether sessionid and userid is equal
+    def auth(sessionid, userid)
+        if sessionid != userid
+            return false
+        else
+            return true
         end
     end
 
@@ -76,10 +35,8 @@ module Model
         query = "SELECT * FROM #{table} WHERE #{attribute} = ?"
         result = db.execute(query, check)
         if result.length == 0
-            session[:notUnique] = false
             return true
         else
-            session[:notUnique] = true
             return false
         end
     end
@@ -116,7 +73,7 @@ module Model
     # @return [Boolean] whether the credential is unique or not
     def uniqueUserUpdate(credential, calledCredential, id)
         db = db_called("db/database.db")
-        attribute = attributeSpecifikUsers(credential)
+        attribute = attributeSpecifikUsers(credential, id)
 
         if isUnique(db, "users", credential, calledCredential)
             db.execute("UPDATE users SET #{credential} = ? WHERE id = ?", calledCredential, id)
@@ -136,13 +93,10 @@ module Model
     # @return [Boolean] whether the input is empyt or not
     def isEmpty(text)
         if text == nil
-            session[:empty] = true
             return true
         elsif text.scan(/ /).empty? == false || text == ""
-            session[:empty] = true
             return true
         else
-            session[:empty] = false
             return false
         end
     end
@@ -169,13 +123,10 @@ module Model
     # @return [Boolean] whether the input is an email or not
     def isEmail(text)
         if text == nil
-            session[:isEmail] = true
-            return true
+            return false
         elsif text.include?('@') && text.include?('.')
-            session[:isEmail] = true
             return true
         else
-            session[:isEmail] = false
             return false
         end
     end
@@ -189,37 +140,34 @@ module Model
         if number != nil
             answer = number.scan(/\D/).empty?
         else
-            answer == false
+            answer = false
         end
 
         if answer
-            session[:isNumber] = true
             return true
         else
-            session[:isNumber] = false
             return false
         end
     end
 
     # Attempts to check if too many inputs are recieved in close proximity
 
-    # @return [Boolean] whether the inputs are recieved in close proximity
-    def logTime()
+    # @param [String] latestTempTime, the latest logged time
+
+    # @return [Hash] whether the inputs are recieved in close proximity
+    #   * :result [Boolean] whether the inputs are recieved in close proximity
+    #   * :time [Integer] the new latest logged time
+    def logTime(latestTempTime)
         tempTime = Time.now.to_i
 
-        if session[:timeLogged] == nil
-            session[:timeLogged] = 0
-        end
-        difTime = tempTime - session[:timeLogged]
+        difTime = tempTime - latestTempTime
 
         if difTime < 1.5
-            session[:timeLogged] = tempTime
-            session[:stress] = true
-            return false
+            tempHash = {result: false, time: tempTime}
+            return tempHash
         else
-            session[:timeLogged] = tempTime
-            session[:stress] = false
-            return true
+            tempHash = {result: true, time: tempTime}
+            return tempHash
         end
     end
 
@@ -237,7 +185,7 @@ module Model
         end
     end
 
-    # Attempts to check if user can register
+    # Attempts to register user
 
     # @param [String] password, the password input
     # @param [String] passConfirm, the password confirm input
@@ -248,7 +196,6 @@ module Model
 
     # @see Model#passwordMatch
     # @see Model#db_called
-    # @see Model#usersByUsername
 
     # @return [Boolean] whether the user registration succeeds 
     def authenticationReg(password, passConfirm, username, email, phonenumber, birthday)
@@ -256,17 +203,9 @@ module Model
             passwordDigest = BCrypt::Password.create(password)
             db = db_called("db/database.db")
             db.execute("INSERT INTO users (username, pwdigest, email, phonenumber, birthday) VALUES (?,?,?,?,?)", username, passwordDigest, email, phonenumber, birthday).first
-
-            user = usersByUsername(username).first
-            session[:id] = user["id"]
-            session[:user] = username
-            session[:auth] = true
-            session[:empty] = false
-            session[:notUnique] = false
             return true
         else
-            session[:registerError] = true
-            redirect('/showregister')
+            return false
         end
     end
 
@@ -274,46 +213,38 @@ module Model
 
     # @param [String] username, the user username
     # @param [String] password, the user password
+    # @param [Hash] user, all information of a specific user
 
     # @see Model#db_called
-    # @see Model#usersByUsername
     # @see Model#passwordMatch
-    # @see Model#passwordMatch
-    def authenticationLogin(username, password)
+
+    # @return [Boolean] whether the user can login or not
+    def authenticationLogin(username, password, user)
         db = db_called("db/database.db")
-        user = usersByUsername(username).first
 
         begin
             pwdigest = user["pwdigest"]
-            id = user["id"]
-        
             if passwordMatch(BCrypt::Password.new(pwdigest), password)
-                session[:loginError] = false
-                session[:id] = id
-                session[:auth] = true
-                session[:user] = username
-                redirect('/posts/all')
-                
+                return true
             else
-                session[:loginError] = true
-                redirect('/showlogin')
+                return false
+
             end
-            
         rescue => exception
-            session[:loginError] = true
-            redirect('/showlogin')
+            return false
         end
     end
 
     # Attempts to update user personality
 
+    # @param [String] userid, the user ID
     # @param [String] :woods, value "wood" if box is checked
     # @param [String] :sea, value "sea" if box is checked
     # @param [String] :mountains, value "mountains" if box is checked
     # @param [String] :lakes, value "lakes" if box is checked
 
     # @see Model#db_called
-    def personalityUpdate()
+    def personalityUpdate(userid)
         db = db_called("db/database.db")
 
         woods = params[:woods]
@@ -322,61 +253,25 @@ module Model
         lakes = params[:lakes]
 
         if woods == "woods"
-            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 1)
+            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", userid, 1)
         end  
 
         if sea == "sea"
-            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 2)
+            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", userid, 2)
         end
 
         if mountains == "mountains"
-            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 3)
+            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", userid, 3)
         end
 
         if lakes == "lakes"
-            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", session[:id], 4)
+            db.execute("INSERT INTO user_personality_relation (userid,categoryid) VALUES (?,?)", userid, 4)
         end 
     end 
 
-    # Attempts to register user
-
-    # @param [String] anyEmpty, true or false whether the credentials were empty
-    # @param [String] isNotUnique, true or false whether the credentials were unique
-    # @param [String] :email, the user email
-    # @param [String] :phonenumber, the user phonenumber
-    # @param [String] :password, the password input
-    # @param [String] :passwordConfirm, the password confirm input
-    # @param [String] :username, the user username
-    # @param [String] :birthday, the user birthday
-
-    # @see Model#isEmail
-    # @see Model#isNumber
-    # @see Model#authenticationReg
-    # @see Model#personalityUpdate
-    def registration(anyEmpty, isNotUnique)
-        if not anyEmpty and not isNotUnique
-
-            if not isEmail(params[:email])
-                redirect('/showregister')
-            end
-        
-            if not isNumber(params[:phonenumber])
-                redirect('/showregister')
-            end
-
-            if authenticationReg(params[:password], params[:passwordConfirm], params[:username], params[:email], params[:phonenumber], params[:birthday])
-                personalityUpdate()
-
-                redirect('/posts/all')
-            end
-        else
-            redirect('/showregister')
-        end  
-    end
     # Attempts to update user profile
 
     # @param [Integer] userid, the user ID
-    # @param [String] anyEmpty, true or false whether the credentials were empty
     # @param [Array] credentials, the inputform's credentials 
     # @param [String] :birthday, the user birthday
 
@@ -384,42 +279,37 @@ module Model
     # @see Model#updateBirthday
     # @see Model#deletePersonalityUser
     # @see Model#personalityUpdate
-    def upadteProfil(userid, anyEmpty, credentials)
-        if not anyEmpty
-            isNotUnique = false
-            credentials[0..credentials.length - 2].each do |credential|
-                uniqueUserUpdate(credential.to_s, params[credential], userid)
-            end
 
-            if not isNotUnique 
-                birthday = params[:birthday]
-                updateBirthday(birthday, userid)
-                deletePersonalityUser(userid)
-                personalityUpdate()
-                
-                session[:notUnique] = false
-                route = "/showprofile/#{userid}"
-                redirect(route)
-            else
-                route = "/user/#{userid}/edit"
-                redirect(route)
-            end
+    # @return [Boolean] whether the user profile updates
+    def updateProfile(userid, credentials)
+
+        isNotUnique = false
+        credentials[0..credentials.length - 2].each do |credential|
+            isNotUnique = uniqueUserUpdate(credential.to_s, params[credential], userid)
+        end
+
+        if not isNotUnique 
+            birthday = params[:birthday]
+            updateBirthday(birthday, userid)
+            deletePersonalityUser(userid)
+            personalityUpdate(userid)
+            return true
         else
-            route = "/user/#{userid}/edit"
-            redirect(route)
+            return false
         end
     end
 
     # Finds the information under a specific attribution for a specific user
 
     # @param [String] credential, the inputform's credential 
+    # @param [String] id, the user ID
 
     # @see Model#db_called
 
     # @return [Array] the information under a specific attribution for a specific user
-    def attributeSpecifikUsers(credential)
+    def attributeSpecifikUsers(credential, id)
         db = db_called("db/database.db")
-        return db.execute("SELECT #{credential} FROM users WHERE id = ?", session[:id]).first
+        return db.execute("SELECT #{credential} FROM users WHERE id = ?", id).first
     end
 
     # Attempts to check what ID the fitler value gives
@@ -429,35 +319,34 @@ module Model
     # @return [Integer] the ID the filter value gives
     def filter(filter)
         if filter == "woods"
-            session[:filter] = "Woods"
             return 1
         elsif filter == "sea"
-            session[:filter] = "Sea"
             return 2
         elsif filter == "mountains"
-            session[:filter] = "Mountains"
             return 3
         elsif filter == "lakes"
-            session[:filter] = "Lakes"
             return 4
         else
-            session[:filter] = "All Posts"
             return "all"
         end
     end
 
     # Attempts to check what route the filter gives
-    def filterRoute()
-        if session[:filter] == "Lakes"
-            redirect('/posts/lakes')
-        elsif session[:filter] == "Woods"
-            redirect('/posts/woods')
-        elsif session[:filter] == "Sea"
-            redirect('/posts/sea')
-        elsif session[:filter] == "Mountains"
-            redirect('/posts/mountains')
-        else
-            redirect('/posts/all')
+
+    # @param [String] filter, the filter value
+
+    # @return [Integer] the ID the filter value gives
+    def filterRoute(filter)
+        if filter == "Woods"
+            return 1
+        elsif filter == "Sea"
+            return 2
+        elsif filter == "Mountains"
+            return 3
+        elsif filter == "Lakes"
+            return 4
+        elsif filter == "All Posts"
+            return "all"
         end
     end
 
@@ -490,21 +379,26 @@ module Model
     # @see Model#db_called
     # @see Model#filter
 
-    # @return [Array] all posts according to the filter value
+    # @return [Hash] whether the inputs are recieved in close proximity
+    #   * :filterId [Integer] the ID the filter gives
+    #   * :posts [Array] all information about posts according to the filterID
     def posts(filter)
         db = db_called("db/database.db")
         filterId = filter(filter)
 
         if filterId == "all"
-            session[:filter] = "All Posts"
-            return db.execute("SELECT * FROM posts")
+            posts = db.execute("SELECT * FROM posts")
+
         else
-            return db.execute("SELECT * FROM posts WHERE creatorid IN (
+            posts = db.execute("SELECT * FROM posts WHERE creatorid IN (
                 SELECT DISTINCT
                     user_personality_relation.userid
                 FROM user_personality_relation
                     INNER JOIN category ON user_personality_relation.categoryid = ?)", filterId)
         end
+
+        tempHash = {filterId: filterId, posts:posts}
+        return tempHash
     end
 
     # Finds one specific post
@@ -546,24 +440,19 @@ module Model
     # @param [Integer] text, the post text
     # @param [Integer] id, the user ID
 
-    # @see Model#isEmpty
     # @see Model#db_called
     # @see Model#isUnique
+
+    # @return [Boolean] whether a new post was created
     def postNew(title, text, id)
-        if not isEmpty(title)
-            db = db_called("db/database.db")
-            if isUnique(db, "posts", "title", title)
-                t = Time.now
-                time = t.strftime("%Y-%m-%d %H:%M")
-                db.execute("INSERT INTO posts (title, text, creatorid, time) VALUES (?,?,?,?)", title, text, session[:id], time)
-                redirect('/posts/all')
-            else
-                route = "/newpost/#{id}"
-                redirect(route)
-            end
+        db = db_called("db/database.db")
+        if isUnique(db, "posts", "title", title)
+            t = Time.now
+            time = t.strftime("%Y-%m-%d %H:%M")
+            db.execute("INSERT INTO posts (title, text, creatorid, time) VALUES (?,?,?,?)", title, text, id, time)
+            return true
         else
-            route = "/newpost/#{id}"
-            redirect(route)
+            return false
         end
     end
 
@@ -574,53 +463,36 @@ module Model
     # @param [Integer] userid, the user ID
     # @param [Integer] :text, the post text
 
-    # @see Model#isEmpty
     # @see Model#db_called
     # @see Model#isUnique
+
+    # @return [Boolean] whether a post was updated
     def postUpdate(title, postid, userid)
-        if not isEmpty(title)
-            anyEmpty = false
+        db = db_called("db/database.db")
+        result = db.execute("SELECT title FROM posts WHERE creatorid = ? AND id = ?", userid, postid).first
+
+        text = params[:text]
+
+        if isUnique(db, "posts", "title", title)
+            db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
+            return true
+        elsif result['title'] == title 
+            db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
+            return true
         else
-            anyEmpty = true
-        end 
-
-        if not anyEmpty
-            db = db_called("db/database.db")
-            result = db.execute("SELECT title FROM posts WHERE creatorid = ? AND id = ?", userid, postid).first
-
-            text = params[:text]
-
-            if isUnique(db, "posts", "title", title)
-                db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
-                redirect('/posts/all')
-            elsif result['title'] == title 
-                db.execute("UPDATE posts SET title = ?, text = ? WHERE id = ?", title, text, postid)
-                redirect('/posts/all')
-            else
-                route = "/post/#{postid}/#{userid}/edit"
-                redirect(route)
-            end
-
-        else
-            route = "/post/#{postid}/#{userid}/edit"
-            redirect(route)
+            return false
         end
     end
 
     # Attempts to delete a post
 
     # @param [Integer] postid, the post ID
-    # @param [Integer] userid, the user ID
 
-    # @see Model#auth
     # @see Model#db_called
-    def postDelete(userid, postid)
-        auth(userid)
-        
+    def postDelete(postid)        
         db = db_called("db/database.db")
         db.execute("DELETE FROM posts WHERE id = ?", postid)
         db.execute("DELETE FROM likes WHERE postid = ?", postid)
-        redirect('/posts/all')
     end
 
     # Finds a specific user information by ID
@@ -674,22 +546,6 @@ module Model
         WHERE user_personality_relation.userid = ?", id)
     end
 
-    # Finds the total likes of the client
-
-    # @param [Integer] id, the user ID
-
-    # @see Model#db_called
-    def likeCountClient(id)
-        db = db_called("db/database.db")
-        db.results_as_hash = false
-
-        session[:likeCount] = db.execute("SELECT COUNT
-            (likes.postid)
-        FROM likes
-            INNER JOIN posts ON posts.id = likes.postid
-        WHERE creatorid = ?", id).first.first
-    end
-
     # Finds the total likes of a specific user
 
     # @param [Integer] id, the user ID
@@ -722,14 +578,16 @@ module Model
 
     # Finds the posts that a specific user liked
 
+    # @param [Integer] userid, the user ID
+
     # @see Model#db_called
 
     # @return [Array] the posts that a specific user liked
-    def isLiked()
+    def isLiked(userid)
         db = db_called("db/database.db")
         db.results_as_hash = false
 
-        isLikeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", session[:id])
+        isLikeArr = db.execute("SELECT postid FROM likes WHERE userid = ?", userid)
         tempArr = isLikeArr.map do |el|
             el = el.first
         end
