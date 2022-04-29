@@ -250,11 +250,12 @@ post('/register') do
         session[:timeLogged] = 0
     end
 
-    logTime =  logTime(session[:timeLogged])
+    logTime =  timeChecker(session[:timeLogged])
 
-    if logTime[:result]
+    session[:timeLogged] = Time.now.to_i
+
+    if logTime
         session[:stress] = false
-        session[:timeLogged] = logTime[:time]
 
         credentials = [:username, :password, :passwordConfirm, :email, :phonenumber, :birthday]
         anyEmpty = emptyCredentials(credentials)
@@ -309,7 +310,6 @@ post('/register') do
         end  
     else
         session[:stress] = true
-        session[:timeLogged] = logTime[:time]
         redirect('/showregister')
     end
 end
@@ -328,11 +328,11 @@ post('/login') do
         session[:timeLogged] = 0
     end
 
-    logTime =  logTime(session[:timeLogged])
+    logTime =  timeChecker(session[:timeLogged])
+    session[:timeLogged] = Time.now.to_i
 
-    if logTime[:result]
+    if logTime
         session[:stress] = false
-        session[:timeLogged] = logTime[:time]
 
         username = params[:username]
         password = params[:password]
@@ -359,7 +359,6 @@ post('/login') do
         end
     else
         session[:stress] = true
-        session[:timeLogged] = logTime[:time]
         redirect('/showlogin')
     end
 end
@@ -382,11 +381,11 @@ post('/user/:userid/update') do
         session[:timeLogged] = 0
     end
 
-    logTime =  logTime(session[:timeLogged])
+    logTime =  timeChecker(session[:timeLogged])
+    session[:timeLogged] = Time.now.to_i
 
-    if logTime[:result]
+    if logTime
         session[:stress] = false
-        session[:timeLogged] = logTime[:time]
 
         credentials = [:email, :phonenumber, :birthday]
         anyEmpty = emptyCredentials(credentials)
@@ -425,7 +424,6 @@ post('/user/:userid/update') do
 
     else
         session[:stress] = true
-        session[:timeLogged] = logTime[:time]
         route = "/user/#{userid}/edit"
         redirect(route)
     end
@@ -446,11 +444,11 @@ post('/post/new') do
         session[:timeLogged] = 0
     end
 
-    logTime =  logTime(session[:timeLogged])
+    logTime =  timeChecker(session[:timeLogged])
+    session[:timeLogged] = Time.now.to_i
 
-    if logTime[:result]
+    if logTime
         session[:stress] = false
-        session[:timeLogged] = logTime[:time]
 
         title = params[:title]
         text = params[:text]
@@ -473,7 +471,6 @@ post('/post/new') do
         end
     else
         session[:stress] = true
-        session[:timeLogged] = logTime[:time]
         route = "/newpost/#{id}"
         redirect(route)
     end
@@ -495,11 +492,11 @@ post('/post/:id/update') do
         session[:timeLogged] = 0
     end
 
-    logTime =  logTime(session[:timeLogged])
+    logTime =  timeChecker(session[:timeLogged])
+    session[:timeLogged] = Time.now.to_i
 
-    if logTime[:result]
+    if logTime
         session[:stress] = false
-        session[:timeLogged] = logTime[:time]
 
         title = params[:title]
 
@@ -521,7 +518,6 @@ post('/post/:id/update') do
         end 
     else
         session[:stress] = true
-        session[:timeLogged] = logTime[:time]
         route = "/post/#{postid}/#{userid}/edit"
         redirect(route)
     end

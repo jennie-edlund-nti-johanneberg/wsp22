@@ -152,23 +152,18 @@ module Model
 
     # Attempts to check if too many inputs are recieved in close proximity
 
-    # @param [String] latestTempTime, the latest logged time
+    # @param [String] latestTime, the latest logged time
 
-    # @return [Hash] whether the inputs are recieved in close proximity
-    #   * :result [Boolean] whether the inputs are recieved in close proximity
-    #   * :time [Integer] the new latest logged time
-    def logTime(latestTempTime)
-        tempTime = Time.now.to_i
+    # @return [Boolean] whether the inputs are recieved in close proximity
+    def timeChecker(latestTime)
 
-        difTime = tempTime - latestTempTime
+        timeDiff = Time.now.to_i - latestTime
 
-        if difTime < 1.5
-            tempHash = {result: false, time: tempTime}
-            return tempHash
-        else
-            tempHash = {result: true, time: tempTime}
-            return tempHash
-        end
+        p timeDiff
+        p timeDiff > 0.2
+      
+        return timeDiff > 1.5
+      
     end
 
     # Attempts to check if the passwords match
