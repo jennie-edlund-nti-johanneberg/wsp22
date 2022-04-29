@@ -237,7 +237,7 @@ end
 # @param [Integer] :username, The new user username
 # @param [Integer] :birthday, The new user birthday
 
-# @see Model#logTime
+# @see Model#timeChecker
 # @see Model#emptyCredentials
 # @see Model#uniqueCredentials
 # @see Model#isEmail
@@ -319,7 +319,7 @@ end
 # @param [String] :username, The username
 # @param [String] :password, The password
 
-# @see Model#logTime
+# @see Model#timeChecker
 # @see Model#isEmpty
 # @see Model#usersByUsername
 # @see Model#authenticationLogin
@@ -369,7 +369,7 @@ end
 # @param [String] :email, The new user email
 # @param [String] :phonenumber, The new user phonenumber
 
-# @see Model#logTime
+# @see Model#timeChecker
 # @see Model#emptyCredentials
 # @see Model#isEmail
 # @see Model#isNumber
@@ -434,7 +434,7 @@ end
 # @param [String] :title, The post title
 # @param [String] :text, The post text
 
-# @see Model#logTime
+# @see Model#timeChecker
 # @see Model#isEmpty
 # @see Model#postNew
 post('/post/new') do
@@ -481,7 +481,7 @@ end
 # @param [Integer] :postid, The post ID
 # @param [String] :title, The new post title
 
-# @see Model#logTime
+# @see Model#timeChecker
 # @see Model#isEmpty
 # @see Model#postUpdate
 post('/post/:id/update') do
